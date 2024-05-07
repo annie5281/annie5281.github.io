@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Animation 补间动画 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/动画/Animation 补间动画"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Animation 补间动画
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/31/Android/%E5%8A%A8%E7%94%BB/Animation%20%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB/" class="article-date">
+  <time datetime="2024-03-31T09:15:35.000Z" itemprop="datePublished">2024-03-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a> / <a class="article-category-link" href="/categories/Android/%E5%8A%A8%E7%94%BB/">动画</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">5 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>补间动画：有起始状态和终止状态(只是一个动画效果 视觉效果 没有真正改变控件的属性)</p>
+<p>适用情况：需要实现简单的基本动画效果，或者需要快速实现视图的基本动画效果。</p>
+<h1 id="补间动画"><a href="#补间动画" class="headerlink" title="补间动画"></a>补间动画</h1><p>补间动画(TweenAnimaion)四种常用实现：</p>
+<ol>
+<li><strong>AlphaAnimation</strong> (透明动画)</li>
+</ol>
+<ul>
+<li>fromAlpha:动画开始时视图的透明度(取值范围: -1 ~ 1)  </li>
+<li>toAlpha:动画结束时视图的透明度(取值范围: -1 ~ 1)</li>
+</ul>
+<ol start="2">
+<li><strong>RotateAnimation</strong> (旋转动画)</li>
+</ol>
+<ul>
+<li>fromDegrees ：动画开始时 视图的旋转角度(正数 &#x3D; 顺时针，负数 &#x3D; 逆时针)  </li>
+<li>toDegrees ：动画结束时 视图的旋转角度(正数 &#x3D; 顺时针，负数 &#x3D; 逆时针)  </li>
+<li>pivotXType ：旋转轴点的x坐标的模式  </li>
+<li>pivotXValue ：旋转轴点x坐标的相对值  </li>
+<li>pivotYType ：旋转轴点的y坐标的模式  </li>
+<li>pivotYValue ：旋转轴点y坐标的相对值</li>
+</ul>
+<p>pivotXType &#x3D; Animation.ABSOLUTE:旋转轴点的x坐标&#x3D; View左上角的原点 在x方向 加上 pivotXValue数值的点(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_SELF:旋转轴点的x坐标&#x3D; View左上角的原点在x方向加上自身宽度乘上pivotXValue数值的值(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_PARENT:旋转轴点的x坐&#x3D; View左上角的原点在x方向加 父控件宽度乘上pivotXValue数值的值 (y方向同理)  </p>
+<ol start="3">
+<li><strong>ScaleAnimation</strong> (缩放动画)<br>参数：</li>
+</ol>
+<ul>
+<li>fromX ：动画在水平方向X的起始缩放倍数  </li>
+<li>toX ：动画在水平方向X的结束缩放倍数  </li>
+<li>fromY ：动画开始前在竖直方向Y的起始缩放倍数  </li>
+<li>toY：动画在竖直方向Y的结束缩放倍数  </li>
+<li>pivotXType:缩放轴点的x坐标的模式  </li>
+<li>pivotXValue:缩放轴点x坐标的相对值  </li>
+<li>pivotYType:缩放轴点的y坐标的模式  </li>
+<li>pivotYValue:缩放轴点y坐标的相对值</li>
+</ul>
+<p>pivotXType &#x3D; Animation.ABSOLUTE:缩放轴点的x坐标 &#x3D;  View左上角的原点 在x方向 加上 pivotXValue数值的点(y方向同理)<br>pivotXType &#x3D; Animation.<strong>RELATIVE_TO_SELF</strong>:缩放轴点的x坐标&#x3D;View左上角的原点 在x方向加上自身宽度乘上pivotXValue数值的值(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_PARENT:缩放轴点的x坐标&#x3D;View左上角的原点 在x方向加上父控件宽度乘上pivotXValue数值的值 (y方向同理)  </p>
+<ol start="4">
+<li><strong>TranslateAnimation</strong> (平移动画)</li>
+</ol>
+<ul>
+<li>fromXDelta ：视图在水平方向x 移动的起始值   </li>
+<li>toXDelta ：视图在水平方向x 移动的结束值   </li>
+<li>fromYDelta ：视图在竖直方向y 移动的起始值   </li>
+<li>toYDelta：视图在竖直方向y 移动的结束值</li>
+</ul>
+<p>动画的同一属性<br>以下参数是4种动画效果的公共属性,即都有的属性（即可写在set中也可以在自己的属性中写）<br>    android:duration&#x3D;”3000” &#x2F;&#x2F; 动画持续时间（ms），必须设置，动画才有效果<br>    android:startOffset &#x3D;”1000” &#x2F;&#x2F; 动画延迟开始时间（ms）<br>    android:fillBefore &#x3D; “true” &#x2F;&#x2F; 动画播放完后，视图是否会停留在动画开始的状态，默认为true<br>    android:fillAfter &#x3D; “false” &#x2F;&#x2F; 动画播放完后，视图是否会停留在动画结束的状态，优先于fillBefore值，默认为false<br>    android:fillEnabled&#x3D; “true” &#x2F;&#x2F; 是否应用fillBefore值，对fillAfter值无影响，默认为true<br>    android:repeatMode&#x3D; “restart” &#x2F;&#x2F; 选择重复播放动画模式，restart代表正序重放，reverse代表倒序回放，默认为restart<br>    android:repeatCount &#x3D; “0” &#x2F;&#x2F; 重放次数（所以动画的播放次数&#x3D;重放次数+1），为infinite时无限重复<br>    android:interpolator &#x3D; @[package:]anim&#x2F;interpolator_resource &#x2F;&#x2F; 插值器，即影响动画的播放速度  </p>
+<h1 id="AnimationSet"><a href="#AnimationSet" class="headerlink" title="AnimationSet"></a>AnimationSet</h1><p>在Android中，AnimationSet是一个用于组合多个动画效果的类。通过AnimationSet，可以将多个动画效果按照一定的顺序或同时播放。<br>AnimationSet可以包含多个Animation对象，每个Animation对象可以是AlphaAnimation（透明度动画）、ScaleAnimation（缩放动画）、TranslateAnimation（位移动画）或RotateAnimation（旋转动画）等。</p>
+<p>以下是AnimationSet的常用方法及其作用：</p>
+<ol>
+<li><strong>addAnimation</strong>(animation: Animation)：向AnimationSet中添加动画效果。</li>
+<li><strong>setDuration</strong>(durationMillis: Long)：设置动画的持续时间，单位为毫秒。</li>
+<li>setFillAfter(fillAfter: Boolean)：设置动画结束后是否保持最后的状态。</li>
+<li>setFillBefore(fillBefore: Boolean)：设置动画开始前是否使用起始状态。</li>
+<li>setInterpolator(interpolator: Interpolator)：设置动画的插值器，用于控制动画的变化速率。</li>
+<li>setRepeatCount(repeatCount: Int)：设置动画的重复次数，可以是一个正整数或Animation.INFINITE。</li>
+<li>setStartOffset(offsetMillis: Long)：设置动画开始之前的延迟时间，单位为毫秒。</li>
+<li>setStartTime(startTimeMillis: Long)：设置动画开始的时间，单位为毫秒。</li>
+<li>initialize(width: Int, height: Int, parentWidth: Int, parentHeight: Int)：初始化动画的尺寸信息，通常在动画开始前调用。</li>
+</ol>
+<p>下面是一个使用Kotlin语言创建 AnimationSet 并添加动画的示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> animationSet = AnimationSet(<span class="literal">true</span>).apply &#123;</span><br><span class="line">    addAnimation(AlphaAnimation(<span class="number">0.0f</span>, <span class="number">1.0f</span>).apply &#123;</span><br><span class="line">        duration = <span class="number">1000</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    addAnimation(ScaleAnimation(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>).apply &#123;</span><br><span class="line">        duration = <span class="number">1000</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">view.startAnimation(animationSet)</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，我们创建了一个包含透明度动画和缩放动画的AnimationSet，并将其应用到一个View上。</p>
+<p>在Android中，AnimationSet类中常用的属性有：</p>
+<ol>
+<li>animations ：用于存储AnimationSet中包含的动画效果列表。</li>
+<li><strong>duration</strong> ：动画的持续时间，单位为毫秒。</li>
+<li>fillAfter ：动画结束后是否保持最后的状态。</li>
+<li>fillBefore：动画开始前是否使用起始状态。</li>
+<li><strong>interpolator</strong> ：动画的插值器，用于控制动画的变化速率。</li>
+<li>repeatCount ：动画的重复次数，可以是一个正整数或Animation.INFINITE。</li>
+<li>startOffset ：动画开始之前的延迟时间，单位为毫秒。</li>
+<li>startTime ：动画开始的时间，单位为毫秒。</li>
+</ol>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/03/31/Android/%E5%8A%A8%E7%94%BB/Animation%20%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E7%94%BB/" rel="tag">动画</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/04/06/Android/RecyclerView/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            RecyclerView
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/03/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">适配器模式</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

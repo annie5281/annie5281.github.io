@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Stream流 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Java基础/Stream流"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Stream流
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/26/Java%E5%9F%BA%E7%A1%80/Stream%E6%B5%81/" class="article-date">
+  <time datetime="2024-01-26T10:09:15.000Z" itemprop="datePublished">2024-01-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">11 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Stream流把真正的函数式编程风格引入到Java中</p>
+<p>Java中的Stream流是用于对集合（Collection）对象进行一系列操作的工具。它提供了一种流式操作的方式，可以进行过滤、映射、排序、聚合等各种操作，类似于UNIX中的管道操作，能够简洁高效地处理数据。</p>
+<p>Stream流的主要作用包括：</p>
+<ol>
+<li><strong>简化集合操作：</strong> 使用Stream可以通过一系列的中间操作来对集合进行处理，而不需要繁琐地使用循环等传统方式。这样可以使代码更加简洁易读。</li>
+<li><strong>延迟执行：</strong> Stream提供了延迟执行的特性，只有在终端操作（如forEach、collect等）被调用时，才会触发中间操作的执行。这种延迟执行可以提高性能，避免不必要的计算。</li>
+<li><strong>并行处理：</strong> Stream提供了并行处理的能力，可以很容易地将串行操作转换为并行操作，充分利用多核处理器的性能优势，加快处理速度。</li>
+<li><strong>支持函数式编程：</strong> Stream提供了丰富的函数式编程特性，如map、filter、reduce等操作，使得在处理集合时可以更加灵活地使用函数式编程的思想。<br>总之，Java中的Stream流提供了一种更加便利和高效的方式来处理集合数据，使得代码更加简洁、易读，并且能够充分发挥现代计算机的性能优势。</li>
+</ol>
+<h1 id="Stream流的生成方式"><a href="#Stream流的生成方式" class="headerlink" title="Stream流的生成方式"></a>Stream流的生成方式</h1><p><em><strong>Stream流的使用</strong></em><br><strong>生成流</strong><br>通过数据源(集合,数组等)生成流<br>list.stream()  </p>
+<p><strong>中间操作</strong><br>一个流后面可以跟随零个或多个中间操作，其目的主要是打开流，做出某种程度的数据过滤&#x2F;映射，然后返回一个新的流交给下一个操作使用<br>filter()  </p>
+<p><strong>终结操作</strong><br>一个流只能有一个终结操作，当这个操作执行后，流就被使用“光”了，无法再被操作。所以这必定是流的最后一个操作<br>forEach()</p>
+<h2 id="1-Stream流的常见生成方式"><a href="#1-Stream流的常见生成方式" class="headerlink" title="(1)Stream流的常见生成方式"></a>(1)Stream流的常见生成方式</h2><p>①<strong>Collection体系</strong>的集合可以使用默认方法stream()生成流<br>&nbsp;&nbsp;&nbsp;&nbsp;default Stream&lt; E &gt; stream()<br>②<strong>Map体系</strong>的集合间接的生成流<br>③<strong>数组</strong>可以通过Stream接口的静态方法**of(T…values)**生成流  </p>
+<h3 id="Collection-体系的集合"><a href="#Collection-体系的集合" class="headerlink" title="Collection 体系的集合"></a>Collection 体系的集合</h3><p><em>CoLLection体系的集合可以使用默认方法stream()生成流</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">Stream&lt;String&gt; listStream = list.stream();</span><br><span class="line"></span><br><span class="line">Set&lt;String&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;String&gt;</span><br><span class="line">Stream&lt;String&gt; setStream = set.stream();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Map-体系的集合"><a href="#Map-体系的集合" class="headerlink" title="Map 体系的集合"></a>Map 体系的集合</h3><p><em>Map体系的集合间接的生成流</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,Integer&gt;();</span><br><span class="line">Stream&lt;String&gt; keyStream = map.keySet().stream();</span><br><span class="line">Stream&lt;Integer&gt; valueStream = map.values().stream();</span><br><span class="line">Stream&lt;Map.Entry&lt;String, Integer&gt;&gt; entryStream = map.entrySet().stream();</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p><em>数组可以通过 stream 接口的静态方法 of(T… values) 生成流</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String[] strArray = &#123;<span class="string">&quot;hello&quot;</span>,<span class="string">&quot;world&quot;</span>,<span class="string">&quot;java&quot;</span>&#125;;</span><br><span class="line">Stream&lt;String&gt; strArrayStream = Stream.of(strArray);</span><br><span class="line"></span><br><span class="line">Stream&lt;String&gt; strArrayStream2 = Stream.of(<span class="string">&quot;hello&quot;</span>,<span class="string">&quot;world&quot;</span>,<span class="string">&quot;java&quot;</span>);</span><br><span class="line">Stream&lt;Integer&gt; intStream = Stream.of(<span class="number">10</span>,<span class="number">2</span>,<span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Stream流的常见中间操作方法"><a href="#2-Stream流的常见中间操作方法" class="headerlink" title="(2)Stream流的常见中间操作方法"></a>(2)Stream流的常见中间操作方法</h2><h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p>Stream&lt; T &gt; <strong>filter</strong>(Predicate predicate): 用于对流中的数据进行<strong>过滤</strong><br>Predicate接口中的方法：boolean test(T t):对给定的参数进行判断，返回一个布尔值  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求:把List集合中以张开头的，长度为3的元素在控制台输出</span></span><br><span class="line">list.stream().filter(s -&gt; s.startswith(<span class="string">&quot;张&quot;</span>)).filter(s -&gt; s.length() == <span class="number">3</span>).forEach(System,out::println);</span><br></pre></td></tr></table></figure>
+
+<h3 id="limit-skip"><a href="#limit-skip" class="headerlink" title="limit skip"></a>limit skip</h3><p>Stream&lt; T &gt;<strong>limit</strong>(long maxSize): 返回此流中的元素组成的流，截取前指定参数个数的数据(取前几个)<br>Stream&lt; T &gt;<strong>skip</strong>(long n):跳过指定参数个数的数据，返回由该流的剩余元素组成的流(跳过前几个，返回剩下的)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求:跳过2个元素，把剩下的元素中前2个在控制台输出</span></span><br><span class="line">list.stream().skip(<span class="number">2</span>).limit(<span class="number">2</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<h3 id="concat-distinct"><a href="#concat-distinct" class="headerlink" title="concat distinct"></a>concat distinct</h3><p>static&lt; T &gt; Stream&lt; T &gt; <strong>concat</strong>(Stream a,Stream b): 合并a和b两个流为一个流(注意这个是静态方法)<br>Stream&lt; T &gt; <strong>distinct</strong>(): 返回由该流的不同元素(根据Object.equals(Object)) 组成的流  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求1:取前4个数据组成一个流</span></span><br><span class="line">Stream&lt;String&gt; s1 = list.stream().limit(<span class="number">4</span>);</span><br><span class="line"><span class="comment">//需求2:跳过2个数据组成一个流</span></span><br><span class="line">Stream&lt;String&gt; s2 = list.stream().skip(<span class="number">2</span>);</span><br><span class="line"><span class="comment">//需求3:合并需求1和需求2得到的流，并把结果在控制台输出，要求字符串元素不能重复</span></span><br><span class="line">Stream.concat(s1,s2).distinct().forEach(System.out::printIn); <span class="comment">//合并&amp;&amp;不重复</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h3><p>Stream&lt; T &gt; <strong>sorted</strong>():返回由此流的元素组成的流，根据自<strong>然顺序</strong>排序<br>Stream&lt; T &gt; <strong>sorted</strong>(Comparator comparator): 返回由该流的元素组成的流，根据提供的<strong>Comparator比较器</strong>进行排序  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求1:按照字母顺序把数据在控制台输出(自然排序)</span></span><br><span class="line">List.stream().sorted().forEach(System.out::println);</span><br><span class="line"></span><br><span class="line"><span class="comment">//需求2:按照字符串长度把数据在控制台输出(比较器排序)</span></span><br><span class="line"><span class="comment">//list.stream().sorted((s1, s2) -&gt; s1.length() - s2.length()).forEach(System.out::println);</span></span><br><span class="line"></span><br><span class="line">list.stream().sorted((s1,s2) -&gt; &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> s1.length() - s2.length();</span><br><span class="line">  <span class="type">int</span> <span class="variable">num2</span> <span class="operator">=</span> num == <span class="number">0</span> ? s1.compareTo(s2) : num;</span><br><span class="line">&#125;).forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="map-mapToInt"><a href="#map-mapToInt" class="headerlink" title="map mapToInt"></a>map mapToInt</h3><p>&lt; R &gt; Stream &lt; R &gt; <strong>map</strong>(Function mapper):返回由给定函数应用于此流的元素的结果组成的流<br>Function接口中的方法 —&gt; R apply(T t)   </p>
+<p><em>IntStream</em> <strong>mapTolnt</strong>(ToIntFunction mapper):返回一个 IntStream 其中包含将给定函数应用于此流的元素的结果<br><em>IntStream</em>:表示原始int流   </p>
+<p>ToIntFunction 接口中的方法 —&gt; int applyAsInt(T value)<br>(mapToInt()方法可以将 Stream 流转化为 IntStream ，就可以接着使用 IntStream 中特殊的方法)  </p>
+<p>使用案例：<br>将一个 Set 集合转换为数组：<br>int[] array &#x3D; res.<strong>stream().mapToInt(Integer::intValue).toArray()</strong>;  </p>
+<h4 id="IntStream"><a href="#IntStream" class="headerlink" title="IntStream"></a>IntStream</h4><p><strong>IntStream 接口中的方法：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Modifier and Type</th>
+<th align="left">方法</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">int</td>
+<td align="left">sum()</td>
+<td align="left">返回此流中元素的总和</td>
+</tr>
+<tr>
+<td align="left">int[]</td>
+<td align="left">toArray()</td>
+<td align="left">返回一个包含此流的元素的数组</td>
+</tr>
+</tbody></table>
+<p>在 Java 中，<code>IntStream</code> 是一个用于处理基本类型 <code>int</code> 的流。<code>IntStream</code> 提供了许多用于操作和处理 <code>int</code> 类型数据的方法。以下是一些 <code>IntStream</code> 中常用的方法：</p>
+<ol>
+<li><code>forEach(IntConsumer action)</code>：对流中的每个元素执行指定的操作。</li>
+<li><code>sum()</code>：返回流中所有元素的和。</li>
+<li><code>average()</code>：返回流中所有元素的平均值。</li>
+<li><code>min()</code>：返回流中所有元素的最小值。</li>
+<li><code>max()</code>：返回流中所有元素的最大值。</li>
+<li><code>count()</code>：返回流中元素的数量。</li>
+<li><code>filter(IntPredicate predicate)</code>：根据指定的条件过滤流中的元素。</li>
+<li><code>map(IntUnaryOperator mapper)</code>：对流中的每个元素执行指定的映射操作。</li>
+<li><code>distinct()</code>：去除流中重复的元素，返回一个去重后的流。</li>
+<li><code>sorted()</code>：对流中的元素进行排序。</li>
+<li><code>limit(long maxSize)</code>：截取流中的前 maxSize 个元素。</li>
+<li><code>skip(long n)</code>：跳过流中的前 n 个元素。</li>
+<li><code>reduce(int identity, IntBinaryOperator op)</code>：对流中的元素进行归约操作，返回一个结果。</li>
+<li><code>anyMatch(IntPredicate predicate)</code>：判断流中是否存在任意一个元素满足指定条件。</li>
+<li><code>allMatch(IntPredicate predicate)</code>：判断流中是否所有元素都满足指定条件。</li>
+<li><code>noneMatch(IntPredicate predicate)</code>：判断流中是否所有元素都不满足指定条件。</li>
+</ol>
+<p>这些方法可以帮助我们在处理 <code>int</code> 类型数据的流时进行各种操作，如过滤、映射、归约、排序等。通过灵活运用这些方法，可以方便地对 <code>IntStream</code> 进行处理和操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求1:将集合中的字符串数据转换为整数之后在控制台输出</span></span><br><span class="line">list.stream().map(Integer::parseInt).forEach(System.out::println);</span><br><span class="line">list.stream().mapToInt(Integer::parseInt).forEach(System.out::println);</span><br><span class="line"></span><br><span class="line"><span class="comment">//需求2：将集合中的字符串数据转换为整数之后在控制台输出 元素和</span></span><br><span class="line"><span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> list.stream().mapToInt(Integer::parseInt).sum();</span><br><span class="line">System.out::println(result);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-Stream流的常见终结操作方法"><a href="#3-Stream流的常见终结操作方法" class="headerlink" title="(3)Stream流的常见终结操作方法"></a>(3)Stream流的常见终结操作方法</h2><h3 id="forEach、count"><a href="#forEach、count" class="headerlink" title="forEach、count"></a>forEach、count</h3><p>void <strong>forEach</strong>(Consumer action):对此流的每个元素执行操作<br>Consumer接口中的方法 —&gt; void accept(T t):对给定的参数执行此操作<br>long <strong>count</strong>():返回此流中的元素数   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求1:把集合中的元素在控制台输出</span></span><br><span class="line">List.stream().forEach(System. out::println);</span><br><span class="line"><span class="comment">//需求2: 统计集合中有几个以张开头的元素，并把统计结果在控制台输出</span></span><br><span class="line"><span class="type">long</span> <span class="variable">count</span> <span class="operator">=</span> list.stream().filter(s -&gt; s.startswith(<span class="string">&quot;张&quot;</span>)).count();</span><br><span class="line">System.out.printIn(count);</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Stream流的收集操作"><a href="#Stream流的收集操作" class="headerlink" title="Stream流的收集操作"></a>Stream流的收集操作</h1><p>对数据使用Stream流的方式操作完毕后，我想<strong>把流中的数据收集到集合中</strong>，该怎么办呢?  </p>
+<p>Stream流的收集方法：<br>R <strong>collect</strong>(Collector collector)<br>但是这个收集方法的参数是一个Collector接口  </p>
+<p>工具类Collectors提供了具体的收集方式：<br>public static&lt; T &gt; Collector <strong>toList()</strong>: 把元素收集到List集合中<br>public static&lt; T &gt; Collector <strong>toSet()</strong>: 把元素收集到Set集合中<br>public static Collector <strong>toMap(Function keyMapper,Function valueMapper)</strong>: 把元素收集到Map集合中  </p>
+<p><strong>Collectors.toList()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求1:得到名字为3个字的流</span></span><br><span class="line">Stream&lt;String&gt; listStream = list.stream().filter(s -&gt; s.length() == <span class="number">3</span>);</span><br><span class="line"><span class="comment">//需求2:把使用stream流操作完毕的数据收集到List集合中并追历</span></span><br><span class="line">List&lt;String&gt; names = listStream.collect(Collectors.tolist());</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(String name : names)&#123;</span><br><span class="line">  System.out.println(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Collectors.toSet()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//需求3:得到年龄大于25的流</span></span><br><span class="line">Stream&lt;Integer&gt; setStream = set.stream().filter(age -&gt; age &gt; <span class="number">25</span>);</span><br><span class="line"><span class="comment">//需求4:把使用stream流操作完毕的数据收集到Set集合中并遍历</span></span><br><span class="line">Set&lt;Integer&gt; ages = setStream.collect(Collectors.toSet());</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(Integer age : ages) &#123;</span><br><span class="line">  System.out.println(age);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Collectors.toMap(Function keyMapper,Function valueMapper)</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个字符串数组，每一个字符串数据由姓名数据和年龄数据组合而成</span></span><br><span class="line">String[] strArray = &#123;<span class="string">&quot;林青霞,30&quot;</span>，<span class="string">&quot;张曼玉,35&quot;</span>，<span class="string">&quot;王祖贤,33&quot;</span>，<span class="string">&quot;柳岩,25&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//需求5:得到字符串中年龄数据大于28的流</span></span><br><span class="line">Stream&lt;String&gt; arrayStream = Stream.of(strArray).filter(s -&gt; Integer,parseInt(s.split(<span class="string">&quot;，&quot;</span>)[<span class="number">1</span>]) &gt; <span class="number">28</span>);</span><br><span class="line"><span class="comment">//需求6:把使用stream流操作完毕的数据收集到Map集合中并遍历，字符串中的姓名作键，年龄作值</span></span><br><span class="line">Map&lt;String,Integer&gt; map = arrayStream.collect(Collectors.toMap(s -&gt; s.split(<span class="string">&quot;,&quot;</span>)[<span class="number">0</span>], s -&gt; Integer.parseInt(s.split(<span class="string">&quot;,&quot;</span>)[<span class="number">1</span>])));</span><br><span class="line"></span><br><span class="line">Set&lt;String&gt; keySet = map.keySet();</span><br><span class="line"><span class="keyword">for</span> (String key : keySet) &#123;</span><br><span class="line">  <span class="type">Integer</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">  System.out.println(key + <span class="string">&quot;,&quot;</span> + value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>Collectors.groupingBy</strong><br>方法是一个非常常用的收集器，用于根据<strong>指定的分类函数</strong>对<strong>流中的元素进行分组</strong>。<br>该方法接受一个分类函数作为参数，将<em>流中的元素按照分类函数的返回值进行分组</em>，<br><em>并返回一个 Map</em>，其中<em>键是分类函数的返回值</em>，值是<em>对应分类的元素列表</em>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; <span class="title function_">groupAnagrams</span><span class="params">(String[] strs)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(Arrays.stream(strs)</span><br><span class="line">            .collect(Collectors.groupingBy(str -&gt; &#123;</span><br><span class="line">                <span class="comment">// 返回 str 排序后的结果。</span></span><br><span class="line">                <span class="comment">// 按排序后的结果来grouping by，算子类似于 sql 里的 group by。</span></span><br><span class="line">                <span class="type">char</span>[] array = str.toCharArray();</span><br><span class="line">                Arrays.sort(array);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">String</span>(array);</span><br><span class="line">            &#125;)).values());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/26/Java%E5%9F%BA%E7%A1%80/Stream%E6%B5%81/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/" rel="tag">函数式接口</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/27/Java%E5%9F%BA%E7%A1%80/%E5%8F%8D%E5%B0%84/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            反射 Class
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/22/Java%E5%9F%BA%E7%A1%80/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8-%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Lambda表达式-方法引用-函数式接口</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

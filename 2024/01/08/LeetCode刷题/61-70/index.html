@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Leetcode刷题61-70 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-LeetCode刷题/61-70"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Leetcode刷题61-70
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/08/LeetCode%E5%88%B7%E9%A2%98/61-70/" class="article-date">
+  <time datetime="2024-01-08T00:02:43.000Z" itemprop="datePublished">2024-01-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode%E5%88%B7%E9%A2%98/">LeetCode刷题</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">18 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="①169-多数元素"><a href="#①169-多数元素" class="headerlink" title="①169.多数元素"></a>①169.多数元素</h1><p>2024.1.8<br>题目：给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊n&#x2F;2⌋ 的元素。<br>你可以假设数组是非空的，并且给定的数组总是存在多数元素。  </p>
+<p>思路1：<br>在数组排序后，众数一定会出现在数组的中间位置  </p>
+<p><strong>排序Arrays.sort</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">majorityElement</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">return</span> nums[nums.length / <span class="number">2</span>];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：<br>哈希表:使用 HashMap 存储没个元素及其出现的次数<br>键 – 元素<br>值 – 元素出现的次数<br>查找值最大的键 </p>
+<p><em>哈希表</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">majorityElement</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        Map&lt;Integer,Integer&gt; counts = getCounts(nums);</span><br><span class="line">        <span class="comment">//存储最大值的键值对</span></span><br><span class="line">        Map.Entry&lt;Integer,Integer&gt; major = <span class="literal">null</span>;</span><br><span class="line">        <span class="comment">//遍历counts找到值最大的键(打擂台的方法)</span></span><br><span class="line">        <span class="keyword">for</span>(Map.Entry&lt;Integer,Integer&gt; count:counts.entrySet())&#123;</span><br><span class="line">            <span class="keyword">if</span>(major == <span class="literal">null</span> || major.getValue() &lt; count.getValue())&#123;</span><br><span class="line">                major = count;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> major.getKey();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取所有的映射关系</span></span><br><span class="line">    <span class="keyword">public</span> Map&lt;Integer,Integer&gt; <span class="title function_">getCounts</span><span class="params">(<span class="type">int</span>[] nums)</span>&#123;</span><br><span class="line">        Map&lt;Integer,Integer&gt; counts = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer,Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> num:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!counts.containsKey(num))&#123;</span><br><span class="line">                <span class="comment">//不包含该键就加入</span></span><br><span class="line">                counts.put(num,<span class="number">1</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//包含就值加一,覆盖</span></span><br><span class="line">                counts.put(num,counts.get(num) + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> counts;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路3：<br>如果我们把众数记为 +1+1+1，把其他数记为 −1-1−1，将它们全部加起来，显然和大于 0，<br>从结果本身我们可以看出众数比其他数多。</p>
+<p><strong>摩尔投票算法（Boyer-Moore Voting Algorithm）</strong><br>该算法的基本思想是：遍历数组，对每个元素进行投票，当count为0时，将当前元素设置为候选元素，然后根据当前元素与候选元素是否相等来增加或减少count的值。最终获胜的候选元素即为主要元素。</p>
+<p><em>最好 摩尔投票算法（Boyer-Moore Voting Algorithm</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">majorityElement</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> num : nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(count == <span class="number">0</span>)&#123;</span><br><span class="line">                result = num;</span><br><span class="line">            &#125;</span><br><span class="line">            count += (result == num) ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="②217-存在重复元素"><a href="#②217-存在重复元素" class="headerlink" title="②217.存在重复元素"></a>②217.存在重复元素</h1><p>2024.1.9<br>题目：给你一个整数数组 nums 。如果任一值在数组中<strong>出现至少两次</strong> ，返回 true ；<br>如果数组中每个元素<strong>互不相同</strong>，返回 false 。</p>
+<p>思路：<br>直接用哈希表，加不进去了就是多次出现直接 return true</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">containsDuplicate</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        Set&lt;Integer&gt; hash = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> num:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!hash.add(num))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="③219-存在重复元素Ⅱ"><a href="#③219-存在重复元素Ⅱ" class="headerlink" title="③219.存在重复元素Ⅱ"></a>③219.存在重复元素Ⅱ</h1><p>2024.1.10<br>题目：给你一个整数数组 nums 和一个整数 k ，<br>判断数组中是否存在两个不同的索引 i 和 j ，满足 nums[i] &#x3D;&#x3D; nums[j] 且 abs(i - j) &lt;&#x3D; k 。<br>如果存在，返回 true ；否则，返回 false 。  </p>
+<p>思路1：<br>当遍历到下标 i 时，如果在 i 之前存在与 num[i] 相等的元素，应该在这些元素中找下标最大的值 j ，判断 i - j ≤ k是否成立<br>用 HashMap 存储数组值，及该值对应的数组下标  </p>
+<p><em>哈希表</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">containsNearbyDuplicate</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer,Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> nums[i];</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(num) &amp;&amp; i - map.get(num) &lt;= k)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(num,i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：<br>滑动窗口算法，滑动窗口长度不超过 k+1 ,同一个滑动窗口中任意两个下标的绝对值不超过 k 。<br>如果在同一个滑动窗口中，其中有重复元素，则满足nums[i] &#x3D;&#x3D; nums[j] 且 abs(i - j) &lt;&#x3D; k 的要求  </p>
+<p>是否重复用哈希表 HashSet<br>如果 i&gt;ki &gt; ki&gt;k，则下标 i−k−1 处的元素被移出滑动窗口，因此将 nums[i−k−1] 从哈希集合中删除</p>
+<p><em>滑动窗口(最好)</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">containsNearbyDuplicate</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        Set&lt;Integer&gt; hash = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">            <span class="comment">//将前一个元素从窗口中移除</span></span><br><span class="line">            <span class="keyword">if</span>(i &gt; k)&#123;</span><br><span class="line">                hash.remove(nums[i - k - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//在窗口中已经存在</span></span><br><span class="line">            <span class="keyword">if</span>(!hash.add(nums[i]))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><em>暴力解法 超时</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">containsNearbyDuplicate</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i + <span class="number">1</span>; j &lt; nums.length; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[i] == nums[j] &amp;&amp; Math.abs(i - j) &lt;= k)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="④228-汇总区间"><a href="#④228-汇总区间" class="headerlink" title="④228.汇总区间"></a>④228.汇总区间</h1><p>2024.1.11<br>题目：给定一个无重复元素的有序整数数组 nums 。<br>返回 恰好覆盖数组中所有数字 的 最小有序 区间范围列表 。<br>也就是说，nums 的每个元素都恰好被某个区间范围所覆盖，并且不存在属于某个范围但不属于 nums 的数字 x 。<br>列表中的每个区间范围 [a,b] 应该按如下格式输出：<br>“a-&gt;b” ，如果 a !&#x3D; b<br>“a” ，如果 a &#x3D;&#x3D; b  </p>
+<p>emmm 也就是说连续就放在一个区间，输出这种格式 “a-&gt;b”，”a”<br>不连续就断开，另起一个区间<br>输入：nums &#x3D; [0,1,2,4,5,7]<br>输出：[“0-&gt;2”,”4-&gt;5”,”7”]   </p>
+<p>思路1：<br>运用双指针，i 和 j ，j 从 i 开始，如果 nums[j+1] &#x3D; nums.length 或者 nums[j]+1 !&#x3D; nums[j+1] 则当前区间结束<br>i 更新为 j + 1 , j 继续向后遍历，直到数组结束<br>(需要运用字符串拼接)   </p>
+<p><em>双指针</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;String&gt; <span class="title function_">summaryRanges</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        List&lt;String&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i; j &lt; nums.length; j++)&#123;</span><br><span class="line">            <span class="comment">//区间截止条件</span></span><br><span class="line">            <span class="keyword">if</span>( j + <span class="number">1</span> == nums.length || nums[j]+<span class="number">1</span> != nums[j + <span class="number">1</span>])&#123;</span><br><span class="line">                <span class="comment">//分两种情况进行字符串拼接</span></span><br><span class="line">                <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">                sb.append(nums[i]);</span><br><span class="line">                <span class="keyword">if</span>(i != j)&#123;</span><br><span class="line">                    sb.append(<span class="string">&quot;-&gt;&quot;</span>).append(nums[j]);</span><br><span class="line">                &#125;</span><br><span class="line">                res.add(sb.toString());</span><br><span class="line">                <span class="comment">//另辟一个区间，进行下一次循环</span></span><br><span class="line">                i = j+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="⑤268-丢失的数字"><a href="#⑤268-丢失的数字" class="headerlink" title="⑤268.丢失的数字"></a>⑤268.丢失的数字</h1><p>2024.1.12<br>题目：<br>给定一个包含 [0, n] 中 n 个数的数组 nums ，找出 [0, n] 这个范围内没有出现在数组中的那个数。<br>输入：nums &#x3D; [3,0,1]<br>输出：2<br>有 3 个数字，所以所有的数字都在范围 [0,3] 内。2 是丢失的数字，因为它没有出现在 nums 中。  </p>
+<p>思路1：<br>可以运用**按位异或(^)**运算，将nums数组后面拼接 n+1 个 从 0 到 n 的数字，这样就是只有缺失的数组只出现一次，其余数字都出现两次<br>可以运用异或运算的三个性质：<br>①任何数和 0 做异或运算，结果仍然是原来的数，即 a^0&#x3D;a<br>②任何数和其自身做异或运算，结果是 0，即 a^a&#x3D;0<br>③异或运算满足交换律和结合律，即 a^b^a &#x3D; b<br><strong>a^b^a &#x3D; b</strong><br>将这一串数字进行按位异或运算就可以最后得到丢失的数字  </p>
+<p><em>按位异或(效率最高)</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">missingNumber</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">       <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">           result ^= nums[i];</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= nums.length;i++)&#123;</span><br><span class="line">           result ^= i;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：<br>从 0 到 n 的数字和，与数组 nums 的数字和 之差就是缺失数字  </p>
+<p><em>数学方法(巧妙效率高)</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">missingNumber</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">all</span> <span class="operator">=</span> n * (n + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">            sum += nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> all - sum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>排序(Arrays.sort())</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">missingNumber</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] != i)&#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> length;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>哈希集合</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">missingNumber</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">            set.add(nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">missing</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length + <span class="number">1</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!set.contains(i))&#123;</span><br><span class="line">                missing = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> missing;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="⑥283-移动零"><a href="#⑥283-移动零" class="headerlink" title="⑥283.移动零"></a>⑥283.移动零</h1><p>2024.1.13<br>题目：给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。<br>请注意 ，必须在不复制数组的情况下原地对数组进行操作。<br>输入: nums &#x3D; [0,1,0,3,12]<br>输出: [1,3,12,0,0]  </p>
+<p>思路：<br>运用双指针，只有当 nums[i] !&#x3D; 0 时交换两个数字的位置<br>每次交换都是将左指针的 0 和右指针的 非0 交换的，或者指向的同一个数字原地交换  </p>
+<p>1 0 5 6 0<br>1 1   10560<br>0 0   10560<br>0 5   15060<br>0 6   15600  </p>
+<p>1 2 3 0 5<br>1 1  12305<br>2 2  12305<br>3 3  12305<br>0 0  12305<br>0 5  12350  </p>
+<p><em>双指针</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">moveZeroes</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(right &lt; n)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[right]!=<span class="number">0</span> )&#123;</span><br><span class="line">                exchange(nums,left,right);</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            right ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//数组中相邻左右两个数字交换位置</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">exchange</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">int</span> left,<span class="type">int</span> right)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> nums[left];</span><br><span class="line">        nums[left] = nums[right];</span><br><span class="line">        nums[right] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>双指针优化(更好)</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">moveZeroes</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> <span class="number">0</span>; r &lt; nums.length;r++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[r] != <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> nums[l];</span><br><span class="line">                nums[l ++] = nums[r];</span><br><span class="line">                nums[r] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑦303-区域和检索-数组不可变"><a href="#⑦303-区域和检索-数组不可变" class="headerlink" title="⑦303.区域和检索-数组不可变"></a>⑦303.区域和检索-数组不可变</h1><p>2024.1.14<br>题目：<br>给定一个整数数组  nums，处理以下类型的多个查询:<br>计算索引 left 和 right （包含 left 和 right）之间的 nums 元素的 和 ，其中 left &lt;&#x3D; right<br>实现 NumArray 类：<br>NumArray(int[] nums) 使用数组 nums 初始化对象<br>int sumRange(int i, int j) 返回数组 nums 中索引 left 和 right 之间的元素的 总和 ，包含 left 和 right 两点（也就是 nums[left] + nums[left + 1] + … + nums[right] )   </p>
+<p><strong>前缀和</strong>是<strong>一个数组中某一段连续子数组的和</strong>。<br>在计算前缀和时，我们可以先将数组中的元素<strong>依次累加</strong>，得到一个新的数组，新数组中的每个元素表示原数组中从起始位置到当前位置的累加和。<br>通过预先计算前缀和，可以在O(1)的时间内得到任意子数组的和，从而优化一些需要频繁计算子数组和的算法。<br>前缀和在解决数组和矩阵相关的问题时非常有用。</p>
+<p>思路：<br>由于会进行多次检索，即多次调用 sumRange，因此为了降低检索的总时间，应该降低 sumRange的时间复杂度，最理想的情况是时间复杂度 O(1)。为了将检索的时间复杂度降到 O(1)，需要在初始化的时候进行预处理。</p>
+<p><img src="https://s2.loli.net/2024/01/14/NGV5qyRZkpTWDcs.png" alt="前缀和示意图.png"><br>前缀和数组第一个位置空出来  </p>
+<p>0 1 2 3 4<br>计算1-3 ——&gt; 0-3 - 0-1<br>计算3-4 ——&gt; 0-4 - 0-2<br>sumRange(left,right) &#x3D; sumRange(0,right) - sumRange(0,left-1)  </p>
+<p><em>前缀和</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NumArray</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] sums;</span><br><span class="line">    <span class="comment">//构造方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">NumArray</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        sums = <span class="keyword">new</span> <span class="title class_">int</span> [n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">            sums[i+<span class="number">1</span>] = sums[i] + nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">sumRange</span><span class="params">(<span class="type">int</span> left, <span class="type">int</span> right)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> sums[right+<span class="number">1</span>] - sums[left];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="⑧349-两个数组的交集"><a href="#⑧349-两个数组的交集" class="headerlink" title="⑧349.两个数组的交集"></a>⑧349.两个数组的交集</h1><p>2024.1.15<br>题目：<br>给定两个数组 nums1 和 nums2 ，返回 它们的交集 。输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。<br>输入：nums1 &#x3D; [4,9,5], nums2 &#x3D; [9,4,9,8,4]<br>输出：[9,4]<br>解释：[4,9] 也是可通过的  </p>
+<p>思路：<br>用哈希表，将num1中的数字全部加到哈希集合中，如果哈希表中存在num2中的数字，就将其添加到一个新的哈希表(确保结果中的数字唯一)中   </p>
+<p>涉及将哈希表转换为一个int类型的数组：<br><code>int[] array = res.stream().mapToInt(Integer::intValue).toArray();</code>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] intersection(<span class="type">int</span>[] nums1, <span class="type">int</span>[] nums2) &#123;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        Set&lt;Integer&gt; res = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> num1:nums1)&#123;</span><br><span class="line">            set.add(num1);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> num2 : nums2)&#123;</span><br><span class="line">            <span class="keyword">if</span>(set.contains(num2))&#123;</span><br><span class="line">                res.add(num2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] array = res.stream().mapToInt(Integer::intValue).toArray();</span><br><span class="line">        <span class="keyword">return</span> array;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><em>或者</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] array = <span class="keyword">new</span> <span class="title class_">int</span>[res.size()];</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> value:res)&#123;</span><br><span class="line">            array[index++] = value;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> array;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="⑨350-两个数组的交集Ⅱ"><a href="#⑨350-两个数组的交集Ⅱ" class="headerlink" title="⑨350.两个数组的交集Ⅱ"></a>⑨350.两个数组的交集Ⅱ</h1><p>2024.1.16<br>题目：<br>给你两个整数数组 nums1 和 nums2 ，请你以数组形式返回两数组的交集。<br>返回结果中每个元素出现的次数，应与元素在两个数组中都出现的次数一致（如果出现次数不一致，则考虑取较小值）。可以不考虑输出结果的顺序。<br>输入：nums1 &#x3D; [1,2,2,1], nums2 &#x3D; [2,2]<br>输出：[2,2]  </p>
+<p>思路1：<br>哈希表(键值对)<br>出现交集的次数 &#x3D; 该数字在两个集合中出现次数的最小值<br>遍历第一个数组，得到数组中每一个数字对应出现的次数<br>遍历第二个数组，对于第二个数组中的每一个数字，如果在哈希表中存在这个数字，则将其添加到答案中，并减少哈希表中该数字存在的次数，直到为0</p>
+<p><em>哈希表HashMap</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span>[] intersect(<span class="type">int</span>[] nums1, <span class="type">int</span>[] nums2) &#123;</span><br><span class="line">       <span class="comment">//先遍历短的更省空间(结果数组长度用较短一个的大小)</span></span><br><span class="line">       <span class="keyword">if</span>(nums1.length &gt; nums2.length)&#123;</span><br><span class="line">           <span class="keyword">return</span> intersect(nums2,nums1);</span><br><span class="line">       &#125;</span><br><span class="line">       Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> num:nums1)&#123;</span><br><span class="line">           <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> map.getOrDefault(num,<span class="number">0</span>) + <span class="number">1</span>;</span><br><span class="line">           map.put(num,count);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="type">int</span>[] result = <span class="keyword">new</span> <span class="title class_">int</span> [nums1.length];</span><br><span class="line">       <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> num:nums2)&#123;</span><br><span class="line">           <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> map.getOrDefault(num,<span class="number">0</span>);</span><br><span class="line">           <span class="keyword">if</span>(count &gt; <span class="number">0</span>)&#123;</span><br><span class="line">               <span class="comment">//存在该数字,加入结果数组中</span></span><br><span class="line">               result[index ++] = num;</span><br><span class="line">               <span class="comment">//在Map中-1</span></span><br><span class="line">               count--;</span><br><span class="line">               <span class="keyword">if</span>(count &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                   <span class="comment">//-1之后如果还大于0则更新Map</span></span><br><span class="line">                   map.put(num,count);</span><br><span class="line">               &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                   <span class="comment">//否则将该数字从Map中删除</span></span><br><span class="line">                   map.remove(num);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> Arrays.copyOfRange(result,<span class="number">0</span>,index);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：<br>双指针，对两个数组先进行排序<br>用两个指针分别指向两个数组的头部<br>比较两个数字的大小，如果相同则将该数字加入到结果中，并都向右移动一位，<br>如果不相同，则将指向较小的数字的指针向右移动一位，<br>直到有任意一个指针超出数组范围为止。 </p>
+<p>1 2 2 3 4<br>0 1 2 2 5 9  </p>
+<p><em>双指针</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span>[] intersect(<span class="type">int</span>[] nums1, <span class="type">int</span>[] nums2) &#123;</span><br><span class="line">        Arrays.sort(nums1);</span><br><span class="line">        Arrays.sort(nums2);</span><br><span class="line">        <span class="type">int</span> <span class="variable">n1</span> <span class="operator">=</span> nums1.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n2</span> <span class="operator">=</span> nums2.length;</span><br><span class="line">        <span class="type">int</span>[] result = <span class="keyword">new</span> <span class="title class_">int</span>[Math.min(n1,n2)];</span><br><span class="line">        <span class="type">int</span> <span class="variable">index1</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index2</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(index1 &lt; n1 &amp;&amp; index2 &lt; n2)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums1[index1] &lt; nums2[index2])&#123;</span><br><span class="line">                index1++;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums1[index1] &gt; nums2[index2])&#123;</span><br><span class="line">                index2++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                result[index++] = nums1[index1];</span><br><span class="line">                index1++;</span><br><span class="line">                index2++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Arrays.copyOfRange(result,<span class="number">0</span>,index);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑩414-第三大的数"><a href="#⑩414-第三大的数" class="headerlink" title="⑩414.第三大的数"></a>⑩414.第三大的数</h1><p>2024.1.17<br>题目：<br>给你一个非空数组，返回此数组中第三大的数。如果不存在，则返回数组中最大的数。</p>
+<p>思路3：<br>用三个数字维护数组中最大、次大、第三大的元素，初始值为长整形最小值Long.MIN_VALUE</p>
+<p><em>一次遍历 100%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">thirdMax</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">long</span> <span class="variable">a</span> <span class="operator">=</span> Long.MIN_VALUE,b = Long.MIN_VALUE,c = Long.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">long</span> num:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(num &gt; a)&#123;</span><br><span class="line">                c = b;</span><br><span class="line">                b = a;</span><br><span class="line">                a = num;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(a &gt; num &amp;&amp; num &gt;b)&#123;</span><br><span class="line">                c = b;</span><br><span class="line">                b = num;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(b &gt; num &amp;&amp; num &gt; c)&#123;</span><br><span class="line">                c = num;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c == Long.MIN_VALUE ? (<span class="type">int</span>)a : (<span class="type">int</span>)c;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>思路2：<br>使用有序集合TreeSet(元素唯一且有序，无索引)，<br>遍历数组，将数组中的元素插入到有序TreeSet集合中，且维持TreeSet集合的大小&lt;&#x3D;3的状态，<br>(加入新元素后如果大小超过3则移除第一个元素)<br>最后如果size&#x3D;3,则用first返回第一个数字，否则用last返回最后一个数字。</p>
+<p><em>TreeSet 40%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">thirdMax</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        TreeSet&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> num:nums)&#123;</span><br><span class="line">            set.add(num);</span><br><span class="line">            <span class="keyword">if</span>(set.size() &gt; <span class="number">3</span>)&#123;</span><br><span class="line">                set.remove(set.first());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> set.size() == <span class="number">3</span> ? set.first() : set.last();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>思路1：<br>将数组中的数字加入到哈希表中，将哈希表中的数字加入到一个新的数组中，将数组排序，<br>判断数组的长度，如果长度&lt;&#x3D;3，则返回数组最后一个位置的数字，否则返回倒数第3位置的数字。</p>
+<p>0 1 2 3 4 5 6<br>size &#x3D; 7</p>
+<p><em>HashSet哈希表(self)25%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">thirdMax</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> num : nums) &#123;</span><br><span class="line">            set.add(num);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> set.size();</span><br><span class="line">        <span class="type">int</span>[] array = <span class="keyword">new</span> <span class="title class_">int</span>[size];</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> num : set) &#123;</span><br><span class="line">            array[index++] = num;</span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(array);</span><br><span class="line">        <span class="keyword">if</span> (size &lt; <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> array[size - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> array[size - <span class="number">3</span>];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/08/LeetCode%E5%88%B7%E9%A2%98/61-70/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/08/Java%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数据类型转换
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/05/Java%E5%9F%BA%E7%A1%80/%E6%95%B0%E7%BB%84/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">数组</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

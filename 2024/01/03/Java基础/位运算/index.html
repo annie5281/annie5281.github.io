@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>位运算 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Java基础/位运算"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  位运算
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/03/Java%E5%9F%BA%E7%A1%80/%E4%BD%8D%E8%BF%90%E7%AE%97/" class="article-date">
+  <time datetime="2024-01-03T13:27:35.000Z" itemprop="datePublished">2024-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">5 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在 Java 中，位运算是对<strong>二进制数据</strong>进行操作的运算符。  </p>
+<p>Java 中包括以下位运算符：  </p>
+<h1 id="1-逻辑位运算符"><a href="#1-逻辑位运算符" class="headerlink" title="(1)逻辑位运算符"></a>(1)逻辑位运算符</h1><ol>
+<li><strong>按位与(&amp;)</strong> ：二进制位按位相与，对应位置上的两个位都为1时结果为1，否则为0。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(n &amp; <span class="number">1</span>) <span class="comment">//得到n的最后一位  </span></span><br><span class="line"><span class="comment">//只有当n的最后一位也是1时，其结果才为1</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算某二进制数的1的个数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">oneCount</span><span class="params">(<span class="type">int</span> n)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(n &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            count += n &amp; <span class="number">1</span>;</span><br><span class="line">            n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//相当于</span></span><br><span class="line">count = Integer.bitCount(n);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>按位或(|)</strong> ：二进制位按位相或，都为0时结果为0，否则为1。<br>&nbsp;&nbsp;&nbsp;&nbsp;有一位为 1 结果就为1<br>&nbsp;&nbsp;&nbsp;&nbsp;val &#x3D; (val &lt;&lt; 1) | root.val;  </li>
+<li><strong>按位异或(^)</strong> ：二进制位按位相异或，相同为0，不同为1。<br>&nbsp;&nbsp;&nbsp;&nbsp;异或运算 有以下三个性质：<br>&nbsp;&nbsp;&nbsp;&nbsp;①任何数和 0 做异或运算，结果仍然是原来的数，即 a^0&#x3D;a<br>&nbsp;&nbsp;&nbsp;&nbsp;②任何数和其自身做异或运算，结果是 0，即 a^a&#x3D;0<br>&nbsp;&nbsp;&nbsp;&nbsp;③异或运算满足交换律和结合律，即 a^b^a &#x3D; b<br>&nbsp;&nbsp;&nbsp;&nbsp;  a^b^a<br>&nbsp;&nbsp;&nbsp;&nbsp;&#x3D;b^a^a<br>&nbsp;&nbsp;&nbsp;&nbsp;&#x3D;b^(a^a)<br>&nbsp;&nbsp;&nbsp;&nbsp;&#x3D;b^0<br>&nbsp;&nbsp;&nbsp;&nbsp;&#x3D;b<br>&nbsp;&nbsp;&nbsp;&nbsp;异或运算的规则是，如果两个操作数的对应位相同，则结果为 0；如果两个操作数的对应位不同，则结果为 1。<br>&nbsp;&nbsp;&nbsp;&nbsp;int a &#x3D; 5;  &#x2F;&#x2F; 二进制表示为 0101<br>&nbsp;&nbsp;&nbsp;&nbsp;int b &#x3D; 3;  &#x2F;&#x2F; 二进制表示为 0011<br>&nbsp;&nbsp;&nbsp;&nbsp;int result &#x3D; a ^ b;  &#x2F;&#x2F; 二进制表示为 0110，十进制表示为 6  </li>
+<li><strong>按位取反(~)</strong> ：将二进制位取反，0变为1，1变为0。</li>
+</ol>
+<h1 id="2-位移运算符"><a href="#2-位移运算符" class="headerlink" title="(2)位移运算符"></a>(2)位移运算符</h1><ol start="5">
+<li><strong>左移(&lt;&lt;)</strong> ：将二进制数向左移动指定位数，低位补0，相当于乘以2的指定次方。<br>&nbsp;&nbsp;&nbsp;&nbsp;1&lt;&lt;left:表示将二进制数 1 左移 left 位。<br>&nbsp;&nbsp;&nbsp;&nbsp;例如，假设 <code>left = 3</code>，则 <code>1&lt;&lt;left</code> 将会把二进制数 <code>1</code> 左移 <code>3</code> 位后得到 <code>1000</code>，二进制数 <code>1000</code> 转为十进制就是 <code>8</code>。</li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;通常情况下，使用左移运算符 <code>&lt;&lt;</code> 可以快速地实现将原始数据所代表的位数扩大 <code>2</code> 的幂次方倍</p>
+<ol start="6">
+<li><strong>右移(&gt;&gt;)</strong> ：将二进制数向右移动指定位数，高位补符号位，正数补0，负数补1，相当于除以2的指定次方。</li>
+<li><strong>无符号右移(&gt;&gt;&gt;)</strong> ：将二进制数向右移动指定位数，高位补0，相当于无符号除以2的指定次方</li>
+</ol>
+<p>实际使用中，位运算主要用于二进制数据的处理和优化，比如位移运算可以用来对2的次幂进行快速计算，按位与运算可以用来对数据进行掩码处理等等。但要注意的是，在使用位运算时需要特别小心，因为位运算会改变数据类型和位数，可能导致数据溢出或类型转换错误。</p>
+<p>以下是一些位运算的示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">0b1010</span>; <span class="comment">// 定义二进制数10</span></span><br><span class="line"><span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">0b1100</span>; <span class="comment">// 定义二进制数12</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> a &amp; b; <span class="comment">// 二进制位相与，结果为 0b1000，即10</span></span><br><span class="line"><span class="type">int</span> <span class="variable">d</span> <span class="operator">=</span> a | b; <span class="comment">// 二进制位相或，结果为 0b1110，即14</span></span><br><span class="line"><span class="type">int</span> <span class="variable">e</span> <span class="operator">=</span> a ^ b; <span class="comment">// 二进制位相异或，结果为 0b0110，即6</span></span><br><span class="line"><span class="type">int</span> <span class="variable">f</span> <span class="operator">=</span> ~a;    <span class="comment">// 二进制位取反，结果为 0b0101，即-11（注意Java中的补码表示方式）</span></span><br><span class="line"><span class="type">int</span> <span class="variable">g</span> <span class="operator">=</span> a &lt;&lt; <span class="number">2</span>; <span class="comment">// 将二进制数向左移动2位，结果为 0b101000，即40</span></span><br><span class="line"><span class="type">int</span> <span class="variable">h</span> <span class="operator">=</span> a &gt;&gt; <span class="number">1</span>; <span class="comment">// 将二进制数向右移动1位，结果为 0b0101，即5</span></span><br><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> b &gt;&gt;&gt; <span class="number">2</span>;<span class="comment">// 将二进制数向右移动2位，结果为 0b0011，即3</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><p><strong>tmp |&#x3D; 1 &lt;&lt; (c[i]-‘a’)</strong><br>用一个整数表示字符集合  </p>
+<p>在代码中，通过 <code>tmp |= 1 &lt;&lt; (c[i]-&#39;a&#39;)</code> 的操作，实际上是在一个整数 <code>tmp</code> 中的不同比特位上设置为 1，每个字符对应整数的不同比特位。这样做的目的是为了将字符集合转换为一个整数，方便进行比较和处理。</p>
+<p>举个例子，假设字符集合为 {‘a’, ‘b’, ‘c’}，则对应的整数表示为：</p>
+<ul>
+<li>‘a’ 对应整数的第 0 位，即 000…0001</li>
+<li>‘b’ 对应整数的第 1 位，即 000…0010</li>
+<li>‘c’ 对应整数的第 2 位，即 000…0100</li>
+</ul>
+<p>将这些整数按位或操作后，得到的整数就能表示字符集合 {‘a’, ‘b’, ‘c’}，可以方便地比较不同字符串的字符集合是否相似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> words[i].charAt(j) - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line"><span class="comment">//用1标记出现的字母</span></span><br><span class="line">binary |= (<span class="number">1</span> &lt;&lt; num);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//无重复位</span></span><br><span class="line">(temp[i] &amp; temp[j]) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>在这段代码中，使用<code>(1 &lt;&lt; c)</code>而不是<code>(1 &lt;&lt; (c-&#39;a&#39;))</code>的原因是为了简化代码并提高效率。  </p>
+<ol>
+<li>简化代码：使用<code>(1 &lt;&lt; c)</code>可以直接将字符c对应的比特位置为1，不需要额外的计算<code>c-&#39;a&#39;</code>来确定字符在字母表中的位置。这样可以减少代码的复杂度和提高可读性。</li>
+<li>提高效率：在计算机中，位运算比加减法操作更快速和高效。因此，直接使用<code>(1 &lt;&lt; c)</code>来设置比特位可以更快地更新特征值，而不需要进行字符位置的减法运算。</li>
+</ol>
+<p>综上所述，使用<code>(1 &lt;&lt; c)</code>来更新特征值可以简化代码并提高效率，是一种更好的选择。</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/03/Java%E5%9F%BA%E7%A1%80/%E4%BD%8D%E8%BF%90%E7%AE%97/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/05/Java%E5%9F%BA%E7%A1%80/%E6%95%B0%E7%BB%84/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数组
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/02/Java%E5%9F%BA%E7%A1%80/%E9%9B%86%E5%90%88/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">集合</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

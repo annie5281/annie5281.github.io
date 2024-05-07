@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>git |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/git"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  git
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/29/Android/git/" class="article-date">
+  <time datetime="2024-01-29T02:55:35.000Z" itemprop="datePublished">2024-01-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">982</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">3 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Git 是一个免费的开源分布式版本控制系统，旨在快速高效地处理从小到大的项目。<br>Git易于学习，占用空间小，性能快如闪电。  </p>
+<p><em><strong>Git⼯作机制</strong></em><br><strong>⼯作区</strong> —— git add —— <strong>暂存区</strong> —— git commit —— <strong>本地库</strong> —— push —— <strong>远程库</strong><br><img src="https://s2.loli.net/2024/01/29/eQv2prlwoaiRzZq.png" alt="工作机制.png">  </p>
+<p>配置git用户信息<br>git config –global user.name annie 设置⽤户<br>git config –global user.email <a href="mailto:&#49;&#x31;&#x31;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#49;&#x31;&#x31;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a>  设置邮件<br><img src="https://s2.loli.net/2024/01/29/QaFgLeXJiq8A3B2.png" alt="查看配置信息.png">  </p>
+<h1 id="常⽤命令"><a href="#常⽤命令" class="headerlink" title="常⽤命令"></a>常⽤命令</h1><p>git-scm-com</p>
+<p>git -v 查看版本<br>git config –global user.name annie5281 设置⽤户签名<br>git config –global user.email <a href="mailto:&#x31;&#49;&#49;&#64;&#x71;&#x71;&#x2e;&#x63;&#x6f;&#109;">&#x31;&#49;&#49;&#64;&#x71;&#x71;&#x2e;&#x63;&#x6f;&#109;</a>  </p>
+<p><em>初始化提交操作：</em><br>git init 初始化本地库<br>git status 查看本地库状态<br><strong>git add file</strong> 添加到暂存区<br>git rm –cached 文件名 （从暂存区删除）<br><strong>git commit -m “日志” 文件名</strong> 可标注具体版本信息）  </p>
+<p><em>版本信息查看 版本切换</em><br><strong>git log</strong> 查看当前仓库提交的版本（显示详细信息）<br>&nbsp;&nbsp;&nbsp;&nbsp;HEAD指向当前版本<br><strong>git reflog</strong> (查看所有版本信息)(简约版本信息)<br><strong>git reset –hard 简约版本号</strong> (切换版本)   </p>
+<p><em>分支操作：</em><br><strong>git branch -v</strong> (查看分支信息)当前分支(带有*) 分支名称 此分支版本号 提交信息<br><strong>git branch 分支名</strong> (创建分支) (开启新功能的时候创建分支，之后合并到主分支)<br><strong>git checkout 分支名</strong> (切换分支 进入某分支内)主分支or其他分支<br><strong>git merge 分支名</strong> (合并到主分支)要先切换到主分支才能合并<br>注意：处理完冲突之后commit提交时 ⼀定不能添加⽂件名  </p>
+<p><em>远程操作：</em><br><strong>git remote -v</strong> (查看当前所有远程仓库别名)<br><strong>git remote add 别名 远程仓库地址</strong>  (给远程仓库起别名)<br><strong>git push 远程仓库地址&#x2F;别名 推送的分⽀名</strong> (将本地版本推送到远程仓库)<br>&nbsp;&nbsp;&nbsp;&nbsp;git push <a target="_blank" rel="noopener" href="https://gitee.com/Annie5281/project.git">https://gitee.com/Annie5281/project.git</a> main<br><strong>git pull 远程库地址&#x2F;别名 拉取的分⽀名</strong> (将远程仓库的内容拉取下来)   </p>
+<p><em>克隆操作(本地没有仓库，远程已经有了，需要把远程仓库克隆一份下来到本地)：</em><br>在远程创建⼀个仓库<br>复制仓库的https地址<br>在本地创建⼀个⽂件夹⽤于保存远程克隆过来的内容<br>使⽤git clone 远程仓库地址<br><strong>git clone 远程仓库http地址</strong> (克隆服务器端代码)  </p>
+<p>cat 文件名 (直接查看文件内容)</p>
+<h1 id="团队合作"><a href="#团队合作" class="headerlink" title="团队合作"></a>团队合作</h1><p><img src="https://s2.loli.net/2024/01/30/QWotNHYUvg8r5bK.png" alt="团队/第三者.png"></p>
+<h1 id="Android-Studio"><a href="#Android-Studio" class="headerlink" title="Android Studio"></a>Android Studio</h1><p>在Android Studio下使⽤Github &#x2F; Gitee</p>
+<h2 id="本地"><a href="#本地" class="headerlink" title="本地"></a>本地</h2><p><strong>VCS -&gt; Create Git Repository</strong>  (创建代码仓库)<br>选择本项目<br>如果在源文件中出现.git文件夹即表示创建仓库成功<br>⽂件名为红⾊表⽰没有提交到仓库<br><img src="https://s2.loli.net/2024/01/30/3iHInPtuR1ZT2mC.png" alt="创建代码仓库.png">  </p>
+<p><strong>Git -&gt; Commit</strong> (提交当前所有的新⽂件)<br><img src="https://s2.loli.net/2024/01/30/sLcnaZ4FtrO8pkQ.png" alt="提交.png">  </p>
+<p><strong>设置提交选项</strong>，关闭代码分析功能(太耗时了)，TODO也去掉<br>输⼊更新的内容并且，提交<br><img src="https://s2.loli.net/2024/01/30/PwzUYmCfcgGMasx.png" alt="设置提交.png">  </p>
+<p><strong>查看版本和提交信息</strong>：<br>绿色表示:master<br>黄色表示:当前操作的分支<br>分支名出现在当前分支最新的版本上<br><img src="https://s2.loli.net/2024/01/30/gAEWr9dJbPzSDm2.png" alt="查看.png">  </p>
+<p><strong>切换版本</strong>：在对应版本信息上 -&gt; 右键 -&gt; <strong>checkout</strong> …<br><img src="https://s2.loli.net/2024/01/30/AKbuqIgGiamUjzs.png" alt="切换版本.png">  </p>
+<p><strong>创建分⽀</strong>：在分⽀上点击右键 -&gt; <strong>new branch</strong><br><img src="https://s2.loli.net/2024/01/30/sCpXtdqIAP6HLy1.png" alt="创建分⽀.png">  </p>
+<p><strong>合并分⽀</strong>：<strong>Git -&gt; Merge</strong><br>先切换到主分支上<br><img src="https://s2.loli.net/2024/01/30/OI9ldcoB5xL4H1W.png" alt="合并分⽀.png">  </p>
+<h2 id="远程"><a href="#远程" class="headerlink" title="远程"></a>远程</h2><p><strong>确定账号：</strong><br>File -&gt; Settings -&gt; Version Control -&gt; Gitee(没有就到Plugins里面 -&gt; Marketplace -&gt; 搜索并安装对应插件)</p>
+<p>GitHub获取Token -&gt; 进入GitHub 右上角进入个人主页 -&gt; Settings -&gt; Account -&gt; 左下角Developer settings -&gt; Personal access tokens -&gt; Tokens(Classic) -&gt; Generate new token -&gt; Generate new token()</p>
+<p>Note 这个Token是做什么的？(随便写)<br>Expiration 到期时间(尽量写长)<br>生成后复制令牌即可  </p>
+<p><strong>和远程仓库建立链接：</strong><br>(账号确定之后，确定账号下的哪个仓库)<br>在该账号下创建一个远程仓库<br>得到仓库地址<br>Git -&gt; Push<br>URL填入仓库地址<br><img src="https://s2.loli.net/2024/01/30/ipSkKvlbH9TVWD1.png" alt="推送.png"><br><img src="https://s2.loli.net/2024/01/30/7rPsXO3IS5AiMzd.png" alt="确定仓库地址.png">  </p>
+<p><strong>如何把远程仓库的项目拉取下来：</strong><br>选择要拉取的分支<br><img src="https://s2.loli.net/2024/01/30/JktH2v5cwjAsBQN.png" alt="拉取.png">  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/29/Android/git/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" rel="tag">版本控制</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/29/Java%E5%9F%BA%E7%A1%80/%E6%B3%A8%E8%A7%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            注解
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/29/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">单例设计模式</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

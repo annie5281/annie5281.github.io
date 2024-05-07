@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>网络编程 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Java基础/网络编程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  网络编程
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/20/Java%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time datetime="2024-01-20T09:58:35.000Z" itemprop="datePublished">2024-01-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">3.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">12 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一-网络编程入门"><a href="#一-网络编程入门" class="headerlink" title="(一)网络编程入门"></a>(一)网络编程入门</h1><p><strong>计算机网络</strong>：<br>是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统，网络管理软件及网络通信协议的管理和协调下，实现<strong>资源共享和信息传递</strong>的计算机系统</p>
+<p><strong>网络编程</strong>:<br>在网络通信协议下，实现网络互连的不同计算机上运行的程序间可以进行数据交换(学完网络编程之后，我就可以通过我自己编写的网络程序，去访问其他人计算机上的内容，实现资源共享和信息传递)  </p>
+<p><img src="https://s2.loli.net/2024/01/20/pmZvHBXWIRNu5g7.png" alt="计算机网络.png"><br>(客户端和服务器通过互联网连接起来，连接起来就可以实现资源共享和信息传递)</p>
+<h2 id="1-网络编程三要素"><a href="#1-网络编程三要素" class="headerlink" title="(1)网络编程三要素"></a>(1)网络编程三要素</h2><p><strong>IP地址</strong>(标识设备)：<br>要想让网络中的计算机能够互相通信，必须为每台计算机指定一个标识号，通过这个标识号来指定要接收数据的计算机和识别发送的计算机，而IP地址就是这个标识号。也就是设备的标识<br><strong>端口</strong>(标识应用程序)：<br>网络的通信，本质上是两个应用程序的通信。每台计算机都有很多的应用程序，那么在网络通信时，如何区分这些应用程序呢?如果说IP地址可以唯一标识网络中的设备，那么端口号就可以唯一标识设备中的应用程序了。也就是应用程序的标识<br><strong>协议</strong>(规则)：<br>通过计算机网络可以使多台计算机实现连接，位于同一个网络中的计算机在进行连接和通信时需要遵守一定的规则，这就好比在道路中行驶的汽车一定要遵守交通规则一样。在计算机网络中，这些连接和通信的规则被称为网络通信协议，它对数据的传输格式、传输速率、传输步骤等做了统一规定，通信双方必须同时遵守才能完成数据交换。常见的协议有<em>UDP协议</em>和<em>TCP协议</em>  </p>
+<h3 id="①IP地址"><a href="#①IP地址" class="headerlink" title="①IP地址"></a>①IP地址</h3><p>IP地址:是网络中设备的唯一标识<br>IP地址分为两大类：<br><em><strong>IPv4:</strong></em> 是给每个连接在网络上的主机分配一个<strong>32bit</strong>地址按照TCP&#x2F;IP规定，IP地址用二进制来表示，每个P地址长32bit，也就是4个字节例如一个采用二进制形式的IP地址是“11000000  10101000  00000001  01000010”，这么长的地址，处理费劲。<br>为方便使用，IP地址经常被写成十进制的形式，中间使用符号“.”分隔不同的字节。<br>于是，上面的IP地址可以表示为“192.168.1.66”。<br>IP地址的这种表示法叫做 <strong>“点分十进制表示法”</strong>，这显然比1和0容易记忆得多。  </p>
+<p><em><strong>IPv6:</strong></em> 由于互联网的蓬勃发展，IP地址的需求量愈来愈大，但是网络地址资源有限，使得IP的分配越发紧张。为了扩大地址空间，通过IPv6重新定义地址空间，采用<strong>128bit</strong>地址长度，每16个字节一组，分成8组十六进制数，这样就解决了网络地址资源数量不够的问题。</p>
+<p><em><strong>常用命令：</strong></em><br>ipconfig:查看本机IP地址<br>ping IP地址:检查网络是否连通  </p>
+<p><em><strong>特殊IP地址:</strong></em><br>127.0.0.1:是回送地址，可以代表本机地址，一般用来测试使用  </p>
+<h4 id="InetAddress-的使用"><a href="#InetAddress-的使用" class="headerlink" title="InetAddress 的使用"></a>InetAddress 的使用</h4><p>为了方便我们对IP地址的获取和操作，Java提供了一个类InetAddress供我们使用<br><strong>此类表示Internet协议(IP)地址</strong>   </p>
+<p>(没有构造方法，且大部分的方法都不是静态的，这种情况下一定会提供一种静态的方式得到该类的对象)</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>static</strong> InetAddress <strong>getByName</strong>(String host)</td>
+<td align="left">确定主机名称的IP地址。主机名称可以是机器名称，也可以是IP地址</td>
+</tr>
+<tr>
+<td align="left">String getHostAddress()</td>
+<td align="left">返回文本显示中的IP地址字符串</td>
+</tr>
+<tr>
+<td align="left">String getHostName()</td>
+<td align="left">获取此IP地址的主机名</td>
+</tr>
+</tbody></table>
+<h3 id="②端口"><a href="#②端口" class="headerlink" title="②端口"></a>②端口</h3><p>端口:设备上应用程序的唯一标识<br><em><strong>端口号</strong></em>:<br>用两个字节表示的整数，它的取值范围是<strong>0~65535</strong>。其中，0~1023之间的端口号用于一些知名的网络服务和应用，普通的应用程序需要使用1024以上的端口号。如果端口号被另外一个服务或应用所占用，会导致当前程序启动失败</p>
+<h3 id="③协议"><a href="#③协议" class="headerlink" title="③协议"></a>③协议</h3><p>协议:计算机网络中，连接和通信的规则被称为网络通信协议<br><em><strong>UDP协议</strong></em>:<br><strong>用户数据报协议</strong>(UserDatagram Protocol)<br>UDP是<strong>无连接通信协议</strong>，即在数据传输时，数据的发送端和接收端<strong>不建立逻辑连接</strong>。<br>简单来说，当一台计算机向另外一台计算机发送数据时，发送端不会确认接收端是否存在，就会发出数据，同样接收端在收到数据时，也不会向发送端反馈是否收到数据。<br>由于使用UDP协议消耗资源小，通信效率高，所以通常都会用于<strong>音频、视频和普通数据的传输</strong>。<br>例如：视频会议通常采用UDP协议，因为这种情况即使偶尔丢失一两个数据包，也不会对接收结果产生太大影响。<br>但是在使用UDP协议传送数据时，由于UDP的面向无连接性，不能保证数据的完整性，因此在传输重要数据时不建议使用UDP协议。</p>
+<p><em><strong>TCP协议</strong></em>：<br><strong>传输控制协议</strong>(Transmission Control Protocol)<br>TCP协议是<strong>面向连接的通信协议</strong>，即传输数据之前，在发送端和接收端<strong>建立逻辑连接</strong>，然后再传输数据它提供了两台计算机之间<strong>可靠无差错</strong>的数据传输。<br>在TCP连接中必须要明确客户端与服务器端，由客户端向服务端发出连接请求，每次连接的创建都需要经过“三次握手”。    </p>
+<p><strong>三次握手</strong>:TCP协议中，在发送数据的准备阶段，客户端与服务器之间的三次交互，以保证连接的可靠<br>第一次握手，客户端向服务器端发出连接请求，等待服务器确认；<br>第二次握手，服务器端向客户端回送一个响应，通知客户端收到了连接请求；<br>第三次握手，客户端再次向服务器端发送确认信息，确认连接。  </p>
+<p>完成三次握手，连接建立后，客户端和服务器就可以开始进行数据传输了。由于这种面向连接的特性TCP协议可以保证传输数据的安全，所以应用十分广泛。例如<strong>上传文件、下载文件、浏览网页</strong>等  </p>
+<p><img src="https://s2.loli.net/2024/01/20/nzVPO5EDfFGcWBh.png" alt="三次握手.png">  </p>
+<h1 id="二-UDP通信程序"><a href="#二-UDP通信程序" class="headerlink" title="(二)UDP通信程序"></a>(二)UDP通信程序</h1><h2 id="1-UDP通信原理"><a href="#1-UDP通信原理" class="headerlink" title="(1)UDP通信原理"></a>(1)UDP通信原理</h2><p>UDP协议是一种不可靠的网络协议，它在通信的两端各建立一个Socket对象，但是这两个Socket只是发送or接收数据的对象<br>(发送端只是发送数据，不管接收端是否接收到，接收端只是接收数据，不会向发送端给出反馈)<br>(套接字（Socket）是在计算机网络中用于进程间通信的一端点)<br>因此对于基于UDP协议的通信双方而言，<em>没有所谓的客户端和服务器的概念</em>  </p>
+<p>Java提供了 <strong>DatagramSocket类</strong> 作为基于UDP协议的Socket(套接字)<br>DatagramSocket ：此类表示用于发送和接收数据报数据包的套接字  </p>
+<h2 id="2-UDP发送数据"><a href="#2-UDP发送数据" class="headerlink" title="(2)UDP发送数据"></a>(2)UDP发送数据</h2><p>发送数据的步骤：<br><em><strong>①创建发送端的Socket对象(DatagramSocket)</strong></em><br><strong>DatagramSocket()</strong> 无参构造<br><code>DatagramSocket ds = new DatagramSocket();</code></p>
+<p><em><strong>②创建数据，并把数据打包</strong></em><br><strong>DatagramPacket(byte buf[], int length,InetAddress address, int port)</strong><br>构造一个数据包，发送长度为 Length的数据包到指定主机上的指定端口号。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">byte</span>[] bys =<span class="string">&quot;hello,udp,我来了&quot;</span>.getBytes();</span><br><span class="line"><span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> bys .length;</span><br><span class="line"><span class="type">InetAddress</span> <span class="variable">address</span> <span class="operator">=</span> InetAddress.getByName(<span class="string">&quot;192.168.152.1&quot;</span>);</span><br><span class="line"><span class="type">int</span> <span class="variable">port</span> <span class="operator">=</span> <span class="number">10086</span>;</span><br><span class="line"><span class="type">DatagramPacket</span> <span class="variable">dp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DatagramPacket</span>(bys ,length,address ,port);</span><br><span class="line"></span><br><span class="line"><span class="comment">//DataeramPacket dp = new DatagramPacket(bys, bys.length, Address.getByName(&quot;192.168.152.1&quot;), 10086);</span></span><br></pre></td></tr></table></figure>
+
+<p><em><strong>③调用DatagramSocket对象的方法发送数据</strong></em><br>void <strong>send</strong>(DatagramPacket p) 从此套接字发送数据报包<br><code>ds.send(dp);</code></p>
+<p><em><strong>④关闭发送端</strong></em><br>void <strong>close</strong>()关闭此数据报套接字<br><code>ds.close();</code></p>
+<h2 id="3-UDP接收数据"><a href="#3-UDP接收数据" class="headerlink" title="(3)UDP接收数据"></a>(3)UDP接收数据</h2><p>接收数据的步骤：<br><em><strong>①创建接收端的Socket对象(DatagramSocket)</strong></em><br><strong>DatagramSocket(int port)</strong> 带参构造 构造数据报套接字并将其绑定到本地主机上的指定端口<br><code>DatagramSocket ds = new DatagramSocket(10086);</code></p>
+<p><em><strong>②创建一个数据包，用于接收数据</strong></em><br><strong>DatagramPacket(byte buf[], int length)</strong>  构造一个 DatagramPacket用于接收长度为 Length数据包<br><code>DategramPacket dp = new DatagramPacket(bys,bys.length);</code></p>
+<p><em><strong>③调用DatagramSocket对象的方法接收数据</strong></em><br>void <strong>receive</strong> (DatagramPacket p) 从此套接字接收数据报包<br><code>ds.receive(dp);</code></p>
+<p><em><strong>④解析数据包，并把数据在控制台显示</strong></em><br>byte[] <strong>getData</strong>() 返回数据缓冲区<br>int <strong>getLength</strong> () 返回实际发送的数据的长度或接收到的数据的长度</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">byte</span>[] datas = dp.getData();</span><br><span class="line"><span class="type">String</span> <span class="variable">dataString</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(datas,<span class="number">0</span>,dp.getLength());</span><br><span class="line">System.out.println(<span class="string">&quot;数据是：&quot;</span> + dataString);</span><br><span class="line"></span><br><span class="line"><span class="comment">//System.out.println(&quot;数据是：&quot; + new String(dp.getData(),0,dp.getLength()));</span></span><br></pre></td></tr></table></figure>
+
+<p><em><strong>⑤关闭接收端</strong></em><br><code>ds.close();</code></p>
+<p>DatagramSocket</p>
+<table>
+<thead>
+<tr>
+<th align="left">DatagramSocket构造方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DatagramSocket()</td>
+<td align="left">无参构造</td>
+</tr>
+<tr>
+<td align="left">DatagramSocket(int port)</td>
+<td align="left">带参构造，构造数据报套接字并将其绑定到本地主机上的指定端口</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">DatagramSocket中的方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">void receive(DatagramPacket p)</td>
+<td align="left">从此套接字接收数据报包</td>
+</tr>
+<tr>
+<td align="left">void send(DatagramPacket p)</td>
+<td align="left">从此套接字发送数据报包</td>
+</tr>
+<tr>
+<td align="left">void close()</td>
+<td align="left">关闭此数据报套接字</td>
+</tr>
+</tbody></table>
+<p>DatagramPacket</p>
+<table>
+<thead>
+<tr>
+<th align="left">DatagramPacket构造方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DatagramPacket(byte buf[], int length,InetAddress address, int port)</td>
+<td align="left">构造一个数据包，发送长度为Length的数据包到指定主机上的指定端口号</td>
+</tr>
+<tr>
+<td align="left">DatagramPacket(byte buf[], int length)</td>
+<td align="left">构造一个DatagramPacket用于接收长度为Length数据包</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">DatagramPacket中的方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">byte[] getData()</td>
+<td align="left">返回数据缓冲区</td>
+</tr>
+<tr>
+<td align="left">int getLength ()</td>
+<td align="left">返回要发送的数据的长度或接收到的数据的长度</td>
+</tr>
+</tbody></table>
+<h1 id="三-TCP通信程序"><a href="#三-TCP通信程序" class="headerlink" title="(三)TCP通信程序"></a>(三)TCP通信程序</h1><h2 id="1-TCP通信原理"><a href="#1-TCP通信原理" class="headerlink" title="(1)TCP通信原理"></a>(1)TCP通信原理</h2><p>TCP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket对象，从而在通信的两端形成网络虚拟链路,一旦建立了虚拟的网络链路，两端的程序就可以通过虚拟链路进行通信。<br>(TCP协议将程序分为客户端和服务器端，两端之间就形成了网络虚拟链路，通过这个虚拟链路进行通信)</p>
+<p>Java对基于TCP协议的的网络提供了良好的封装，使用Socket对象来代表两端的通信端口，并通过Socket产生IO流来进行网络通信(客户端和服务器端是通过IO流来进行通信的)</p>
+<p>Java为客户端提供了<strong>Socket类</strong>，为服务器端提供了<strong>ServerSocket类</strong><br><img src="https://s2.loli.net/2024/01/20/pmZvHBXWIRNu5g7.png" alt="计算机网络.png">   </p>
+<h2 id="2-TCP发送数据"><a href="#2-TCP发送数据" class="headerlink" title="(2)TCP发送数据"></a>(2)TCP发送数据</h2><p>发送数据的步骤：<br><em><strong>①创建客户端的Socket对象(Socket)</strong></em><br>(两种构造方法皆可)<br><strong>Socket(InetAddress address,int port)</strong> 创建流套接字并将其连接到指定 IP地址 的指定端口<br><code>Socket s = new Socket(InetAddress.getByName(&quot;192.168.152.1&quot;),10000)</code><br><strong>Socket (string host，int port)</strong> 创建流套接字并将其连接到指定 主机 上的指定端口号<br><code>Socket s = new Socket( host: &quot;192.168.1.66&quot;, port: 10000);</code> </p>
+<p><em><strong>②获取输出流，写数据</strong></em><br>Outputstream <strong>getOutputstream()</strong> 返回此套接字的输出流<br><code>OutputStream os = s.getOutputStream();</code><br><code>os.write(&quot;hello world&quot;.getBytes());</code>  </p>
+<p><em><strong>③释放资源</strong></em><br><code>s.close();</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">Socket构造方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Socket(InetAddress address,int port)</td>
+<td align="left">创建流套接字并将其连接到指定 IP地址 的指定端口</td>
+</tr>
+<tr>
+<td align="left">Socket (string host，int port)</td>
+<td align="left">创建流套接字并将其连接到指定 主机 上的指定端口号</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">Socket中的方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Outputstream getOutputStream()</td>
+<td align="left">返回此套接字的输出流</td>
+</tr>
+<tr>
+<td align="left">Outputstream getInputStream()</td>
+<td align="left">返回此套接字的输入流</td>
+</tr>
+<tr>
+<td align="left">void close()</td>
+<td align="left">关闭套接字(释放资源)</td>
+</tr>
+<tr>
+<td align="left">void shutdownOutput()</td>
+<td align="left">禁用此套接字的输出流(对于TCP套接字,任何先前写入的数据都将被发送,之后是TCP的正常连接终止序列)</td>
+</tr>
+</tbody></table>
+<h2 id="3-TCP接收数据"><a href="#3-TCP接收数据" class="headerlink" title="(3)TCP接收数据"></a>(3)TCP接收数据</h2><p>接收数据的步骤：<br><em><strong>①创建服务器端的Socket对象(ServerSocket)</strong></em><br><strong>ServerSocket (int port)</strong> 创建绑定到指定端口的服务器套接字<br><code>ServerSocket ss = new ServerSocket( port: 10000);</code>  </p>
+<p><em><strong>②监听客户端连接，返回一个Socket对象</strong></em><br>(要先监听，接收它并产生对应Socket对象，再调用Socket的getInputStream)<br>Socket <strong>accept()</strong> 侦听要连接到此套接字并接受它(监听客户端的连接并生成对应Socket对象)<br><code>Socket s = ss .accept();</code></p>
+<p><em><strong>③获取输入流，读数据，并把数据显示在控制台</strong></em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InputStream</span> <span class="variable">is</span> <span class="operator">=</span> s.getInputStream();</span><br><span class="line"><span class="type">byte</span>[] bys = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line"><span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> is.read(bys);</span><br><span class="line"><span class="type">String</span> <span class="variable">data</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(bys, <span class="number">0</span> ,len);</span><br><span class="line">System.out.printIn(<span class="string">&quot;数据是:&quot;</span>+ data);</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>④释放资源</strong></em>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s.close();</span><br><span class="line">ss.close(); <span class="comment">//可以只释放这一个</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">ServerSocket构造方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ServerSocket (int port)</td>
+<td align="left">创建绑定到指定端口的服务器套接字</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">ServerSocket中的方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Socket accept()</td>
+<td align="left">侦听要连接到此套接字并接受它</td>
+</tr>
+<tr>
+<td align="left">void close()</td>
+<td align="left">关闭套接字(释放资源)</td>
+</tr>
+</tbody></table>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/20/Java%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/22/Java%E5%9F%BA%E7%A1%80/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8-%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Lambda表达式-方法引用-函数式接口
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/18/LeetCode%E5%88%B7%E9%A2%98/71-90/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">LeetCode刷题71-90</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

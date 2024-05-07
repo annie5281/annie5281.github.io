@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>LeetCode刷题31-40 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-LeetCode刷题/31-40"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  LeetCode刷题31-40
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/09/LeetCode%E5%88%B7%E9%A2%98/31-40/" class="article-date">
+  <time datetime="2023-12-09T02:33:04.000Z" itemprop="datePublished">2023-12-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode%E5%88%B7%E9%A2%98/">LeetCode刷题</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">3.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">13 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="①222-完全二叉树的节点个数"><a href="#①222-完全二叉树的节点个数" class="headerlink" title="①222.完全二叉树的节点个数"></a>①222.完全二叉树的节点个数</h1><p>题目：给你一棵 完全二叉树 的根节点 root ，求出该树的节点个数。</p>
+<p>完全二叉树 的定义如下：在完全二叉树中，除了最底层节点可能没填满外，其余每层节点数都达到最大值，并且最下面一层的节点都集中在该层最左边的若干位置。若最底层为第 h 层，则该层包含 1~ 2h 个节点。</p>
+<p><em>普遍使用法，未利用完全二叉树的特点</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public int countNodes(TreeNode root) &#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        return countNodes(root.left) + countNodes(root.right) + 1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>思考：完全二叉树的特点<br>如果左右子树的深度相同 left &#x3D;&#x3D; right 那么左子树一定是满的，右子树不一定<br>如果左右子树的深度不同 left !&#x3D; right 那么右子树一定满的，right &#x3D;&#x3D; left-1</p>
+<p>完全二叉树深度的特点：height &#x3D; left + 1 (整颗树的深度 &#x3D; 左子树的深度 + 根结点1)</p>
+<p>满二叉树深度为 h ，则其结点数为：<strong>2^h -1</strong><br><strong>1 &lt;&lt; h 可表示 2 的 h 次方</strong></p>
+<p><em>利用完全二叉树的特点(求深度未用递归)</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int countNodes(TreeNode root) &#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int left = countHeight(root.left);</span><br><span class="line">        int right = countHeight(root.right);</span><br><span class="line"></span><br><span class="line">        if(left == right)&#123;</span><br><span class="line">            return countNodes(root.right) + (1 &lt;&lt; left);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return (1 &lt;&lt; right) + countNodes(root.left);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //求深度</span><br><span class="line">    public int countHeight(TreeNode root)&#123;</span><br><span class="line">        int height = 0;</span><br><span class="line">        while(root != null)&#123;</span><br><span class="line">            height ++;</span><br><span class="line">            root = root.left;</span><br><span class="line">        &#125;</span><br><span class="line">        return height;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="②226-翻转二叉树"><a href="#②226-翻转二叉树" class="headerlink" title="②226.翻转二叉树"></a>②226.翻转二叉树</h1><p>题目：给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。<br><img src="https://s2.loli.net/2023/12/10/pb5CNF3hZORDAJw.jpg" alt="示例图"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return root;</span><br><span class="line">        &#125;</span><br><span class="line">        //分别翻转root的左子树和右子树</span><br><span class="line">        TreeNode left = invertTree(root.left);</span><br><span class="line">        TreeNode right = invertTree(root.right);</span><br><span class="line">        //将root的左子树指针指向right，将右子树指针指向left，完成翻转</span><br><span class="line">        root.left = right;</span><br><span class="line">        root.right = left;</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="③257-二叉树的所有路径"><a href="#③257-二叉树的所有路径" class="headerlink" title="③257.二叉树的所有路径"></a>③257.二叉树的所有路径</h1><p>题目：给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。<br>叶子节点 是指没有子节点的节点。</p>
+<p>当前结点如果不为 null<br>将结点加入到 拼接器中<br>判断当前结点是记否为叶子结点<br>是：将拼接器中当前路径加入到 paths 中<br>否：添加 -&gt;  、  递归</p>
+<p><em>深度优先搜索、递归</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public List&lt;String&gt; binaryTreePaths(TreeNode root) &#123;</span><br><span class="line">        List&lt;String&gt; paths =  new ArrayList&lt;String&gt;();</span><br><span class="line">        getPaths(root,&quot;&quot;,paths);</span><br><span class="line">        return paths;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void getPaths(TreeNode root,String path,List&lt;String&gt; paths)&#123;</span><br><span class="line">        if(root != null)&#123;</span><br><span class="line">            StringBuilder sb = new StringBuilder(path);</span><br><span class="line">            sb.append(Integer.toString(root.val));</span><br><span class="line">            if(root.left == null &amp;&amp; root.right == null)&#123;</span><br><span class="line">                //是叶子结点</span><br><span class="line">                paths.add(sb.toString());</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                //不是叶子结点</span><br><span class="line">                sb.append(&quot;-&gt;&quot;); //拼接-&gt;</span><br><span class="line">                //继续递归</span><br><span class="line">                getPaths(root.left,sb.toString(),paths);</span><br><span class="line">                getPaths(root.right,sb.toString(),paths);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="④404-左叶子之和"><a href="#④404-左叶子之和" class="headerlink" title="④404.左叶子之和"></a>④404.左叶子之和</h1><p>题目：给定二叉树的根节点 root ，返回所有左叶子之和。</p>
+<p>思考：是叶子 且是左叶子<br>树不为空的情况下，分别判断左子树和右子树</p>
+<p><em>深度优先搜索</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int sumOfLeftLeaves(TreeNode root) &#123;</span><br><span class="line">        //要判空</span><br><span class="line">        return root != null ? getSum(root) : 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getSum(TreeNode root)&#123;</span><br><span class="line">        int sum = 0;</span><br><span class="line">        //有左孩子</span><br><span class="line">        if(root.left != null)&#123;</span><br><span class="line">            //如果是叶子sum加其值</span><br><span class="line">            //如果不是叶子就继续递归，加上递归结果</span><br><span class="line">            sum += isLeaf(root.left) ? root.left.val : getSum(root.left);</span><br><span class="line">        &#125;</span><br><span class="line">        //有右孩子</span><br><span class="line">        //只有右孩子不是叶子的时候才有可能再加</span><br><span class="line">        if(root.right != null &amp;&amp; !isLeaf(root.right))&#123;</span><br><span class="line">            sum += getSum(root.right);</span><br><span class="line">        &#125;</span><br><span class="line">        return sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //判断是否为叶子结点</span><br><span class="line">    public boolean isLeaf(TreeNode root)&#123;</span><br><span class="line">        return root.left == null &amp;&amp; root.right == null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>在 Java 中，Queue 接口提供了以下可直接使用的方法：   </p>
+<ol>
+<li><strong>offer(E e)</strong>: 将元素 e 插入队列的尾部。如果队列已满，将返回 false。   </li>
+<li><strong>poll()</strong>: 移除并返回队列头部的元素。如果队列为空，将返回 null。   </li>
+<li><strong>peek()</strong>: 返回队列头部的元素，但不移除它。如果队列为空，将返回 null。   </li>
+<li><strong>isEmpty()</strong>: 判断队列是否为空。如果队列为空，将返回 true；否则返回 false。   </li>
+<li><strong>size()</strong>: 返回队列中元素的个数。</li>
+</ol>
+<p><em>广度优先</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int sumOfLeftLeaves(TreeNode root) &#123;</span><br><span class="line">        //要判空</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line">        int sum = 0;</span><br><span class="line">        queue.offer(root);</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            TreeNode node = queue.poll();</span><br><span class="line">            if(node.left != null)&#123;</span><br><span class="line">                if(isLeaf(node.left))&#123;</span><br><span class="line">                    sum += node.left.val;</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    queue.offer(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(node.right != null &amp;&amp; !isLeaf(node.right))&#123;</span><br><span class="line">                queue.offer(node.right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //判断是否为叶子结点</span><br><span class="line">    public boolean isLeaf(TreeNode root)&#123;</span><br><span class="line">        return root.left == null &amp;&amp; root.right == null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="⑤543-二叉树的直径"><a href="#⑤543-二叉树的直径" class="headerlink" title="⑤543.二叉树的直径"></a>⑤543.二叉树的直径</h1><p>题目：给你一棵二叉树的根节点，返回该树的 直径 。<br>二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root。<br>两节点之间路径的 长度 由它们之间边数表示。   </p>
+<p>思考：<br>二叉树的直径 &#x3D; 经过最大结点数 - 1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    //记录经过的结点数的最大值</span><br><span class="line">    int ans;</span><br><span class="line">    public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">        ans = 1;</span><br><span class="line">        depth(root);</span><br><span class="line">        //返回最长路径的长度</span><br><span class="line">        return ans - 1;</span><br><span class="line">    &#125;</span><br><span class="line">    public int depth(TreeNode node) &#123;</span><br><span class="line">        if (node == null) &#123;</span><br><span class="line">            return 0; // 访问到空节点了，返回0</span><br><span class="line">        &#125;</span><br><span class="line">        int L = depth(node.left); // 左儿子为根的子树的深度</span><br><span class="line">        int R = depth(node.right); // 右儿子为根的子树的深度</span><br><span class="line">        ans = Math.max(ans, L+R+1); // 计算d_node即L+R+1 并更新ans</span><br><span class="line">        return Math.max(L, R) + 1; // 返回该节点为根的子树的深度</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="⑥563-二叉树的坡度"><a href="#⑥563-二叉树的坡度" class="headerlink" title="⑥563.二叉树的坡度"></a>⑥563.二叉树的坡度</h1><p>题目：给你一个二叉树的根节点 root ，计算并返回 整个树 的坡度 。<br>一个树的 节点的坡度 定义即为，该节点<strong>左子树的节点之和</strong>和<strong>右子树节点之和</strong>的 <strong>差的绝对值</strong>。如果没有左子树的话，左子树的节点之和为 0 ；没有右子树的话也是一样。空结点的坡度是 0 。<br>整个树 的坡度就是其所有节点的坡度之和。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int findTilt(TreeNode root) &#123;</span><br><span class="line">        if (root == null) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        //左右子结点的坡度</span><br><span class="line">        int leftSum = getSum(root.left);</span><br><span class="line">        int rightSum = getSum(root.right);</span><br><span class="line">        //根结点的坡度</span><br><span class="line">        int tilt = Math.abs(leftSum - rightSum);</span><br><span class="line">        //返回树的坡度</span><br><span class="line">        return tilt + findTilt(root.left) + findTilt(root.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //得到二叉树中所有结点的值的和</span><br><span class="line">    public int getSum(TreeNode root) &#123;</span><br><span class="line">        if (root == null) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125; </span><br><span class="line">        int leftSum = getSum(root.left);</span><br><span class="line">        int rightSum = getSum(root.right);</span><br><span class="line">        return root.val + leftSum + rightSum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>深度优先搜索</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    int ans = 0;</span><br><span class="line"></span><br><span class="line">    public int findTilt(TreeNode root) &#123;</span><br><span class="line">        dfs(root);</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">    //深度优先搜索</span><br><span class="line">    public int dfs(TreeNode node) &#123;</span><br><span class="line">        if (node == null) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        int sumLeft = dfs(node.left);</span><br><span class="line">        int sumRight = dfs(node.right);</span><br><span class="line"></span><br><span class="line">        ans += Math.abs(sumLeft - sumRight);</span><br><span class="line"></span><br><span class="line">        return sumLeft + sumRight + node.val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="⑦637-二叉树的层平均值"><a href="#⑦637-二叉树的层平均值" class="headerlink" title="⑦637.二叉树的层平均值"></a>⑦637.二叉树的层平均值</h1><p>题目：给定一个非空二叉树的根节点 root , 以数组的形式返回每一层节点的平均值。与实际答案相差 10^-5 以内的答案可以被接受。</p>
+<p>思考：<br>深度优先：<br>counts:每层结点的个数<br>sums：每层结点值的和<br>level：控制层数   </p>
+<p>如果level层数 &lt; sum.size()，表明当前层还没有遍历完(当前层级已经存在于 sums 列表中)，需要在 sum 和 count 的指定位置再加   </p>
+<p>如果level层数 ≥ sum.size()，是新的一层(当前层级还不存在于 sums 列表中)，直接在 sum 和 count 添加新的一层</p>
+<p>接着递归下一层</p>
+<p><em>深度优先搜索</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public List&lt;Double&gt; averageOfLevels(TreeNode root) &#123;</span><br><span class="line">        //每层结点的个数</span><br><span class="line">        List&lt;Integer&gt; counts = new ArrayList&lt;Integer&gt;();</span><br><span class="line">        //每层结点值的和</span><br><span class="line">        List&lt;Double&gt; sums = new ArrayList&lt;Double&gt;();</span><br><span class="line">        dfs(root,0,counts,sums);</span><br><span class="line"></span><br><span class="line">        //每层结点的平均值</span><br><span class="line">        List&lt;Double&gt; averages = new ArrayList&lt;Double&gt;();</span><br><span class="line">        for(int i = 0; i &lt; sums.size(); i++)&#123;</span><br><span class="line">            averages.add(sums.get(i) / counts.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">        return averages;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void dfs(TreeNode root,int level, List&lt;Integer&gt; counts,List&lt;Double&gt; sums)&#123;</span><br><span class="line">        //空节点结束</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        //当前层级已经存在于 sums 列表中，当前层还没有遍历完</span><br><span class="line">        if(level &lt; sums.size())&#123;</span><br><span class="line">            //指定位置 加和，个数加一</span><br><span class="line">            sums.set(level,sums.get(level) + root.val);</span><br><span class="line">            counts.set(level,counts.get(level) + 1);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            //是新的一层(当前层级还不存在于 sums 列表中)</span><br><span class="line">            sums.add(1.0 * root.val);</span><br><span class="line">            counts.add(1);</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(root.left,level + 1,counts,sums);</span><br><span class="line">        dfs(root.right,level + 1,counts,sums);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>广度优先</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;Double&gt; averageOfLevels(TreeNode root) &#123;</span><br><span class="line">        List&lt;Double&gt; average = new ArrayList&lt;Double&gt;();</span><br><span class="line">        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line"></span><br><span class="line">        queue.offer(root);</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            double sum = 0;</span><br><span class="line">            //当前层结点个数</span><br><span class="line">            int size = queue.size();</span><br><span class="line">            for(int i = 0; i &lt; size; i++)&#123;</span><br><span class="line">                TreeNode node = queue.poll();</span><br><span class="line">                sum += node.val;</span><br><span class="line">                if(node.left != null)&#123;</span><br><span class="line">                    queue.offer(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">                if(node.right != null)&#123;</span><br><span class="line">                    queue.offer(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            average.add(sum / size);</span><br><span class="line">        &#125;</span><br><span class="line">        return average;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑧671-二叉树中第二小的节点"><a href="#⑧671-二叉树中第二小的节点" class="headerlink" title="⑧671.二叉树中第二小的节点"></a>⑧671.二叉树中第二小的节点</h1><p>题目：给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么该节点的值等于两个子节点中较小的一个。<br>更正式地说，即 root.val &#x3D; min(root.left.val, root.right.val) 总成立。  </p>
+<p>给出这样的一个二叉树，你需要输出所有节点中的 第二小的值 。<br>如果第二小的值不存在的话，输出 -1 。  </p>
+<p><img src="https://s2.loli.net/2023/12/16/cAmNltWBQCIxeDu.jpg" alt="特殊.png">  </p>
+<p>思考：<br>二叉树根节点的值是最小的<br>第二小：严格大于根节点值  </p>
+<p><em>深度优先</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">        int ans;</span><br><span class="line">        int rootValue;</span><br><span class="line"></span><br><span class="line">    public int findSecondMinimumValue(TreeNode root) &#123;</span><br><span class="line">        ans = -1;</span><br><span class="line">        rootValue = root.val;</span><br><span class="line">        //要找到严格大于rootValue的最小值</span><br><span class="line">        dfs(root);</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public void dfs(TreeNode node)&#123;</span><br><span class="line">        if(node == null)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        //ans已经被更新了，但是不是当前最小的</span><br><span class="line">        if(ans != -1 &amp;&amp; node.val &gt;= ans )&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        //ans未被更新，或者是比当前更新了的最小值还要小</span><br><span class="line">        //当前结点的值严格大于rootValue的值</span><br><span class="line">        if(node.val &gt; rootValue)&#123;</span><br><span class="line">            if(ans == -1 || node.val &lt; ans)&#123; //可以不加这层if，上面的if已经排除了</span><br><span class="line">                ans = node.val;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(node.left);</span><br><span class="line">        dfs(node.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑨501-二叉搜索树中的众数"><a href="#⑨501-二叉搜索树中的众数" class="headerlink" title="⑨501.二叉搜索树中的众数"></a>⑨501.二叉搜索树中的众数</h1><p>题目：给你一个含重复值的二叉搜索树（BST）的根节点 root ，找出并返回 BST 中的所有 众数（即，出现频率最高的元素）。<br>如果树中有不止一个众数，可以按 任意顺序 返回。  </p>
+<p>思考：<br>二叉排序树的性质：<strong>中序遍历</strong>非空的二又排序树所得到的数据元素序列是一个按关键字排列的<strong>递增有序</strong>序列<br>重复的数字会集中在一起  </p>
+<p>为了开辟空间单独存储中序遍历结果，可以在递归进行中序遍历的过程中当访问到某个结点时直接对其进行操作</p>
+<p>base 当前数字<br>count 当前数字出现的次数  </p>
+<p>maxCount 当前出现最多的次数<br>answer 出现的众数  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    List&lt;Integer&gt; answer = new ArrayList&lt;Integer&gt;();//最终答案众数</span><br><span class="line">    int base,count; //当前结点上的数字，及其出现的次数</span><br><span class="line">    int maxCount; //当前出现最多的次数</span><br><span class="line"></span><br><span class="line">    public int[] findMode(TreeNode root) &#123;</span><br><span class="line">        dfs(root);</span><br><span class="line">        int[] result = new int[answer.size()];</span><br><span class="line">        for(int i = 0; i &lt; answer.size(); i++)&#123;</span><br><span class="line">            result[i] = answer.get(i);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //中序遍历</span><br><span class="line">    public void dfs(TreeNode root)&#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(root.left);</span><br><span class="line">        update(root.val);</span><br><span class="line">        dfs(root.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //更新</span><br><span class="line">    public void update(int x)&#123;</span><br><span class="line">        if(x == base)&#123;</span><br><span class="line">            count++; //数字相同继续加1</span><br><span class="line">        &#125;else&#123;//不同则更新</span><br><span class="line">            base = x;</span><br><span class="line">            count = 1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //可能有多个众数</span><br><span class="line">        if(count == maxCount)&#123;</span><br><span class="line">            answer.add(base);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(count &gt; maxCount)&#123;</span><br><span class="line">            //更新最大次数</span><br><span class="line">            maxCount = count;</span><br><span class="line">            //清空answer</span><br><span class="line">            answer.clear();</span><br><span class="line">            //将当前最多次数的数字加入answer</span><br><span class="line">            answer.add(base);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="⑩530-二叉搜索树的最小绝对差"><a href="#⑩530-二叉搜索树的最小绝对差" class="headerlink" title="⑩530.二叉搜索树的最小绝对差"></a>⑩530.二叉搜索树的最小绝对差</h1><p>题目：给你一个二叉搜索树的根节点 root ，返回 树中任意两不同节点值之间的最小差值 。<br>差值是一个正数，其数值等于两值之差的绝对值。  </p>
+<p>思考：<br>考虑对<strong>升序数组</strong>求任意<strong>两个元素之差的绝对值</strong>的最小值，答案一定为<strong>相邻两个元素之差的最小值</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    int minR;</span><br><span class="line">    int pre;</span><br><span class="line">    public int getMinimumDifference(TreeNode root) &#123;</span><br><span class="line">        minR = Integer.MAX_VALUE;</span><br><span class="line">        pre = -1;</span><br><span class="line">        dfs(root);</span><br><span class="line">        return minR;</span><br><span class="line">    &#125;</span><br><span class="line">    public void dfs(TreeNode root)&#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        dfs(root.left);</span><br><span class="line">        if(pre == -1)&#123;</span><br><span class="line">            pre = root.val;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            minR = Math.min(minR,root.val - pre);</span><br><span class="line">            pre = root.val;</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(root.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2023/12/09/LeetCode%E5%88%B7%E9%A2%98/31-40/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/12/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            查找
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/12/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9B%BE/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">图</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

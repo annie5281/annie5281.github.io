@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>集合 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Java基础/集合"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  集合
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/02/Java%E5%9F%BA%E7%A1%80/%E9%9B%86%E5%90%88/" class="article-date">
+  <time datetime="2024-01-02T13:15:11.000Z" itemprop="datePublished">2024-01-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">3.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">12 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><img src="https://s2.loli.net/2024/01/13/o7guUSWBGaRFfcI.png" alt="集合类体系结构.png"><br>（集合存储的是引用类型，若需要基本数据类型则用其包装类类型） </p>
+<h1 id="一-Collection"><a href="#一-Collection" class="headerlink" title="(一)Collection"></a>(一)Collection</h1><p>是单列集合的顶层接口，表示一组对象，这些对象称为Collection的元素</p>
+<h2 id="集合的遍历-Iterator"><a href="#集合的遍历-Iterator" class="headerlink" title="集合的遍历 Iterator"></a>集合的遍历 Iterator</h2><p>Iterator迭代器，集合的专用遍历方式（Iterator一个接口）</p>
+<p>Iterator中的常用方法<br><strong>next()</strong>:返回迭代中的下一个元素<br><strong>hasNext()</strong>:如果迭代具有更多元素，则返回true</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;String&gt; c = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">c.add(“<span class="number">1</span>”);</span><br><span class="line">c.add(“<span class="number">2</span>”);</span><br><span class="line">c.add(“<span class="number">3</span>”);</span><br><span class="line"></span><br><span class="line">Iterator&lt;String&gt; it = c.iterator(); <span class="comment">//迭代器</span></span><br><span class="line"><span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">  System.out.println(it.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="二-List"><a href="#二-List" class="headerlink" title="(二)List"></a>(二)List</h1><p>List集合的特点：<br><strong>有序</strong>：存储和取出的元素顺序一致<br><strong>可重复</strong>：存储的元素可以重复   </p>
+<p>遍历List集合的三种方法：<br>①迭代器 &#x2F; 列表迭代器（集合特有的遍历方式）<br>②for循环(带有索引的遍历方式)<br>③增强for循环(最方便的遍历方式)  </p>
+<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><p>ArrayList是Java中的动态数组实现的集合类，它实现了List接口，可以用于存储有序的元素集合。ArrayList允许在列表的任何位置插入、删除和访问元素，并且可以根据需要动态调整其大小。</p>
+<p>ArrayList中常用的方法包括：</p>
+<ol>
+<li>add(element)：将指定的元素添加到列表的末尾。</li>
+<li>add(index, element)：在指定的索引位置插入指定的元素。</li>
+<li>get(index)：获取指定索引位置的元素。</li>
+<li>remove(index)：删除指定索引位置的元素。</li>
+<li>size()：返回列表的大小（元素个数）。</li>
+<li>clear()：清空列表中的所有元素。</li>
+<li>contains(element)：判断列表中是否包含指定的元素。</li>
+<li>indexOf(element)：返回指定元素在列表中第一次出现的索引。</li>
+<li>lastIndexOf(element)：返回指定元素在列表中最后一次出现的索引。</li>
+<li>set(index, element)：将指定索引位置的元素替换为指定的元素。</li>
+</ol>
+<p>ArrayList是一个常用的集合类，适用于需要<strong>频繁访问和修改</strong>元素的场景。</p>
+<h2 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h2><p>LinkedList是Java中的一个双向链表实现的集合类，它实现了List接口和Deque接口，可以用于存储有序的元素集合。<br>与ArrayList相比，LinkedList在<strong>插入和删除</strong>元素时更加高效，因为它不需要像ArrayList那样移动元素。  </p>
+<p>LinkedList中常用的方法包括：</p>
+<ol>
+<li><p>add(element)：将指定的元素添加到列表的末尾。</p>
+</li>
+<li><p>add(index, element)：在指定的索引位置插入指定的元素。</p>
+</li>
+<li><p>get(index)：获取指定索引位置的元素。</p>
+</li>
+<li><p><strong>remove</strong>(index)：删除指定索引位置的元素。</p>
+</li>
+<li><p>remove(Object o)：删除指定元素o，如果存在多个相同元素，则只删除第一个匹配的元素。(如果要删除的元素不存在，remove方法则会返回false)</p>
+</li>
+<li><p>size()：返回列表的大小（元素个数）。</p>
+</li>
+<li><p>clear()：清空列表中的所有元素。</p>
+</li>
+<li><p>contains(element)：判断列表中是否包含指定的元素。</p>
+</li>
+<li><p>indexOf(element)：返回指定元素在列表中第一次出现的索引。</p>
+</li>
+<li><p>lastIndexOf(element)：返回指定元素在列表中最后一次出现的索引。</p>
+</li>
+<li><p>offerFirst(element)：将指定的元素插入到列表的开头。</p>
+</li>
+<li><p><strong>offerLast</strong>(element)：将指定的元素插入到列表的末尾。</p>
+</li>
+<li><p>pollFirst()：移除并返回列表的第一个元素。</p>
+</li>
+<li><p>pollLast()：移除并返回列表的最后一个元素。</p>
+</li>
+<li><p>peekFirst()：返回列表的第一个元素，但不移除。</p>
+</li>
+<li><p>peekLast()：返回列表的最后一个元素，但不移除。</p>
+</li>
+</ol>
+<p>除了上述方法，LinkedList还提供了一些其他方法用于操作链表，如添加、删除、获取元素等。通过这些方法，可以方便地对LinkedList中的元素进行操作。</p>
+<h1 id="三-Set"><a href="#三-Set" class="headerlink" title="(三)Set"></a>(三)Set</h1><p>Set集合的特点：<br>不包含重复元素的集合<br>没有带索引的方法，所以不能使用普通for循环遍历  </p>
+<h2 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h2><p>在Java中，HashSet是一个实现了Set接口的集合类，它基于哈希表实现。下面是HashSet的一些常用方法：  </p>
+<ol>
+<li>add(E e): 向HashSet中添加元素 e  </li>
+<li>remove(Object o): 从HashSet中移除元素o  </li>
+<li>contains(Object o): 判断HashSet是否包含元素o  </li>
+<li>size(): 返回HashSet中的元素个数  </li>
+<li>isEmpty(): 判断HashSet是否为空   </li>
+<li>clear(): 清空HashSet中的所有元素   </li>
+<li>iterator(): 返回在HashSet上进行迭代的迭代器   </li>
+<li>toArray(): 将HashSet转换为数组   </li>
+<li>equals(Object o): 判断HashSet是否与指定对象 o 相等   </li>
+<li>hashCode(): 返回HashSet对象的哈希码值   </li>
+<li>clone(): 创建并返回HashSet的浅表副本</li>
+</ol>
+<p>除了以上这些，HashSet还继承了Set接口和Collection接口的方法。需要注意的是，HashSet不保证元素的顺序，不包含重复的元素。</p>
+<h2 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h2><p>TreeSet集合特点</p>
+<ol>
+<li>元素有序，这里的顺序不是指存储和取出的顺序，而是按照一定的规则进行排序，具体排序方式取决于构造方法。<br>TreeSet():根据其元素的自然排序进行排序<br>TreeSet(Comparator comparator):根据指定的比较器进行排序  </li>
+<li>没有带索引的方法，所以不能使用普通的for循环遍历；</li>
+<li>由于是set集合，所以不包含重复的集合。</li>
+</ol>
+<p>常用方法包括：</p>
+<ol>
+<li>add(E e)：向集合中添加元素。</li>
+<li>remove(Object o)：从集合中移除指定元素。</li>
+<li>contains(Object o)：判断集合中是否包含指定元素。</li>
+<li>size()：返回集合中元素的个数。</li>
+<li>isEmpty()：判断集合是否为空。</li>
+<li>clear()：清空集合中的所有元素。</li>
+<li>iterator()：返回一个迭代器，用于遍历集合中的元素。</li>
+<li><strong>first</strong>()：返回集合中的第一个元素。</li>
+<li><strong>last</strong>()：返回集合中的最后一个元素。</li>
+<li>headSet(E toElement)：返回小于指定元素的子集合。</li>
+<li>tailSet(E fromElement)：返回大于等于指定元素的子集合。</li>
+<li>subSet(E fromElement, E toElement)：返回指定范围内的子集合。</li>
+</ol>
+<p>通过TreeSet的这些方法，可以方便地对集合中的元素进行添加、删除、查找和遍历操作，并且可以根据元素的顺序进行子集合的操作。</p>
+<h1 id="四-泛型"><a href="#四-泛型" class="headerlink" title="(四)泛型"></a>(四)泛型</h1><p>泛型是JDK5中引入的特性，它提供了编译时类型安全检测机制，该机制允许在编译时检测到非法的类型<br>它的本质是<strong>参数化类型</strong>，即操作的数据类型被指定为一个参数<br>将类型由原来的具体的类型参数化，然后在使用&#x2F;调用时传入具体的类型<br>这种参数类型可以用在类、方法和接口中，分别被称为泛型类、泛型方法、泛型接口</p>
+<p><strong>泛型的好处</strong><br>①把运行时期的问题提前到了编译期间<br>②避免了强制类型转换  </p>
+<p>此处的 T 可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型<br>通常情况下，T 表示 “Type”，<br>E 表示 “Element”，<br>K 表示 “Key”，<br>V 表示 “Value”<br>这些符号没有固定的含义，仅作为占位符号在泛型代码中使用。<br>选择使用哪个符号来表示泛型参数，完全取决于程序员的个人喜好和约定。  </p>
+<h2 id="类型通配符"><a href="#类型通配符" class="headerlink" title="类型通配符"></a>类型通配符</h2><p>为了表示各种泛型List的父类，可以使用类型通配符<br>类型通配符:<strong>&lt;?&gt;</strong><br>List&lt;?&gt;: 表示元素类型末知的List，它的元素可以<strong>匹配任何的类型</strong><br>这种带通配符的List仅表示它是各种泛型List的父类，并不能把元素添加到其中  </p>
+<p>如果说我们不希望 List&lt;?&gt; 是任何泛型 List 的父类，只希望它代表某一类泛型 List 的父类，可以使用类型通配符的上限<br>类型通配符上限:  <strong>&lt;?extends类型&gt;</strong><br>List&lt;?extends Number&gt;: 它表示的类型是Number或者其子类型  </p>
+<p>除了可以指定类型通配符的上限，我们也可以指定类型通配符的下限<br>类型通配符下限: <strong>&lt;?super类型&gt;</strong><br>List&lt;?super Number&gt;: 它表示的类型是Number或者其父类型  </p>
+<h2 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h2><p>一个方法实现多个参数(参数个数不一定)的操作<br>可变参数又称<strong>参数个数可变</strong>，用作方法的形参出现，那么方法参数个数就是可变的了格式:<br>修饰符 返回值类型方法名(数据类型…变量名))<br>范例: public static int sum(<strong>int…a</strong>) { }    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span>...a)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i:a)&#123;</span><br><span class="line">            sum += i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可变参数注意事项:<br>这里的变量其实是一个数组如果一个方法有多个参数，包含可变参数，<strong>可变参数要放在最后</strong>  </p>
+<h1 id="五-Map集合"><a href="#五-Map集合" class="headerlink" title="(五)Map集合"></a>(五)Map集合</h1><p>Map集合概述<br>Interface Map&lt;K,V&gt; K:键的类型; V:值的类型<br><strong>将键映射到值的对象</strong><br>不能包含重复的键；每个键可以映射到最多一个值</p>
+<p>创建 Map 集合的对象:<br>①多态的方式<br>②具体的实现类 HashMap(哈希映射)   </p>
+<h2 id="1-Map集合的常用方法"><a href="#1-Map集合的常用方法" class="headerlink" title="(1)Map集合的常用方法"></a>(1)Map集合的常用方法</h2><ol>
+<li><strong>put</strong>(key, value): 添加元素，将指定的键值对存储到 HashMap 中<br>(键第一次出现是添加元素，第二次出现就是修改元素，用后面的值把前面的替代掉)  </li>
+<li>remove(key): 根据指定的键移除对应的键值对(返回要删除的键对应的值)  </li>
+<li><strong>containsKey</strong>(key): 判断 HashMap 中是否包含指定的键(包含就返回true，否则false)  </li>
+<li>containsValue(value): 判断 HashMap 中是否包含指定的值  </li>
+<li>size(): 获取 HashMap 中键值对的数量   </li>
+<li>clear(): 清空 HashMap 中的所有键值对  </li>
+<li>isEmpty():判断集合是否为空</li>
+</ol>
+<p> Map集合的获取功能：<br>8. <strong>get</strong>(key): 根据指定的键获取对应的值<br>9. <strong>keySet</strong>(): 获取 HashMap 中所有的键 Set&lt; K &gt;<br>10. values(): 获取 HashMap 中所有的值 Collection&lt; V &gt;<br>11. <strong>entrySet()</strong>: 获取 HashMap 中所有的键值对 Set &lt; Map.Entry&lt; K,V &gt;&gt;   </p>
+<p>如果键重复的话，之前的值会被覆盖掉  </p>
+<h2 id="2-Map集合的遍历"><a href="#2-Map集合的遍历" class="headerlink" title="(2)Map集合的遍历"></a>(2)Map集合的遍历</h2><p><em><strong>方法一：</strong></em><br>1:获取所有<strong>键的集合</strong>。用keySet()方法实现<br>2:遍历键的集合，获取到每一个键。用增强for实现<br>3:根据键去找值。用get(object key)方法实现  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建集合对象</span></span><br><span class="line">Map&lt;String,String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,String&gt;();</span><br><span class="line"><span class="comment">//添加元素</span></span><br><span class="line">map.put(<span class="string">&quot;张无忌&quot;</span>,<span class="string">&quot;赵敏&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;郭靖&quot;</span>,<span class="string">&quot;黄蓉&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;杨过&quot;</span>,<span class="string">&quot;小龙女&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取所有键的集合</span></span><br><span class="line">Set&lt;String&gt; keySet = map.keySet();</span><br><span class="line"><span class="comment">//遍历键的集合，获取每一个键</span></span><br><span class="line"><span class="keyword">for</span>(String key:keySet)&#123;</span><br><span class="line">    <span class="comment">//根据键找值</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">    System.out.println(key + <span class="string">&quot;,&quot;</span>value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><em><strong>方法二：</strong></em><br>转换为Map集合中的操作:<br>获取所有<strong>键值对对象</strong>的集合<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&lt; Map.Entry&lt; K,V &gt;&gt; entrySet(): 获取所有键值对对象的集合<br>遍历键值对对象的集合，得到每一个键值对对象<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用增强for实现，得到每一个 Map.Entry<br>根据键值对对象获取键和值<br>用 <strong>getKey()</strong> 得到键<br>用 <strong>getValue()</strong> 得到值  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取所有键值对对象的集合</span></span><br><span class="line">Set&lt;Map.Entry&lt;String, String&gt;&gt; entrySet = map.entrySet();</span><br><span class="line"><span class="comment">//遍历键值对对象的集合，得到每一个键值对对象</span></span><br><span class="line"><span class="keyword">for</span> (Map.Entry&lt;String, String&gt; me : entrySet) &#123;</span><br><span class="line">    <span class="comment">//根据键值对对象获取键和值</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> me.getKey();</span><br><span class="line">    <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> me.getValue();</span><br><span class="line">    System.out.println(key +<span class="string">&quot;&quot;</span> + value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>***Map.Entry&lt; K, V &gt;*<strong>是Java中表示键值对的接口。<br>它表示 <strong>Map 中的一个条目</strong>，包含一个键和对应的值。<br>Map 接口中的方法 <strong>entrySet()</strong> 返回一个包含Map中所有条目的Set集合，每个条目都是一个Map.Entry对象。<br>Map.Entry接口提供了</strong>getKey()<strong>和</strong>getValue()**方法分别用于获取键和值。<br>可以使用 Map.Entry 对象来遍历Map中的所有条目，或者对Map中的条目进行操作。<br>Map.Entry接口是泛型接口，可以使用任意类型作为键和值。</p>
+<h1 id="六-Collections"><a href="#六-Collections" class="headerlink" title="(六)Collections"></a>(六)Collections</h1><p>针对集合操作的工具类<br>此类仅由<strong>静态方法</strong>组成  </p>
+<p><em><strong>Collections类的常用方法：</strong></em><br><strong>sort</strong>(List&lt; T &gt; list): 将指定的列表按升序排序(Collections.sort)   </p>
+<p>Collections.sort()方法： Collections.sort()方法是Java中的一个静态方法，用于对集合进行排序。该方法接受一个List类型的集合作为参数，并根据集合元素的自然顺序或指定的Comparator进行排序。具体语法如下：<br>public static <T> void sort(List<T> list)<br>其中，T表示集合中元素的类型。Collections.sort()方法会根据集合元素的自然顺序进行排序，如果集合元素的类型实现了Comparable接口并重写了compareTo()方法，则会按照compareTo()方法定义的顺序进行排序。如果集合元素的类型没有实现Comparable接口，则会抛出ClassCastException异常。</p>
+<p><strong>reverse</strong>(List&lt; ? &gt; list): 反转指定列表中素的顺序<br><strong>shuffle</strong>(List&lt; ? &gt; list): 使用默认的随机源随机排列指定的列表(按照随机的顺序重新排列、洗牌)   </p>
+<p><strong>sort(List<T> ist, Comparator&lt;? super T&gt; c)</strong></p>
+<p>线程安全的方法：<br>public static &lt; T &gt; List&lt; T &gt; <strong>synchronizedList</strong>(List&lt; T &gt; list)<br>public static &lt; K,V &gt; Map&lt; K,V &gt; <strong>synchronizedMap</strong>(Map&lt; K,V &gt; m)<br>public static &lt; T &gt; Set&lt; T &gt; <strong>synchronizedSet</strong>(Set&lt; T &gt; s)  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/02/Java%E5%9F%BA%E7%A1%80/%E9%9B%86%E5%90%88/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B3%9B%E5%9E%8B/" rel="tag">泛型</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/03/Java%E5%9F%BA%E7%A1%80/%E4%BD%8D%E8%BF%90%E7%AE%97/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            位运算
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/01/Java%E5%9F%BA%E7%A1%80/%E6%8A%BD%E8%B1%A1%E7%B1%BB%20%E6%8E%A5%E5%8F%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">抽象类 接口</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

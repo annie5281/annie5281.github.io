@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>排序 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-数据结构与算法/排序"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  排序
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2023-12-16T14:19:37.000Z" itemprop="datePublished">2023-12-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">4.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">17 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="基本概念和排序方法概述"><a href="#基本概念和排序方法概述" class="headerlink" title="基本概念和排序方法概述"></a>基本概念和排序方法概述</h2><p><em><strong>什么是排序?</strong></em><br><strong>排序</strong>:将一组杂乱无章的数据按一定规律顺次排列起来即，将无序序列<strong>排成一个有序序列</strong> (由小到大或由大到小) 的运算<br>如果参加排序的数据结点包含多个数据域，那么排序往往是针对其中<em>某个域而言</em>  </p>
+<p><em><strong>排序的应用</strong></em><br>软件中直接应用<br>程序中间接应用<br>&nbsp;&nbsp;&nbsp;&nbsp;二分法查找<br>&nbsp;&nbsp;&nbsp;&nbsp;最短路径、最小生成树  </p>
+<p><em><strong>排序方法的分类</strong></em>  </p>
+<ol>
+<li>按<strong>存储介质</strong>可分为:<br><strong>内部排序</strong>: 数据量不大、数据在内存，无需内外存交换数据<br>外部排序:数据量较大、数据在外存(文件排序)<br>外部排序时，要将数据分批调入内存来排序，中间结果还要及时放入外存，显然外部排序要复杂得多  </li>
+<li>按<strong>比较器个数</strong>可分为:<br><strong>串行排序</strong>: 单处理机 (同一时刻比较一对元素)<br>并行排序:多处理机 (同一时刻比较多对元素)  </li>
+<li>按<strong>主要操作</strong>可分为:<br><strong>比较排序</strong>:用比较的方法<br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>插入排序、交换排序、选择排序、归并排序</strong><br><strong>基数排席</strong>:不比较元素的大小，仅仅根据元素<strong>本身的取值</strong>确定其有序位置  </li>
+<li>按<strong>辅助空间</strong>可分为:<br>原地排序: 辅助空间用量为O(1)的排序方法<br>(所占的辅助存储空间与参加排序的数据量大小无关)<br>非原地排序: 辅助空间用量超过O(1)的排序方法  </li>
+<li>按<strong>稳定性</strong>可分为：<br>稳定排序:能够使任何数值相等的元素，排序以后相对次序不变非稳定性<br>排序:不是稳定排序的方法<br>排序的稳定性只对<strong>结构类型数据</strong>排序有意义。  </li>
+<li>按<strong>自然性</strong>可分为：<br>自然排序: 输入数据越有序，排序的速度越快的排序方法<br>非自然排序:不是自然排序的方法</li>
+</ol>
+<p><strong>按排序依据原则</strong><br>插入排序:直接插入排序、折半插入排序、希尔排序<br>交换排序:冒泡排序、快速排序<br>选择排序:简单选择排序、堆排序<br>归并排序: 2-路归并排序<br>基数排序<br><strong>按排序所需工作量</strong><br>简单的排序方法: T(n)&#x3D;O(n²)<br>先进的排序方法: T(n)&#x3D;O(n㏒₂n)<br>基数排序: T(n)&#x3D;O(d.n)  </p>
+<p><em><strong>存储结构 ———— 记录序列以顺序表存储</strong></em>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define MAXSIZE 20  //设记录不超过20个</span><br><span class="line">typedef int KeyType; //设关键字为整型量(int型)</span><br></pre></td></tr></table></figure>
+
+<p><em>数据记录的类型定义</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Typedef struct &#123;//定义每个记录 (数据元素)的结构</span><br><span class="line">	KeyType key; //关键字</span><br><span class="line">	InfoType otherinfo; //其它数据项</span><br><span class="line">&#125;RedType;  //Record Type</span><br></pre></td></tr></table></figure>
+
+<p><em>顺序表的结构</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Typedef struct &#123;//定义顺序表的结构</span><br><span class="line">	RedType r[MAXSIZE +1];//存储顺序表的向量</span><br><span class="line">	                      //r[0]一般作哨兵或缓冲区</span><br><span class="line">	int length ;//顺序表的长度</span><br><span class="line">&#125;SqList ;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="一-插入排序"><a href="#一-插入排序" class="headerlink" title="(一)插入排序"></a>(一)插入排序</h2><p><strong>基本思想</strong>:<br>&nbsp;&nbsp;每步将一个待排序的对象，按其关键码大小，插入到前面已经排好序的一组对象的适当位置上，直到对象全部插入为止。<br>(即边插入边排序，保证子序列中随时都是排好序的)  </p>
+<h3 id="1-直接插入排序"><a href="#1-直接插入排序" class="headerlink" title="(1)直接插入排序"></a>(1)直接插入排序</h3><p>顺序法定位插入位置<br>采用顺序查找法查找插入位置<br><img src="https://s2.loli.net/2023/12/17/B1CH6enLwriUGcR.jpg" alt="直接插入排序使用“哨兵”.png">  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void InsertSort( SqList &amp;L ) &#123;</span><br><span class="line">	int i, j;</span><br><span class="line">	for (i=2; i&lt;=L.length; ++i) &#123;</span><br><span class="line">		if (L.rli].key &lt; L.r[i-1].key)&#123; // 若&quot;&lt;&quot;,需将L.r[i]插入有序子表</span><br><span class="line">		L.r[o]=L.r[i];// 复制为哨兵</span><br><span class="line">		for (j = i - 1; L.r[0].key &lt; L.r[j].key; --j)&#123;</span><br><span class="line">			L.r[j+1] = L.r[j];// 记录后移</span><br><span class="line">		&#125;</span><br><span class="line">		L.r[j+1]=L.r[O];// 插入到正确位置</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原始数据越接近有序，排序速度越快<br>最坏情况下 (输入数据是逆有序的)Tw(n)&#x3D;O(n²)<br>平均情况下，耗时差不多是最坏情况的一半 Te(n)&#x3D;O(n²)<br>要提高查找速度<br>&nbsp;&nbsp;&nbsp;&nbsp;减少元素的比较次数<br>&nbsp;&nbsp;&nbsp;&nbsp;减少元素的移动次数<br>是一种<strong>稳定的</strong>排序方法    </p>
+<h3 id="2-折半插入排序"><a href="#2-折半插入排序" class="headerlink" title="(2)折半插入排序"></a>(2)折半插入排序</h3><p>二分法定位插入位置<br>查找插入位置时采用折半查找法<br><img src="https://s2.loli.net/2023/12/17/VOU967bMusRykFr.jpg" alt="折半插入查找.png">  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void BInsertSort ( SqList &amp;L ) &#123;</span><br><span class="line">	for(i = 2;i &lt;= L.length ;++i)&#123; //依次插入第2~第n个元素</span><br><span class="line">		L.r[O] = L.rlil; // 当前插入元素存到“哨兵”位置</span><br><span class="line">		low = 1;high = i-1; //采用二分查找法查找插入位置</span><br><span class="line">		while ( low &lt;= high ) &#123;</span><br><span class="line">			mid = ( low + high ) / 2 ;</span><br><span class="line">			if ( L.r[0].key &lt; L.r[mid]. key ) high = mid -1 ;</span><br><span class="line">			else low = mid + 1;</span><br><span class="line">		&#125; //循环结束，high+1则为插入位置</span><br><span class="line">		for(j=i-1;j&gt;=high+1;--j) L.r[j+1] = L.rljl; //移动元素</span><br><span class="line">		L.r[high+1] = L.r[O];//插入到正确位置</span><br><span class="line">	&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>折半插入排序的对象移动次数与直接插入排序相同，依赖于对象的初始排列<br>&nbsp;&nbsp;&nbsp;&nbsp;减少了比较次数，但没有减少移动次数<br>&nbsp;&nbsp;&nbsp;&nbsp;平均性能优于直接插入排序<br>时间复杂度为 O(n²)<br>空间复杂度为 O(1)<br>是一种<strong>稳定的</strong>排序方法  </p>
+<h3 id="3-希尔排序"><a href="#3-希尔排序" class="headerlink" title="(3)希尔排序"></a>(3)希尔排序</h3><p>缩小增量多遍插入排序  </p>
+<p>当 直接插入排序 元素个数少、基本有序时插入效率高<br>如何插入的时候基本有序，怎么样才能比较一次移动一大步  </p>
+<p><em><strong>基本思想</strong></em>:<br>先将整个待排记录序列分<strong>割成若干子序列</strong>，<strong>分别进行直接插入排序</strong>待整个序列中的记录 <strong>“基本有序”</strong>时，再对全体记录进行一次直接插入排序。</p>
+<p>希尔排序算法的特点:  </p>
+<ol>
+<li>缩小增量  </li>
+<li>多遍插入排序</li>
+</ol>
+<p><img src="https://s2.loli.net/2023/12/17/qFrHW8UDP5LoK91.jpg" alt="希尔排序.png">  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void ShellSort (Sqlist&amp;L,int dlta[], int t)&#123;</span><br><span class="line">	//按增量序列 dlta[0..t-1]对顺序表L作希尔排序</span><br><span class="line">	for(k=0; k&lt;t; ++k)&#123;</span><br><span class="line">		Shelllnsert(L，dlta[k]); //一趟增量为dlta[k]的插入排序</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void Shelllnsert(SqList &amp;L， int dk)&#123;</span><br><span class="line">	//对顺序表L进行一趟增量为dk的Shell排序，dk为步长因子</span><br><span class="line">	for(i=dk+1;i&lt;=L.length; ++ i)&#123;</span><br><span class="line">		if(r[i].key &lt; r[i-dk].key) &#123;</span><br><span class="line">			r[O]=r[i];</span><br><span class="line">			for(j=i-dk;j&gt;0 &amp;&amp;(r[0].key &lt; r[j].key);j = j-dk)&#123;</span><br><span class="line">				r[j+dk]=r[j];</span><br><span class="line">			&#125;</span><br><span class="line">		r[j+dk]=r[0];</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>时间复杂度是 n 和 d 的函数：<br>O(n ^ 1.25) ~ O(1.6n ^ 1.25) 一 经验公式<br>空间复杂度为 O(1)<br>是一种<strong>不稳定</strong>的排序方法<br>&nbsp;&nbsp;&nbsp;&nbsp;如何选择<strong>最佳d序列，目前尚未解决</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>最后一个增量值必须为1，无除了1之外的公因子</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>不宜在链式</strong>存储结构上实现  </p>
+<h2 id="二-交换排序-快速"><a href="#二-交换排序-快速" class="headerlink" title="(二)交换排序(快速)"></a>(二)交换排序(快速)</h2><p><strong>基本思想</strong>：两两比较，如果发生逆序则交换，直到所有记录都排好序为止<br>常见的两种：<br>冒泡排序O(n²)<br>快速排序O(n㏒₂n)   </p>
+<h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="(1)冒泡排序"></a>(1)冒泡排序</h3><p><strong>基本思想</strong>:每趟不断将记录两两比较，并按“前小后大” 规则交换  </p>
+<p>n个记录，总共需要 n-1 趟<br>第 m 趟需要比较 n-m 次<br>每趟比较的次数 + 当前趟数m &#x3D; n  </p>
+<p><em>冒泡排序算法</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void bubble sort(SgList &amp;L) &#123;//冒泡排序算法</span><br><span class="line">	int m,i,j;</span><br><span class="line">	RedType x;//交换时临时存储</span><br><span class="line">	for(m=1;m&lt;=n-1; m++)&#123; //总共需 m 趟</span><br><span class="line">		for(j=1;j&lt;=n-m;j++)&#123;</span><br><span class="line">		if(L.r[j].key&gt;L.r[j+1].key) &#123;//发生逆序</span><br><span class="line">			x=L.r[j]; </span><br><span class="line">			L.r[j]=L.r[j+1]; </span><br><span class="line">			L.r[j+1]=x; //交换</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>优点: 每趟结束时，不仅能挤出一个最大值到最后面位置，还能同时部分理顺其他元素<br>如何提高效率?<br>一旦某一趟比较时不出现记录交换就可以结说明已排好序了，可以结束本算法  </p>
+<p><em>冒泡排序算法改进</em><br><em>加flag标记是否发生交换</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void bubble sort(SgList &amp;L)&#123;//改进的冒泡排序算法</span><br><span class="line">	int m,i,j,flag=1; </span><br><span class="line">	RedType x; //flag作为是否有交换的标记</span><br><span class="line">	for(m=1; m&lt;=n-1&amp;&amp;flag==1; m+ +) &#123;</span><br><span class="line">		flag=0;</span><br><span class="line">		for(j=1;j&lt;=m;j++)&#123;</span><br><span class="line">			if(L.rlj]l.key&gt;L.rj+1].key)&#123;//发生逆序</span><br><span class="line">				flag=1; //发生交换，flag置为1，若本趟没发生交换，flag保持为0</span><br><span class="line">				x=L.r[jl;</span><br><span class="line">				L.r[j]=L.r[j+1];</span><br><span class="line">				L.r[j+1]=x; //交换</span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>冒泡排序最好时间复杂度是O(n)<br>冒泡排序最坏时间复杂度为O(n²)<br>冒泡排序平均时复杂度为O(n²)<br>冒泡排序算法中增加一个辅助空间temp，辅助空间为S(n)&#x3D;O(1)<br>冒泡排序是<strong>稳定的</strong>  </p>
+<h3 id="2-快速排序"><a href="#2-快速排序" class="headerlink" title="(2)快速排序"></a>(2)快速排序</h3><p>———— 改进的交换排序<br><strong>基本思想：</strong>  </p>
+<ol>
+<li>任取一个元素(如:第一个) 为<strong>中心</strong>(pivot: 枢轴、中心点)  </li>
+<li>所有比它<strong>小</strong>的元素一律前放，比它<strong>大</strong>的元素一律后，放形成<strong>左右两个子表</strong>  </li>
+<li>对各子表重新选择中心元素并依此规则调整(递归思想)   </li>
+<li>直到每个子表的元素<strong>只剩一个</strong></li>
+</ol>
+<p><strong>(枢轴)中间数</strong>:可以是第一个数、最后一个数、最中间一个数、任选一个数等  </p>
+<p><img src="https://s2.loli.net/2023/12/17/TIR2tSzd7qgmVkU.jpg" alt="快速排序演示.png">  </p>
+<p>中心点放在0位置，有空出来的位置，low指向的则从后面搬一个小的数，后面空出来的heigh指向，从前面搬一个大的数，直到low和heigh重合，分成两个子表<br><img src="https://s2.loli.net/2023/12/17/91nsf8lAMUeRDc2.jpg" alt="快速排序升级版.png"><br>①每一趟的子表的形成是采用从两头向中间交替式逼近法<br>②由于每趟中对各子表的操作都相似，可采用递归算法  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">void main ( )&#123;</span><br><span class="line">	QSort ( L, 1, L.length );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void QSort (SqList &amp;L, int low, int high)&#123; // 对顺序表L快速排序</span><br><span class="line">	if (low &lt; high)&#123; // 长度大于1</span><br><span class="line">		pivotloc = Partition(L, low, high);</span><br><span class="line">		// 将L.r[low..high]一分为二，pivotloc为枢轴元素排好序的位置</span><br><span class="line">		QSort(L, low, pivotloc-1); // 对低子表递归排序</span><br><span class="line">		QSort(L,pivotloc+1,high); // 对高子表递归排序</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Partition ( SqList &amp;L, int low, int high ) &#123;</span><br><span class="line">	L.r[O] = L.r[low]; </span><br><span class="line">	pivotkey = L.r[low].key;</span><br><span class="line">	while ( low &lt; high ) &#123;</span><br><span class="line">		while ( low &lt; high &amp;&amp; L.r[high].key &gt;= pivotkey ) --high;</span><br><span class="line">		L.r[low] = L.r[high];</span><br><span class="line">		while ( low &lt; high &amp;&amp; L.r[low].key &lt;= pivotkey ) ++low;</span><br><span class="line">		L.r[high] = L.r[low];</span><br><span class="line">	&#125;</span><br><span class="line">	L.r[low]=L.r[0];</span><br><span class="line">	return low;</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间复杂度</strong>:<br>最好时间复杂度是 O(n㏒₂n)<br>最坏时间复杂度为 O(n²)<br>平均时复杂度为 O(n㏒₂n)<br>实验结果表明:<strong>就平均计算时间而言，快速排序是我们所讨论的所有内排序方法中最好的一个</strong>  </p>
+<p><strong>空间复杂度</strong>:<br>快速排序不是原地排序<br>由于程序中使用了递归，需要递归调用栈的支持，而栈的长度取决于递归调用的深度。 (即使不用递归，也需要用用户栈)<br>在平均情况下: 需要O(㏒₂n)的栈空间<br>最坏情况下: 栈空间可达O(n)  </p>
+<p>快速排序是一种<strong>不稳定</strong>的排序方法<br>输入数据次序越乱，所选划分元素值的随机性越好，排序速度越快，快速排序<strong>不是自然排序</strong>方法  </p>
+<h2 id="三-选择排序"><a href="#三-选择排序" class="headerlink" title="(三)选择排序"></a>(三)选择排序</h2><h3 id="1-简单选择排序"><a href="#1-简单选择排序" class="headerlink" title="(1)简单选择排序"></a>(1)简单选择排序</h3><p><strong>基本思想</strong>:在待排序的数据中选出最大 (小)的元素放在其最终的位置<br><strong>基本操作</strong>：  </p>
+<ol>
+<li>首先通过n-1次关键字比较，从n个记录中找出关键字最小的记录，将它与第一个记录交换  </li>
+<li>再通过n-2次比较，从剩余的n-1个记录中找出关键字次小的记录，将它与第二个记录交换  </li>
+<li>重复上述操作，共进行n-1趟排序后，排序结束</li>
+</ol>
+<p>打擂台的方式找到最小值  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void SelectSort(SqList &amp;k) &#123;</span><br><span class="line">	for (i=1; i&lt;L.length; ++i) &#123;</span><br><span class="line">		k=i;</span><br><span class="line">		for(j=i+1;j&lt;=L.length ;j++)&#123;</span><br><span class="line">			if ( L.r[j].key &lt; L.r[k].key) k=j;//记录最小值位置</span><br><span class="line">		&#125;</span><br><span class="line">		if(k!=i) L.r[i] &lt;--&gt; L.r[k];//当前不是最小值就要交换</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间复杂度</strong>:<br>最好时间复杂度是 O(n²)<br>最坏时间复杂度为 O(n²)<br>平均时复杂度为 O(n²)<br><strong>空间复杂度</strong>:  O(1)<br>简单选择排序是<strong>不稳定</strong>排序  </p>
+<h3 id="2-堆排序"><a href="#2-堆排序" class="headerlink" title="(2)堆排序"></a>(2)堆排序</h3><p><strong>堆的定义</strong>:<br>若n个元素的序列 {a₁ a₂ … an} 满足<br><img src="https://s2.loli.net/2023/12/17/4C36Gco2J5WrK1H.jpg" alt="堆.png"><br>则分别称该序列 {a₁ a₂ … an} 为<strong>小根堆</strong>和<strong>大根堆</strong><br>从堆的定义可以看出，堆实质是满足如下性质的<strong>完全二叉树</strong>:二叉树中任一非叶子结点均小于(大于)它的孩子结点<br><img src="https://s2.loli.net/2023/12/17/qz2O4d1SE6CoTJj.jpg" alt="大小根堆例子.png">  </p>
+<p>实现堆排序需解决两个问题<br>1、如何由一个无序序列建成一个堆?<br>2、如何在输出堆顶元素后，调整剩余元素为一个新的堆?  </p>
+<h4 id="①堆的调整"><a href="#①堆的调整" class="headerlink" title="①堆的调整"></a>①堆的调整</h4><p>2、如何在输出堆顶元素后，调整剩余元素为一个新的堆?   </p>
+<p>小根堆  </p>
+<ol>
+<li>输出堆顶元素之后，以堆中<strong>最后一个元素替代之</strong>  </li>
+<li>然后将根结点值与左、右子树的根结点值进行比较，并<strong>与其中小者进行交换</strong>   </li>
+<li>重复上述操作，<strong>直至叶子</strong>结点，将得到新的堆，称这个从堆顶至叶子的调整过程为 <strong>“筛选”</strong><br><img src="https://s2.loli.net/2023/12/17/XeYkRIzFCwLhnW2.jpg" alt="堆的调整.png"></li>
+</ol>
+<h4 id="②堆的建立"><a href="#②堆的建立" class="headerlink" title="②堆的建立"></a>②堆的建立</h4><p>1、如何由一个无序序列建成一个堆?  </p>
+<p>单结点的二叉树是堆<br>在完全二叉树中所有以叶子结点(序号i &gt; n&#x2F;2)为根的子树是堆<br>这样，我们只需依次将以序号为n&#x2F;2，n&#x2F;2 - 1，…… 1的结点为根的子树均调整为堆即可<br>即:对应由n个元素组成的无序序列，“筛选”只需从<strong>第n&#x2F;2</strong>个元素(最后一个非叶子)开始   </p>
+<p>叶子结点已经是一个堆了，不用调整，从最后一个非叶子结点往前开始<br>从根往下调整的结点必须调整到叶子才可以<br><img src="https://s2.loli.net/2023/12/17/89XCoDvjhdmbIQp.jpg" alt="堆的建立.png">  </p>
+<p>若<strong>对一个无序序列建堆</strong>，<strong>然后输出根</strong>，重复该过程就可以由一个无需序列输出有序序列。<br>实质上，堆排序就是利用完全二叉树中父结点与孩子结点之间的内在关系来排序的。  </p>
+<p><strong>时间复杂度</strong>:<br>最好时间复杂度是 O(n㏒₂n)<br>最坏时间复杂度为 O(n㏒₂n)<br><strong>空间复杂度</strong>:  O(1)<br>简单选择排序是<strong>不稳定</strong>排序  </p>
+<h2 id="四-归并排序"><a href="#四-归并排序" class="headerlink" title="(四)归并排序"></a>(四)归并排序</h2><p><strong>基本思想</strong>: 将两个或两个以上的有序子序列“归并”为一个有序序列。  </p>
+<h3 id="2-路归并排序"><a href="#2-路归并排序" class="headerlink" title="2-路归并排序"></a>2-路归并排序</h3><p>将两个位置相邻的有序子序列R[l.m和R[m+1..n] 归并为一个有序序列R[l.n]<br><img src="https://s2.loli.net/2023/12/17/ZHS2hyeREQ4I6w8.jpg" alt="归并排序示例.png">  </p>
+<p><strong>时间复杂度</strong>:<br>最好时间复杂度是 O(n㏒₂n)<br>最坏时间复杂度为 O(n㏒₂n)<br><strong>空间复杂度</strong>:  O(n)<br>简单选择排序是<strong>稳定</strong>排序  </p>
+<h2 id="五-基数排序"><a href="#五-基数排序" class="headerlink" title="(五)基数排序"></a>(五)基数排序</h2><p><strong>基本思想</strong>:分配 + 收集<br>也叫<strong>桶排序</strong>或<strong>箱排序</strong>:设置若千个箱子，将关键字为k的记录放入第k个箱子，然后在按序号将非空的连接<br><strong>基数排序</strong>:数字是有范围的，均由0-9这十个数字组成，则只需设置十个箱子，相继按个、十、百…进行排序<br><img src="https://s2.loli.net/2023/12/17/9Gb1S3JF5aniTjE.jpg" alt="基数排序例子.png">  </p>
+<p><em><strong>总结：</strong></em><br><img src="https://s2.loli.net/2023/12/17/1pawyYEOhMB9gmV.jpg" alt="各种排序方法比较.png"><br><strong>一、时间性能</strong><br>(1)按平均的时间性能来分，有三类排序方法  </p>
+<ol>
+<li>时间复杂度为**O(n㏒₂n)**的方法有<br>-快速排序、堆排序和归并排序，其中以快速排序为最好  </li>
+<li>时间复杂度为**O(n²)**的有<br>直接插入排序、冒泡排序和简单选择排序，其中以直接插入为最好，特别是对那些对关键字近似有序的记录序列尤为如此  </li>
+<li>时间复杂度为**O(n)**的排序方法只有: 基数排序。</li>
+</ol>
+<p>(2)当待排记录序列按关键字顺序有序时，直接插入排序和冒泡排序能达到O(n)的时间复杂度;而对于快速排序而言，这是最不好的情况，此时的时间性能退化为O(n²)，因此是应该尽量避免的情况。<br>(3)简单选择排序、堆排序和归并排序的时间性能不随记录序列中关键字的分布而改变  </p>
+<p><strong>二、空间性能</strong><br>指的是排序过程中所需的辅助空间大小  </p>
+<ol>
+<li>所有的简单排序方法(包括: 直接插入、冒泡和简单选择)和堆排序的空间复杂度为O(1)  </li>
+<li>快速排序为O(㏒₂n)，为栈所需的辅助空间  </li>
+<li>归并排序所需辅助空间最多，其空间复杂度为O(n)  </li>
+<li>链式基数排序需附设队列首尾指针，则空间复杂度为O(rd)</li>
+</ol>
+<p><strong>三、排序方法的稳定性能</strong>  </p>
+<ol>
+<li>稳定的排序方法指的是，对于两个关键字相等的记录，它们在序列中的相对位置，在排序之前和经过排序之后，没有改变  </li>
+<li>当对多关键字的记录序列进行LSD方法排序时，必须采用稳定的排序方法  </li>
+<li>对于不稳定的排序方法，只要能举出一个实例说明即可  </li>
+<li>快速排序和堆排序是不稳定的排序方法</li>
+</ol>
+<p><strong>四、关于“排序方法的时间复杂度的下限”</strong><br>本章讨论的各种排序方法，除基数排序外，其它方法都是基于“比较关键字”进行排序的排序方法，可以证明，这类排序法可能达到的最快的时间复杂度为O(n㏒₂n)。<br>(基数排序不是基于“比较关键字”的排序方法,所以它不受这个限制)。<br>可以用一棵判定树来描述这类基于“比较关键字”进行排序的排序方法。  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2023/12/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/12/19/LeetCode%E5%88%B7%E9%A2%98/41-50/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Leetcode刷题41-50
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/12/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">查找</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

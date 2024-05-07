@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Navigation |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/Navigation 导航"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Navigation
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/17/Android/Navigation%20%E5%AF%BC%E8%88%AA/" class="article-date">
+  <time datetime="2024-03-17T02:16:14.000Z" itemprop="datePublished">2024-03-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">4 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Navigation 是指允许用户导航、进入和退出应用中不同内容片段的交互。</p>
+<p>在Android开发中，<code>navHost</code>和<code>navController</code>是与导航组件（Navigation Component）相关的重要概念。</p>
+<ol>
+<li><p><strong><code>NavHost</code>（导航宿主）</strong>：</p>
+<ul>
+<li><code>NavHost</code>是一个容器视图，用于承载导航图（Navigation Graph）中定义的目的地（Destination）和动作（Action）。</li>
+<li>通常，<code>NavHost</code>是一个<code>Fragment</code>，用于在应用中管理导航和目的地之间的切换。</li>
+<li><code>NavHost</code>负责展示导航图中当前目的地的视图，并处理目的地之间的导航。</li>
+</ul>
+</li>
+<li><p><strong><code>NavController</code>（导航控制器）</strong>：</p>
+<ul>
+<li><code>NavController</code>是一个控制器对象，用于管理应用中的导航操作。</li>
+<li><code>NavController</code>负责处理用户在应用中进行的导航操作，例如从一个目的地导航到另一个目的地。</li>
+<li><code>NavController</code>与<code>NavHost</code>结合使用，<code>NavHost</code>托管<code>NavController</code>实例，并在<code>NavHost</code>中管理导航过程。</li>
+</ul>
+</li>
+</ol>
+<p>因此，<code>NavHost</code>和<code>NavController</code>之间的关系是<code>NavHost</code>作为容器视图，承载<code>NavController</code>处理的导航操作。<code>NavHost</code>负责展示当前目的地的视图，而<code>NavController</code>负责处理导航操作，两者共同协作实现应用中的导航功能。</p>
+<h1 id="一-使用步骤"><a href="#一-使用步骤" class="headerlink" title="(一)使用步骤"></a>(一)使用步骤</h1><p><strong>1. 导入依赖</strong><br>implementation(“androidx.navigation:navigation-fragment-ktx:2.6.0”)<br>implementation(“androidx.navigation:navigation-ui-ktx:2.6.0”)</p>
+<p><strong>2. 创建导航图</strong>  </p>
+<p>res —-&gt; New —-&gt; New Resource Directory —-&gt; <strong>navigation</strong><br>Navigation —-&gt; Navigation Resource File</p>
+<p>创建 Fragment 的方式：<br>在导航图的左上角 ——&gt; New Destination -&gt; Fragment(Blank)<br>处理好 Fragment 之间的切换关系  </p>
+<p>右键 ——&gt; Set as Start Destination (该导航图运行起来显示的第一个界面)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag"><span class="attr">android:id</span>=<span class="string">&quot;@+id/welcomeFragment&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">android:name</span>=<span class="string">&quot;com.example.littlepainter.WelcomeFragment&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">android:label</span>=<span class="string">&quot;fragment welcome&quot;</span><span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment welcome&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--action对应箭头--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:id</span>=<span class="string">&quot;@+id/action welcomeFragment to guideFragment2&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">app:destination</span>=<span class="string">&quot;@id/guideFragment&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 添加 NavHostFragment 控件 ，将 Fragment 显示到 Activity 上</strong><br>在 activity_main.xml文件中<br>此时用 navigation 就不能直接使用 fragmentContainerView 了<br>需要使用 <strong>NavHostFragment</strong> (本质上还是fragmentContainerView)  </p>
+<p><em>在 activity 中添加 NavHostFragment ，并关联对应导航图</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app:defaultNavHost=<span class="string">&quot;true&quot;</span> <span class="comment">//是否为默认的导航图 默认加载起来显示的导航图</span></span><br><span class="line">app:navGraph=<span class="string">&quot;@navigation/main_nav&quot;</span> <span class="comment">//关联的哪个导航图 //显示的内容在navGraph中 关联导航图</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>4. 导航到目的地(找到 NavController 实现界面切换)</strong>  </p>
+<p>导航到目的地<br>导航到目的地是使用 NavController 完成的，它是一个在 NavHost 中管理应用导航的对象。每个 NavHost 均有自己的相应 NavController 。<br>可以使用以下方法之一检索 NavController:  </p>
+<p><em><strong>在不同情况下如何找到 NavController :</strong></em><br><strong>findNavController()</strong></p>
+<p><strong>Fragment</strong> —— Fragment.findNavController()<br><strong>View</strong> —— View.findNavController()   &#x2F;&#x2F;知道一个 View 使用 binding.root.findNavController()<br><strong>Activity</strong> —— Activity.findNavController(viewId: Int)  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">findNavController().navigate()</span><br></pre></td></tr></table></figure>
+
+
+<p>activity 中如果使用的是 FragmentContainerView 实现的 NavHost 就不能使用 Activity.findNavController(viewId: Int)  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">navHostFragment</span> <span class="operator">=</span> supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment</span><br><span class="line"><span class="type">val</span> <span class="variable">navController</span> <span class="operator">=</span> navHostFragment.navController</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="二-action-线"><a href="#二-action-线" class="headerlink" title="(二)action 线"></a>(二)action 线</h1><h2 id="Pop-Behavior-管理堆栈信息"><a href="#Pop-Behavior-管理堆栈信息" class="headerlink" title="Pop Behavior 管理堆栈信息"></a>Pop Behavior 管理堆栈信息</h2><p>(线 界面返回的销毁)  </p>
+<p>线（action）：<br><strong>Pop Behavior</strong><br>popUpTo： 把这个界面上面的所有界面出栈<br>popUpToInclusive： true&#x2F;false 是否包含当前界面也要弹出  </p>
+<p>（某一个界面如果只希望它显示一次就不能再返回了就可以使用）</p>
+<h2 id="Animations-动画"><a href="#Animations-动画" class="headerlink" title="Animations 动画"></a>Animations 动画</h2><p>enterAnim  新的进入<br>exitAnim  当前消失<br>popEnterAnim  新的进入后怎么弹出去<br>popExitAnim  旧的怎么弹回来  </p>
+<p>添加补间动画</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:id</span>=<span class="string">&quot;@+id/action welcomeFragment to guideFragment2&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">app:destination</span>=<span class="string">&quot;@id/guideFragment&quot;</span> //<span class="attr">目的地</span></span></span><br><span class="line"><span class="tag">	<span class="attr">app:popUpTo</span>=<span class="string">&quot;@id/drawFragment&quot;</span>  //<span class="attr">把这个界面上面的所有界面出栈</span></span></span><br><span class="line"><span class="tag">	<span class="attr">app:popUpTolnclusive</span>=<span class="string">&quot;true&quot;</span>  //<span class="attr">是否包含当前界面</span></span></span><br><span class="line"><span class="tag">	<span class="attr">app:launchSingleTop</span> = <span class="string">&quot;true&quot;</span>  // <span class="attr">栈顶单个对象</span></span></span><br><span class="line"><span class="tag">	/&gt;</span> </span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="三-实现参数传递"><a href="#三-实现参数传递" class="headerlink" title="(三)实现参数传递"></a>(三)实现参数传递</h1><p>使用 <strong>Safe Args</strong> 传递类型安全的数据</p>
+<p>Navigation 组件具有一个名为 Safe Args 的 Gradle 插件，该插件可以生成简单的 object 和 builder 类，以便以类型安全的方式浏览和访问任何关联的参数。<br>强烈建议将 <strong>Safe Args 用于导航和传递数据</strong>，因为它可以<strong>确保类型安全</strong>。  </p>
+<ol>
+<li><p>导入插件</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins&#123;</span><br><span class="line">	<span class="comment">//替换classPath</span></span><br><span class="line">	id <span class="string">&#x27;androidx.navigation.safeargs&#x27;</span> version <span class="string">&#x27;2.7.7&#x27;</span> apply <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;androidx.navigation.safeargs&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>在需要参数的 destination 中配置这个界面的参数类型和名称<br>谁接受参数就到谁的 Fragment 里面设置</p>
+</li>
+</ol>
+<p>在 navigate 导航图中 ——&gt; Arguments ——&gt; +   </p>
+<p>Name  参数名<br>Type  参数类型<br>Array Nullable<br>Default Value  默认值  </p>
+<p>普通的参数</p>
+<p>传递<br><strong>…FragmentDirections</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">action</span> <span class="operator">=</span> WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment(<span class="number">10</span>)</span><br><span class="line">findNavController().navigate(action)</span><br></pre></td></tr></table></figure>
+
+<p>接收<br><strong>…FragmentArgs by navArgs()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取传递过来的参数对象</span></span><br><span class="line"><span class="keyword">private</span> val args: HomeFragmentArgs by <span class="title function_">navArgs</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">binding.textView.text = args.number.toString()</span><br></pre></td></tr></table></figure>
+
+
+<p>传递一个类</p>
+<p>要实现序列化接口 Parcelable</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Parcelize</span><br><span class="line">data <span class="keyword">class</span> <span class="title class_">User</span> constructor(val name:String, val age:lnt):Parcelable</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/03/17/Android/Navigation%20%E5%AF%BC%E8%88%AA/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/03/18/LeetCode%E5%88%B7%E9%A2%98/131-150/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            LeetCode刷题131-150
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/03/17/Android/%E8%87%AA%E5%AE%9A%E4%B9%89/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%95%E9%83%A8%E8%8F%9C%E5%8D%95/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">自定义底部菜单栏目</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

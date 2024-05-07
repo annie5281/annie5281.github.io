@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Leetcode刷题171-190 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-LeetCode刷题/171-190(动态规划)"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Leetcode刷题171-190
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/04/27/LeetCode%E5%88%B7%E9%A2%98/171-190(%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)/" class="article-date">
+  <time datetime="2024-04-27T01:16:42.000Z" itemprop="datePublished">2024-04-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode%E5%88%B7%E9%A2%98/">LeetCode刷题</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">10 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="①338-比特位计数"><a href="#①338-比特位计数" class="headerlink" title="①338.比特位计数"></a>①338.比特位计数</h1><p>2024.4.29 周一<br>题目：<br>给你一个整数 n ，对于 0 &lt;&#x3D; i &lt;&#x3D; n 中的每个 i ，计算其二进制表示中 1 的个数 ，<br>返回一个长度为 n + 1 的数组 ans 作为答案。<br>示例 1：<br>输入：n &#x3D; 2<br>输出：[0,1,1]<br>解释：<br>0 –&gt; 0<br>1 –&gt; 1<br>2 –&gt; 10  </p>
+<p>思路1：<br>直接使用位运算算出每个数的含有1的位数<br>或者使用<code>Integer.bitCount(n)</code>计算<br><em>41% self 暴力求解</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] countBits(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            res[i] = oneCount(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算某二进制数的1的个数</span></span><br><span class="line">    <span class="comment">//相当于Integer.bitCount(n);</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">oneCount</span><span class="params">(<span class="type">int</span> n)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(n &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            count += n &amp; <span class="number">1</span>;</span><br><span class="line">            n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：<br>奇数：每个奇数都比前一个偶数多1个1的个数，<br>如果已经知道前一个偶数的个数了，后一个奇数就不用算了，直接加一即可  </p>
+<blockquote>
+<p>0 –&gt; 0<br>1 –&gt; 1  </p>
+<p>2 –&gt; 10<br>3 –&gt; 11  </p>
+<p>4 –&gt; 100<br>5 –&gt; 101  </p>
+</blockquote>
+<p>偶数：二进制表示中，偶数中 1 的个数一定和乘 2 之后的那个数一样多，<br>相当于向左移一位  </p>
+<blockquote>
+<p>2 &#x3D; 10       4 &#x3D; 100       8 &#x3D; 1000<br>3 &#x3D; 11       6 &#x3D; 110       12 &#x3D; 1100  </p>
+</blockquote>
+<p>此外：0 的 1 个数为 0，可以根据奇偶性开始遍历计算了</p>
+<p>奇数则前一个偶数+1，偶数直接等于折半数</p>
+<p><em>99%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] countBits(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        res[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i % <span class="number">2</span> == <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="comment">//奇数</span></span><br><span class="line">                res[i] = res[i-<span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//偶数</span></span><br><span class="line">                res[i] = res[i/<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路3：<br>如果 x 是偶数，则 bits[x]&#x3D;bits[⌊x&#x2F;2⌋]<br>如果 x 是奇数，则 bits[x]&#x3D;bits[⌊x&#x2F;2⌋] + 1<br>上述两种情况可以合并成：bits[x] 的值等于 bits[⌊x&#x2F;2⌋] 的值加上 x 除以 2 的余数。<br>⌊x&#x2F;2⌋ 可以通过 x &gt;&gt; 1得到，x除以2的余数可以通过 x &amp; 1得到<br>因此：<br>result[i] &#x3D; result[i &gt;&gt; 1] + (i &amp; 1);  </p>
+<h1 id="②392-判断子序列"><a href="#②392-判断子序列" class="headerlink" title="②392.判断子序列"></a>②392.判断子序列</h1><p>2024.4.30 周二<br>题目：<br>给定字符串 s 和 t ，判断 s 是否为 t 的子序列。<br>字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。<br>（例如，”ace”是”abcde”的一个子序列，而”aec”不是）<br>进阶：<br>如果有大量输入的 S，称作 S1, S2, … , Sk 其中 k &gt;&#x3D; 10亿，你需要依次检查它们是否为 T 的子序列。<br>在这种情况下，你会怎样改变代码？  </p>
+<p>思路1：<br><em>暴力 双指针 90% self</em>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isSubsequence</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">first</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">second</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(first &lt; s.length() &amp;&amp; second &lt; t.length())&#123;</span><br><span class="line">            <span class="keyword">if</span>(s.charAt(first) == t.charAt(second))&#123;</span><br><span class="line">                first++;</span><br><span class="line">            &#125;</span><br><span class="line">            second++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> first == s.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：<br>使用双指针的话，时间大量用于在 t 中找到下一个匹配字符。<br>预处理：<br>对于 t 的每一个位置，从该位置开始往后的每一个字符第一次出现的位置；<br>f(i)(j)表示从位置 i 开始往后，字符 j 第一次出现的位置；  </p>
+<blockquote>
+<p>1.若 t 的位置 i 的字符就是 j：<br>f(i)(j) &#x3D; i<br>2.否则， j 出现在位置 i+1 开始往后：<br>f(i)(j) &#x3D; f(i+1)(j)<br>倒过来进行动态规划，从后往前枚举 i (知道后一个就能知道前一个)   </p>
+</blockquote>
+<p>int m &#x3D; t.length()  </p>
+<blockquote>
+<p>边界状态：<br>f(m-1)(..) &#x3D; m  让其正常进行转移<br>如果：<br>f(i)(j) &#x3D; m  则表示从位置 i 开始往后不存在字符 j   </p>
+</blockquote>
+<p>该解法中对 t 的处理与 s 无关，且预处理完成后，<br>可以利用预处理数组的信息，线性地算出任意一个字符串 s 是否为 t 的子串。 </p>
+<p><em>动态规划 15%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isSubsequence</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> t.length();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 0 1 2 ... m-1 m</span></span><br><span class="line">        <span class="type">int</span>[][] f = <span class="keyword">new</span> <span class="title class_">int</span>[m+<span class="number">1</span>][<span class="number">26</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">26</span>; i++)&#123;</span><br><span class="line">            f[m][i] = m; <span class="comment">//从位置 m 开始往后不存在字符 i</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//从后往前</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> m-<span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; <span class="number">26</span>; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(t.charAt(i) == j + <span class="string">&#x27;a&#x27;</span>)&#123;</span><br><span class="line">                    f[i][j] = i;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    f[i][j] = f[i+<span class="number">1</span>][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//记录当前匹配到的位置</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">add</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//查找</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(f[add][s.charAt(i) - <span class="string">&#x27;a&#x27;</span>] == m)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            add = f[add][s.charAt(i) - <span class="string">&#x27;a&#x27;</span>] + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="③509-斐波那契数"><a href="#③509-斐波那契数" class="headerlink" title="③509.斐波那契数"></a>③509.斐波那契数</h1><p>2024.5.1 周三<br>题目：<br>斐波那契数 （通常用 F(n) 表示）形成的序列称为 斐波那契数列 。<br>该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和。<br>也就是：<br>F(0) &#x3D; 0，F(1) &#x3D; 1<br>F(n) &#x3D; F(n - 1) + F(n - 2)，其中 n &gt; 1<br>给定 n ，请计算 F(n) 。  </p>
+<p>思路1：<br>使用一个数组记录每一个F(0) - F(n)  </p>
+<blockquote>
+<p>0 1 1 2 3 5<br>0 1 2 3 4 5  </p>
+</blockquote>
+<p><em>100% self</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">fib</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">        <span class="type">int</span>[] temp = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        temp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        temp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">2</span>; i &lt; n+<span class="number">1</span>; i++)&#123;</span><br><span class="line">            temp[i] = temp[i-<span class="number">1</span>] + temp[i-<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> temp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：<br>滚动数组，不保留过程，直接得到结果(动态规划)   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">fib</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> <span class="variable">p</span> <span class="operator">=</span> <span class="number">0</span>; </span><br><span class="line">        <span class="type">int</span> <span class="variable">q</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            p = q;</span><br><span class="line">            q = r;</span><br><span class="line">            r = p + q;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑤1137-第N个泰波那契数"><a href="#⑤1137-第N个泰波那契数" class="headerlink" title="⑤1137.第N个泰波那契数"></a>⑤1137.第N个泰波那契数</h1><p>2024.5.6 周一<br>题目：<br>泰波那契序列 Tn 定义如下：<br>T0 &#x3D; 0, T1 &#x3D; 1, T2 &#x3D; 1, 且在 n &gt;&#x3D; 0 的条件下 Tn+3 &#x3D; Tn + Tn+1 + Tn+2<br>给你整数 n，请返回第 n 个泰波那契数 Tn 的值。  </p>
+<p><em>self 100%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">tribonacci</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] temp = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">3</span>];</span><br><span class="line">        </span><br><span class="line">        temp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        temp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        temp[<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(n &lt; <span class="number">3</span>) <span class="keyword">return</span> temp[n];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            temp[i] = temp[i-<span class="number">1</span>] + temp[i-<span class="number">2</span>] + temp[i-<span class="number">3</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> temp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>动态规划 100%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">tribonacci</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">p</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">q</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">s</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            p = q;</span><br><span class="line">            q = r;</span><br><span class="line">            r = s;</span><br><span class="line">            s = p + q + r;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="④1025-除数博弈"><a href="#④1025-除数博弈" class="headerlink" title="④1025.除数博弈"></a>④1025.除数博弈</h1><p>2024.5.5 周日  </p>
+<p>题目：<br>爱丽丝和鲍勃一起玩游戏，他们轮流行动。<strong>爱丽丝先手开局</strong>。<br>最初，黑板上有一个数字 n 。在每个玩家的回合，玩家需要执行以下操作：   </p>
+<ul>
+<li>选出任一 x，满足 0 &lt; x &lt; n 且 n % x &#x3D;&#x3D; 0 。  </li>
+<li>用 n - x 替换黑板上的数字 n 。<br>如果玩家无法执行这些操作，就会输掉游戏。<br>只有在爱丽丝在游戏中取得胜利时才返回 true 。<br>假设两个玩家都以最佳状态参与游戏。</li>
+</ul>
+<p>思考1：数学找规律的方法<br>n &#x3D; 1 的时候，区间 (0,1) 中没有整数是 n 的因数<br>最后谁先拿到偶数 2 谁就赢了<br>爱丽丝先手开局<br>两个玩家都以最佳状态参与游戏  </p>
+<blockquote>
+<p>奇数的因子都是奇数<br>奇数 - 奇数 &#x3D; 偶数<br>如果 n 是奇数，爱丽丝先拿到一个奇数，抛给鲍勃一个偶数，<br>如果只要鲍勃选择-1，还给爱丽丝一个奇数，最后一定是鲍勃先拿到偶数2，<br>爱丽丝必输。<br>如果 n 是偶数，爱丽丝只需要每次选择-1，爱丽丝必赢。  </p>
+</blockquote>
+<p><em>数学 100%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">divisorGame</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> n % <span class="number">2</span> == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>思考2：  </p>
+<blockquote>
+<p>n &#x3D; k         B &#x3D; m<br>n &#x3D; 1   A败<br>n &#x3D; 2  A取1 .. B &#x3D; 1  B败<br>n &#x3D; 3  A取1 .. B &#x3D; 2  A败<br>n &#x3D; 4  A取1&#x2F;2 若取1 .. B &#x3D; 3  B败<br>是否存在一个必败态，爱丽丝直接执行对应的操作让当前的数字变成m，爱丽丝就赢了，如果没有任何一个是必败的状态的话，说明爱丽丝无论怎么进行操作，最后鲍勃处于必胜，爱丽丝必败。<br>f(i) 表示当前数字 i 的时候先手处于必胜还是必败态，从前往后递推，枚举 i 在(0，i)中 i 的因数 j ，看是否存在 f(i-j)为必败态即可</p>
+</blockquote>
+<p><em>动态规划 33%</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">divisorGame</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="type">boolean</span>[] f = <span class="keyword">new</span> <span class="title class_">boolean</span>[n + <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//最基本情况</span></span><br><span class="line">        f[<span class="number">1</span>] = <span class="literal">false</span>;</span><br><span class="line">        f[<span class="number">2</span>] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; i; j++)&#123;</span><br><span class="line">                <span class="comment">//只要做出的选择其中之一，能让对方输，在当前这一步我们就可以赢了</span></span><br><span class="line">                <span class="keyword">if</span>(i % j == <span class="number">0</span> &amp;&amp; !f[i-j])&#123;</span><br><span class="line">                    f[i] = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="⑥1668最大重复子字符串"><a href="#⑥1668最大重复子字符串" class="headerlink" title="⑥1668最大重复子字符串"></a>⑥1668最大重复子字符串</h1><p>题目：  </p>
+<h1 id="⑦LCP07-传递信息"><a href="#⑦LCP07-传递信息" class="headerlink" title="⑦LCP07.传递信息"></a>⑦LCP07.传递信息</h1><p>题目：  </p>
+<h1 id="⑧LCR-003-比特位计数"><a href="#⑧LCR-003-比特位计数" class="headerlink" title="⑧LCR 003.比特位计数"></a>⑧LCR 003.比特位计数</h1><p>题目：  </p>
+<h1 id="⑨LCR-088-使用最小花费"><a href="#⑨LCR-088-使用最小花费" class="headerlink" title="⑨LCR 088.使用最小花费"></a>⑨LCR 088.使用最小花费</h1><p>题目：  </p>
+<h1 id="⑩LCR126-斐波那契数"><a href="#⑩LCR126-斐波那契数" class="headerlink" title="⑩LCR126.斐波那契数"></a>⑩LCR126.斐波那契数</h1><p>题目：  </p>
+<h1 id="⑪LCR-127-跳跃训练"><a href="#⑪LCR-127-跳跃训练" class="headerlink" title="⑪LCR 127.跳跃训练"></a>⑪LCR 127.跳跃训练</h1><p>题目：  </p>
+<h1 id="⑫LCR161-连续天数的最"><a href="#⑫LCR161-连续天数的最" class="headerlink" title="⑫LCR161.连续天数的最"></a>⑫LCR161.连续天数的最</h1><p>题目：  </p>
+<h1 id="⑬LCS-01-下载插件"><a href="#⑬LCS-01-下载插件" class="headerlink" title="⑬LCS 01.下载插件"></a>⑬LCS 01.下载插件</h1><p>题目：  </p>
+<h1 id="⑭面试题05-03翻转数位"><a href="#⑭面试题05-03翻转数位" class="headerlink" title="⑭面试题05.03翻转数位"></a>⑭面试题05.03翻转数位</h1><p>题目：  </p>
+<h1 id="⑮面试题08-01-三步问题"><a href="#⑮面试题08-01-三步问题" class="headerlink" title="⑮面试题08.01.三步问题"></a>⑮面试题08.01.三步问题</h1><p>题目：  </p>
+<h1 id="⑯面试题16-17-连续数列"><a href="#⑯面试题16-17-连续数列" class="headerlink" title="⑯面试题16.17.连续数列"></a>⑯面试题16.17.连续数列</h1><p>题目：  </p>
+<h1 id="⑰面试题17-16-按摩师"><a href="#⑰面试题17-16-按摩师" class="headerlink" title="⑰面试题17.16.按摩师"></a>⑰面试题17.16.按摩师</h1><p>题目：  </p>
+<h1 id="⑱"><a href="#⑱" class="headerlink" title="⑱"></a>⑱</h1><p>题目：  </p>
+<h1 id="⑲"><a href="#⑲" class="headerlink" title="⑲"></a>⑲</h1><p>题目：  </p>
+<h1 id="⑳"><a href="#⑳" class="headerlink" title="⑳"></a>⑳</h1><p>题目：  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/04/27/LeetCode%E5%88%B7%E9%A2%98/171-190(%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/05/01/Android/%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C/Thread%20%E7%BA%BF%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Thread 线程
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/04/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">动态规划</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

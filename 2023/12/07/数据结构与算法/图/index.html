@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>图 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-数据结构与算法/图"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  图
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9B%BE/" class="article-date">
+  <time datetime="2023-12-07T02:09:09.000Z" itemprop="datePublished">2023-12-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">4.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">17 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="一-图的定义和基本术语"><a href="#一-图的定义和基本术语" class="headerlink" title="(一)图的定义和基本术语"></a>(一)图的定义和基本术语</h2><p><strong>图</strong>：G &#x3D; (V,E)  Graph &#x3D; (Vertex,Edge)<br>&nbsp;&nbsp;&nbsp;&nbsp;V:顶点(数据元素)的有穷非空集合；<br>&nbsp;&nbsp;&nbsp;&nbsp;E:边的有穷集合。</p>
+<p><strong>无向图</strong>：每条边都是无方向的<br><strong>有向图</strong>：每条边都是有方向的<br><img src="https://s2.loli.net/2023/12/07/mRK9HEVgeWtbj5k.jpg" alt="有向图、无向图.png"></p>
+<p><strong>完全图</strong>：任意两个点都有一条边相连<br>&nbsp;&nbsp;&nbsp;&nbsp;无向完全图：n个定点，<strong>n(n-1)&#x2F;2</strong>条边<br>&nbsp;&nbsp;&nbsp;&nbsp;有向完全图：n个定点，**n(n-1)**条边<br><img src="https://s2.loli.net/2023/12/07/k8HZ56noMKFDNp3.jpg" alt="完全图.png"></p>
+<p><strong>稀疏图</strong>：有很少边&#x2F;弧的图(e &lt; n㏒n)<br><strong>稠密图</strong>：有较多边&#x2F;弧的图</p>
+<p><strong>网</strong>：边&#x2F;弧带权的图<br><strong>邻接</strong>：有边&#x2F;弧相连的<em>两个顶点</em>之间的关系<br>&nbsp;&nbsp;&nbsp;&nbsp;存在(vi,vj),则称vi和vj互为邻接点；(无向图)<br>&nbsp;&nbsp;&nbsp;&nbsp;存在&lt;vi,vj&gt;,则称vi邻接到vj，vj邻接于vi。&lt;有向图&gt;<br>**关联(依附)*<em>：</em>边&#x2F;弧与顶点*之间的关系<br>&nbsp;&nbsp;&nbsp;&nbsp;存在(vi,vj)&#x2F;&lt;vi,vj&gt;，则称该边&#x2F;弧关联于vi和vj</p>
+<p><strong>顶点的度</strong>：与该顶点相关联的边的数目<br>&nbsp;&nbsp;&nbsp;&nbsp;在有向图中，定点的度&#x3D;该顶点的入度+出度<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顶点v的<strong>入度</strong>：以v为终点的有向边的条数，记作ID(v)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顶点v的<strong>出度</strong>：以v为始点的有向边的条数，记作OD(v)<br><img src="https://s2.loli.net/2023/12/07/kuoUQgwl7TBAzhE.jpg" alt="顶点的度例子.png"></p>
+<hr>
+<p>路径：接续的边构成的顶点序列<br>路径的长度：路径上边&#x2F;弧的数目&#x2F;权值之和<br>回路(环)：第一个顶点和最后一个顶点相同的路径<br>简单路径：除路径起点和终点可以相同外，其余顶点均不相同的路径<br>**简单回路(简单环)**：除路径起点和终点相同外，其余其余顶点均不相同<br><img src="https://s2.loli.net/2023/12/07/YHDKk9T3WcdmORA.jpg" alt="简单路径_回路.png"></p>
+<p>**连通图(强连通图)**：对任何两个顶点，都存在路径<br><img src="https://s2.loli.net/2023/12/07/8gUlZDyr3dSR2mK.jpg" alt="连通图.png"></p>
+<p>权与网：<br>图中边&#x2F;弧所具有的相关数称为权<br>带权的图称为网</p>
+<p>子图：图包含所有子图的顶点和路径</p>
+<p><strong>连通分量(强连通分量)<strong>：<br>无向图G的极大连通子图称为连通分量<br>极大连通子图：该子图是G的连通子图，将G的任何不在该子图中的</strong>顶点</strong>加入，子图不再连通<br>极小连通子图：该子图是G的连通子图，在该子图中删除任意一条<strong>边</strong>，子图不再连通<br><img src="https://s2.loli.net/2023/12/07/KU2Oa9mhxfietMS.jpg" alt="连通分量.png"><br><img src="https://s2.loli.net/2023/12/07/2RLm1raQiP9uYeh.jpg" alt="强连通分量.png"></p>
+<p><strong>生成树</strong>：包含无向图G的所有顶点的极小连通子图(去掉一条边则非连通)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有顶点均由边连接在一起，但<strong>不存在回路</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一个图可以有许<strong>多颗不同的生成树</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生成树的顶点个数<strong>与图的顶点个数相同</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n 个顶点的连通图的生成树有 <strong>n - 1条边</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生成树中任意两个顶点之间的<strong>路径是唯一</strong>的<br>生成森林：对非连通图，由各个连通分量的生成数的集合<br><img src="https://s2.loli.net/2023/12/07/KRAxe4wGZN76XOS.jpg" alt="极小连通子图_生成树.png"><br><img src="https://s2.loli.net/2023/12/10/73gLUuAkGlrPFcS.jpg" alt="一个图可对应多个生成树.png"></p>
+<h2 id="二-图的存储结构"><a href="#二-图的存储结构" class="headerlink" title="(二)图的存储结构"></a>(二)图的存储结构</h2><h3 id="1-邻接矩阵-数组-表示法"><a href="#1-邻接矩阵-数组-表示法" class="headerlink" title="1.邻接矩阵(数组) 表示法"></a>1.邻接矩阵(数组) 表示法</h3><p>建立一个<strong>顶点表</strong>(记录各个顶点表)和一个<strong>邻接矩阵</strong>(表示各个顶点之间的关系)<br>设图 A &#x3D; (V,E) 有 n 个顶点，则<br>顶点表Vexs[n]<br><img src="https://s2.loli.net/2023/12/07/yAfEM9RFIHb7zd8.jpg" alt="顶点表.png"><br>图的邻接矩阵是一个二维数组A.arcs[n][n]<br>有关系则记为 1 ，否则为 0   </p>
+<h4 id="1-无向图的邻接矩阵表示法："><a href="#1-无向图的邻接矩阵表示法：" class="headerlink" title="(1)无向图的邻接矩阵表示法："></a>(1)无向图的邻接矩阵表示法：</h4><p>特点：<br>无向图的邻接矩阵是对称的<br>顶点 i 的度 &#x3D; 第 i 行(列)中 1 的个数<br>完全图的邻接矩阵中，对角元素为 0 ，其余 1<br><img src="https://s2.loli.net/2023/12/07/vCqWbPNUxL4rYSh.jpg" alt="无向图的邻接矩阵表示法.png"></p>
+<h4 id="2-有向图的邻接矩阵表示法："><a href="#2-有向图的邻接矩阵表示法：" class="headerlink" title="(2)有向图的邻接矩阵表示法："></a>(2)有向图的邻接矩阵表示法：</h4><p>特点：<br>有向图的邻接矩阵可能是不对称的<br>顶点的度 &#x3D; 第 i 行元素之和(出度) + 第 i 列元素之和(入度)<br><img src="https://s2.loli.net/2023/12/07/t9rvOBSPmZfM6gN.jpg" alt="有向图的邻接矩阵表示法.png"></p>
+<h4 id="3-网-即有权图-的邻接矩阵表示法："><a href="#3-网-即有权图-的邻接矩阵表示法：" class="headerlink" title="(3)网(即有权图)的邻接矩阵表示法："></a>(3)网(即有权图)的邻接矩阵表示法：</h4><p>有：权值  无：∞<br><img src="https://s2.loli.net/2023/12/07/76gktnwOADjqrGa.jpg" alt="网的邻接矩阵表示法.png"></p>
+<h4 id="邻接矩阵的建立"><a href="#邻接矩阵的建立" class="headerlink" title="邻接矩阵的建立"></a>邻接矩阵的建立</h4><p>邻接矩阵的存储表示：用两个数组分别存储<strong>顶点表</strong>和<strong>邻接矩阵</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define MaxInt 32767 //表示极大值∞</span><br><span class="line">#define MVNum 100  //最大顶点数</span><br><span class="line">typedef char VerTexType;  //设置顶点的数据类型为字符型</span><br><span class="line">typedef int ArcType;  //假设边的权值类型为整型</span><br><span class="line"></span><br><span class="line">typedef struct&#123;</span><br><span class="line">	VerTexType vex[MVNum]; //顶点表</span><br><span class="line">	ArcType arcs[MVNum][MVNum]; //邻接矩阵</span><br><span class="line">	int vexnum,arcnum; //图的当前点数和边数</span><br><span class="line">&#125;AMGraph; //Adjacency Matrix Graph</span><br></pre></td></tr></table></figure>
+
+<p><em>采用邻接矩阵表示法 创建无向网</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Status CreateUDN(AMGraph &amp;G)&#123;</span><br><span class="line">	//输入总顶点数、总边数</span><br><span class="line">	cin &gt;&gt; G.vexnum &gt;&gt; G.arcnum; </span><br><span class="line">	//依次输入点的信息</span><br><span class="line">	for(i = 0; i &lt; G.vexnum; ++i)&#123;</span><br><span class="line">		cin &gt;&gt; G.vexs[i]; </span><br><span class="line">	&#125;</span><br><span class="line">	//初始化邻接矩阵</span><br><span class="line">	for(i = 0; i &lt; G.vexnum; ++i)&#123;</span><br><span class="line">		for(j = 0; j &lt; G.vexnum; ++j)&#123;</span><br><span class="line">			G.arcs[i][j] = MaxNum; //边的权值均置为极大值</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//构造邻接矩阵</span><br><span class="line">	for(k = 0; k &lt; G.arcnum; ++k)&#123;</span><br><span class="line">		//输入一条边所依附的顶点及边的权值</span><br><span class="line">		cin &gt;&gt; v1 &gt;&gt; v2 &gt;&gt; w;</span><br><span class="line">		//确定v1和v2在G中的位置</span><br><span class="line">		i = LocateVex(G,v1);</span><br><span class="line">		j = LocateVex(G,v2);</span><br><span class="line">		//设置权值</span><br><span class="line">		G.arcs[i][j] = w;</span><br><span class="line">		G.arcs[j][i] = G.arcs[i][j];</span><br><span class="line">	&#125;</span><br><span class="line">	return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>在图中查找顶点</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int LocateVex(AMGraph G,VertexType u)&#123;</span><br><span class="line">	int i;</span><br><span class="line">	for(i = 0; i &lt; G.vexnum; ++i)&#123;</span><br><span class="line">		if(u == G.vexs[i]) return i;</span><br><span class="line">	&#125;</span><br><span class="line">	return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2023/12/07/HiwQA8mZMog6DJb.jpg" alt="其他情况建立网or图.png"></p>
+<p><strong>邻接矩阵 ———— 好处：</strong><br>直观、简单、好理解<br>方便检查任意一对顶点间是否存在边<br>方便找任一顶点的所有邻接点<br>方便计算任一顶点的“度”<br><strong>邻接矩阵 ———— 不好：</strong><br>不利于增加和删除顶点<br>浪费空间(存稀疏图)<br>浪费时间(统计稀疏图中一共有多少条边)</p>
+<h3 id="2-邻接表-链式-表示法"><a href="#2-邻接表-链式-表示法" class="headerlink" title="2.邻接表(链式) 表示法"></a>2.邻接表(链式) 表示法</h3><p><img src="https://s2.loli.net/2023/12/07/XTq5Vlr4y9H3QPb.jpg" alt="邻接表示法_链式_.png"><br><strong>顶点</strong>：按编号顺序将顶点数据存储在一维数组中；<br><strong>关联同一顶点的边</strong>(以顶点为尾的弧)：用线性链表存储</p>
+<p>头结点：<br>data:放顶点的数据本身<br>firstarc:存储第一个边的边结点的地址<br>表结点：<br>邻接点域：存放与vi邻接的顶点在表头数组中的位置<br>链域：指示下一条边&#x2F;弧</p>
+<h4 id="1-无向图的邻接表"><a href="#1-无向图的邻接表" class="headerlink" title="(1)无向图的邻接表"></a>(1)无向图的邻接表</h4><p><img src="https://s2.loli.net/2023/12/07/taCxSdIwzlD34JM.jpg" alt="无向图的邻接表.png"><br>特点：   </p>
+<ol>
+<li>邻接表不唯一(表节点次序可交换)。   </li>
+<li>若无向图中有 n 个顶点、 e 条边<br>&nbsp;&nbsp;&nbsp;&nbsp;则其邻接表需要<strong>n 个头结点</strong>和<strong>2e个表结点</strong>。适宜存储稀疏图。   </li>
+<li>无向图中顶点 vi 的度为第 i 个单链表中结点数。</li>
+</ol>
+<h4 id="2-有向图的邻接表"><a href="#2-有向图的邻接表" class="headerlink" title="(2)有向图的邻接表"></a>(2)有向图的邻接表</h4><p><img src="https://s2.loli.net/2023/12/08/JTZNtY5dhp1FayS.jpg" alt="有向图的邻接表__逆邻接表.png"></p>
+<p>邻接表：找出度易，找入度难<br>逆邻接表：找入度易，找出度难<br>题目：已知某网的邻接表，画出该网络</p>
+<h4 id="建立邻接表的算法"><a href="#建立邻接表的算法" class="headerlink" title="建立邻接表的算法"></a>建立邻接表的算法</h4><p><em>表头顶点的结点结构</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef struct VNode&#123;</span><br><span class="line">	VerTexType data;  //顶点信息</span><br><span class="line">	ArcNode *firstarc; //指向第一条依附该顶点的边的指针</span><br><span class="line">&#125;VNode,AdjList[MVNum];  //AdjList表示邻接表类型</span><br></pre></td></tr></table></figure>
+
+<p><em>弧(边)的结点结构</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#define MVNum 100 //最大顶点数</span><br><span class="line">//边结点</span><br><span class="line">typedef struct ArcNode&#123;</span><br><span class="line">	int adjvex;  //该边所指向的顶点的位置</span><br><span class="line">	struct ArcNode * nextarc;  //指向下一条边的指针</span><br><span class="line">	OtherInfo info;  //和边相关的信息</span><br><span class="line">&#125;ArcNode;</span><br></pre></td></tr></table></figure>
+
+<p><em>图的结构定义</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef struct&#123;</span><br><span class="line">	AdjList vertices;  //vertex复数</span><br><span class="line">	int vexnum,arcnum; //图的当前顶点数和弧数</span><br><span class="line">&#125;ALGraph;</span><br></pre></td></tr></table></figure>
+
+<p><em>采用邻接表表示法创建 无向图</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Status CreateUDG(ALGraph &amp;G)&#123;</span><br><span class="line">	cin &gt;&gt; G.vexnum &gt;&gt; G.arcnum;  //输入总顶点数、总边数</span><br><span class="line">	//输入各点，构造表头结点表</span><br><span class="line">	for(i = 0; i &lt; G.vexnum; ++i)&#123;</span><br><span class="line">		cin &gt;&gt; G.vertices[i].data;  //输入顶点值</span><br><span class="line">		G.vertices[i].firstarc = NULL;  //初始化表头结点的指针域</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//输入各边，构造邻接表</span><br><span class="line">	for(k = 0; k &lt; G.arcnum; ++k)&#123;</span><br><span class="line">		cin &gt;&gt; v1 &gt;&gt; v2;  //输入一条边依附的两个顶点</span><br><span class="line">		i = LocateVex(G,v1);</span><br><span class="line">		j = LocateVex(G,v2);</span><br><span class="line">		p1 = new ArcNode;   //生成一个新的边结点*p1</span><br><span class="line">		p1 -&gt; adjvex = j;   //邻接点序号为j</span><br><span class="line">		//将新结点*p1插入顶点vi的边表头部</span><br><span class="line">		p1 -&gt; nextarc = G.vertices[i].firstarc;</span><br><span class="line">		G.vertices[i].firstarc = p1;</span><br><span class="line"></span><br><span class="line">		p2 = new ArcNode;</span><br><span class="line">		p2 -&gt; adjvex = i;</span><br><span class="line">		p2 -&gt; nextarc = G.vertices[j].firstarc;</span><br><span class="line">		G.vertices[j].firstarc = p2;</span><br><span class="line">	&#125;</span><br><span class="line">	return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>邻接表的特点：</strong>   </p>
+<ol>
+<li>方便找任一顶点的所有“邻接点”   </li>
+<li>节约稀疏图的空间   </li>
+<li>方便计算无向图的“度”   </li>
+<li>不方便检查任意一对顶点间是否存在边</li>
+</ol>
+<hr>
+<p><strong>邻接矩阵 &amp;&amp; 邻接表 表示法的关系：</strong><br><strong>1. 联系：</strong><br>邻接表中每一个链表对应于邻接矩阵中的一行<br>链表中结点个数 &#x3D; 一行中非零元素的个数<br><strong>2. 区别：</strong><br>①邻接矩阵是唯一的，邻接表不唯一<br>②邻接矩阵的空间复杂度为O(n²)，而邻接表为O(n + e)或O(n + 2e)<br><strong>3. 用途：</strong><br>邻接矩阵多用于稠密图，而邻接表多用于稀疏图</p>
+<p><img src="https://s2.loli.net/2023/12/08/aRmFwSZE9DixA2M.jpg" alt="十字链表__邻接多重表解决的问题.png"></p>
+<h3 id="3-十字链表-表示法"><a href="#3-十字链表-表示法" class="headerlink" title="3.十字链表 表示法"></a>3.十字链表 表示法</h3><p>有向图的另一种链式存储结构(将有向图的邻接表和逆邻接表结合起来)<br>有向图中的一条弧 -&gt; 弧结点<br>有向图中的顶点 -&gt; 顶点结点<br><img src="https://s2.loli.net/2023/12/08/4kItja17JDZVP95.jpg" alt="十字链表.png"></p>
+<h3 id="4-邻接多重表-表示法"><a href="#4-邻接多重表-表示法" class="headerlink" title="4.邻接多重表 表示法"></a>4.邻接多重表 表示法</h3><p><img src="https://s2.loli.net/2023/12/08/DUlxYhCPg7Q9Mi1.jpg" alt="邻接多重表.png"></p>
+<h2 id="三-图的遍历"><a href="#三-图的遍历" class="headerlink" title="(三)图的遍历"></a>(三)图的遍历</h2><p>遍历定义：<br>从已给的连通图中某一顶点出发，沿着一些边访遍图中所有的顶点，且使每个顶点仅被访问一次，就叫<strong>图的遍历</strong>，它是图的基本运算。<br>遍历实质：<br>找每个顶点的邻接点的过程。   </p>
+<p>图的特点：<br>可能存在回路，可能又回到了曾经访问过的顶点。<br>解决思路：<br>设置辅助数组 visited[n]，用来标记每个被访问过的顶点。<br>初始状态 visited[i] &#x3D; 0<br>顶点 i 被访问，改为 visited[i] &#x3D; 1 ，阻止被多次访问</p>
+<h3 id="深度优先搜索-DFS"><a href="#深度优先搜索-DFS" class="headerlink" title="深度优先搜索(DFS)"></a>深度优先搜索(DFS)</h3><p>(Depth_First Search)</p>
+<p>从 起始顶点 v 出发，访问它的任一邻接顶点 w1<br>从 w1 出发，访问与 w1 邻接但还未被访问过的顶点 w2<br>…<br>直到到达所有邻接顶点都被访问过的顶点 u 为止<br>接着，退回一步，看看还有没有其他没有被访问的邻接顶点<br>有，继续访问<br>无，再退回，重复上述过程</p>
+<p>连通图的深度优先遍历类似于 <em>树的先根遍历</em></p>
+<p><em>连通图的DFS遍历</em><br><img src="https://s2.loli.net/2023/12/10/zdgwUrITJRomjqD.jpg" alt="深度优先搜索案例.png"></p>
+<p><em>非连通图的DFS遍历</em><br><img src="https://s2.loli.net/2023/12/10/KkurXbsEzJVcBP9.jpg" alt="非连通图的深度优先搜索遍历.png"></p>
+<h4 id="DFS算法的实现"><a href="#DFS算法的实现" class="headerlink" title="DFS算法的实现"></a>DFS算法的实现</h4><p><img src="https://s2.loli.net/2023/12/09/rEKoHMXql7JVy8L.jpg" alt="邻接矩阵-无向图-深度遍历.png">   </p>
+<p><em>邻接矩阵-深度优先</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void DFS(AMGraph G,int v)&#123; // v 为起始点</span><br><span class="line">	cout &lt;&lt; v;</span><br><span class="line">	visited[v] = true; //访问</span><br><span class="line">	for(w = 0; w &lt; G.vexnum; w++)&#123;</span><br><span class="line">		if(G.arc[v][w] != 0 &amp;&amp; (!visited[w]))&#123;</span><br><span class="line">			DFS(G,w); // w 是 v 的邻接点，如果 w 未被访问，则递归调用 DFS</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="广度优先搜索-BFS"><a href="#广度优先搜索-BFS" class="headerlink" title="广度优先搜索(BFS)"></a>广度优先搜索(BFS)</h3><p>(Breadth_First Search)<br>方法：从图的，某一结点出发，首先依次访问该结点的<strong>所有邻接点</strong>，<br>再按这些顶点被访问的先后次序依次访问与它们相邻接的所有未被访问的顶点<br>重复此过程，直至所有顶点均被访问完为止</p>
+<p><em>连通图的 BFS遍历</em><br><img src="https://s2.loli.net/2023/12/10/8R43X1P5d7yZrpO.jpg" alt="广度优先搜索遍历的案例.png"></p>
+<p><em>非连通图的 BFS遍历</em><br><img src="https://s2.loli.net/2023/12/10/1rfiO4ZCWvH8Jcq.jpg" alt="非连通图的广度遍历.png"></p>
+<p><em>邻接表-广度优先</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void BFS(Graph G,int v)&#123;</span><br><span class="line">	cout &lt;&lt; v;  //访问第 v 个顶点</span><br><span class="line">	visited[v] = true;</span><br><span class="line"></span><br><span class="line">	InitQueue(Q);</span><br><span class="line">	EnQueue(Q,v);</span><br><span class="line">	while(!QueueEmpty(Q))&#123;</span><br><span class="line">		DeQueue(Q,u);</span><br><span class="line">		for(w = FirstAdjVex(G,u); w &gt;= 0; w = NextAdjVex(G,u,w))&#123;</span><br><span class="line">			if(!visited[w])&#123; // w 为 u 的尚未访问过的邻接顶点</span><br><span class="line">				cout &lt;&lt; w;</span><br><span class="line">				visited[w] = true;</span><br><span class="line">				EnQueue(Q,w);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<h2 id="四-图的应用"><a href="#四-图的应用" class="headerlink" title="(四)图的应用"></a>(四)图的应用</h2><h3 id="1-最小生成树"><a href="#1-最小生成树" class="headerlink" title="(1)最小生成树"></a>(1)最小生成树</h3><p>最小生成树的典型用途：在n个城市间建立通信网，如何选择n-1条线路，使总费用最低</p>
+<p><strong>生成树</strong>：包含无向图G的所有顶点的极小连通子图(所有顶点均由边连接在一起，但不存在回路)<br><strong>最小生成树</strong>：给定一个无向网络，在该网中的所有生成树中，使得<strong>各边权值之和最小</strong>的那颗生成树称为该网的最小生成树，也叫最小代价生成树。</p>
+<p><strong>MST(Minimum Spanning Tree)性质</strong>:<br><img src="https://s2.loli.net/2023/12/10/7hpwtGoHkClz4iy.jpg" alt="MST性质.png"><br><strong>MST性质的解释</strong>：<br>在生成树的构造过程中，图中 n 个顶点分属两个集合：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已落在生成树的顶点集：U<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尚未落在生成树上的顶点集：V-U<br>接下来则应在所有连通 U 中顶点和 V-U 中顶点的边中选取<strong>权值最小的边</strong><br><img src="https://s2.loli.net/2023/12/10/jvVtcsXQYTkPb3n.jpg" alt="MST性质的解释.png"></p>
+<h4 id="构造最小生成树方法"><a href="#构造最小生成树方法" class="headerlink" title="构造最小生成树方法"></a>构造最小生成树方法</h4><h5 id="1-普里姆-Prim-算法"><a href="#1-普里姆-Prim-算法" class="headerlink" title="1.普里姆(Prim)算法"></a>1.普里姆(Prim)算法</h5><p><img src="https://s2.loli.net/2023/12/11/oDL2GAxNM3rtdEY.jpg" alt="普里姆算法思想.png">  </p>
+<h5 id="2-克鲁斯卡尔-Kruskal-算法"><a href="#2-克鲁斯卡尔-Kruskal-算法" class="headerlink" title="2.克鲁斯卡尔(Kruskal)算法"></a>2.克鲁斯卡尔(Kruskal)算法</h5><p><img src="https://s2.loli.net/2023/12/11/lRKQc3pfghSGNdM.jpg" alt="克鲁斯卡尔算法.png"><br><em>两种算法比较</em><br><img src="https://s2.loli.net/2023/12/11/WkeAnLgEj5tixYm.jpg" alt="两种算法比较.png"></p>
+<h3 id="2-最短路径"><a href="#2-最短路径" class="headerlink" title="(2)最短路径"></a>(2)最短路径</h3><p>典型用途：交通网络(用有向网来表示)问题——求最短路径</p>
+<p>最短路径和最小生成树不同，路径上不一定包含 n 个顶点，也不一定包含 n - 1 条边</p>
+<p>两种常见的最短路径问题   </p>
+<h4 id="1-单源最短路径-——-Dijkstra-迪杰斯特拉-算法"><a href="#1-单源最短路径-——-Dijkstra-迪杰斯特拉-算法" class="headerlink" title="1.单源最短路径 —— Dijkstra(迪杰斯特拉)算法"></a>1.单源最短路径 —— Dijkstra(迪杰斯特拉)算法</h4><p><strong>按路径长度递增次序产生最短路径</strong><br><img src="https://s2.loli.net/2023/12/11/Vqg8Y7Rp5EUCko3.jpg" alt="最短路径第二类问题.png"><br>图中某一个顶点到其他顶点的最短路径<br><strong>①初始化</strong>：先找出从源点 v0 到各终点 vk 的直达路径(v0,vk),即通过一条弧直达的路径<br><strong>②选择</strong>：从这些路径中找出一条长度最短的路径(v0,u)<br><strong>③更新</strong>：然后对其余各条路径进行适当调整<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若图中存在弧 (u,vk) ,且 (v0,u) + (u,vk) &#x3D; (v0,vk)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则以路径 (v0,u,vk) 替代 (v0,vk)<br>在调整后的各条路径中，再找长度最短的路径，依此类推<br>时间复杂度：O(n²)</p>
+<p><strong>Dijkstra算法步骤</strong><br><img src="https://s2.loli.net/2023/12/11/8DtB2oVQTmsxHzh.jpg" alt="Dijkstra算法步骤.png"></p>
+<h4 id="2-所有顶点间的最短路径-——-Floyd-弗洛伊德-算法"><a href="#2-所有顶点间的最短路径-——-Floyd-弗洛伊德-算法" class="headerlink" title="2.所有顶点间的最短路径 —— Floyd(弗洛伊德)算法"></a>2.所有顶点间的最短路径 —— Floyd(弗洛伊德)算法</h4><p><img src="https://s2.loli.net/2023/12/11/bFxNmrMCzZDtA3K.jpg" alt="最短路径第一类问题.png"><br><strong>求 所有顶点间的最短路径 的方法：</strong><br>方法一：每次以一个顶点为源点，重复执行 Dijkstra算法 n 次,时间复杂度为 O(n³)<br>方法二：弗洛伊德(Floyd)算法</p>
+<p>弗洛伊德算法思想：<br>逐个顶点试探<br>从 vi 到 vj 的所有可能存在的路径中<br>选出一条<br><img src="https://s2.loli.net/2023/12/11/bXnLc7xEa6hZoQm.jpg" alt="Floyd算法例子.png"></p>
+<hr>
+<p>拓扑排序和关键路径都是针对有向无环图来说的<br><strong>有向无环图</strong>：无环的有向图，简称 DAG图(Directed Acycline Graph)<br><img src="https://s2.loli.net/2023/12/11/3EToq6FespGBCuD.jpg" alt="有向无环图示例.png"><br>有向无环图常用来描述一个工程或系统的进行过程(通常把计划、施工、生产、程序流程等当成是一个工程)<br>一个工程可以分为若干个子工程，只要完成了这些子工程(活动)就可以导致整个工程的完成。</p>
+<p><strong>如何表示“活动”</strong>(用一个有向图表示一个工程的各子工程及其相互制约的关系):   </p>
+<p><strong>AOV网(拓扑排序)：</strong>以<strong>顶点表示活动，弧表示活动之间的优先制约关系</strong>，称这种有向图为顶点表示活动的网，简称 AOV网(Activity On Vertex network)<br><strong>AOE网(关键路径)：</strong>以<strong>弧表示活动，以顶点表示活动的开始或结束事件</strong>，称这种有向图为边表示活动的网，简称 AOE网(Activity On Edge)   </p>
+<hr>
+<h3 id="3-拓扑排序"><a href="#3-拓扑排序" class="headerlink" title="(3)拓扑排序"></a>(3)拓扑排序</h3><p>(针对有向无环图 )  </p>
+<p>排课表：有先修课</p>
+<p><strong>拓扑排序：</strong>在AOV网没有回路的前提下，我们<strong>将全部活动排列成一个线性序列</strong>，使得若 AOV网中有弧 &lt;i，j&gt;存在，则在这个序列中，i一定排在j的前面，具有这种性质的线性序列称为<strong>拓扑有序序列</strong>，相应的拓扑有序排序的算法称为拓扑排序。</p>
+<p><strong>拓扑排序的方法：</strong><br>在有向图中选一个<em><strong>没有前驱的顶点</strong></em>且输出之    从图中删除该顶点和所有以它为尾的弧。<br>重复上述两步，直至全部顶点均已输出;或者当图中不存在无前驱的顶点为止<br><img src="https://s2.loli.net/2023/12/11/1Fa3e4HW2kEpCOZ.jpg" alt="拓扑排序示例.png"></p>
+<p><strong>拓扑排序的一个重要应用：</strong><br><strong>检测 AOV网中是否存在环方法：</strong><br>对有向图构造其顶点的拓扑有序序列，<em>若网中所有顶点都在它的拓扑有序序列中，则该 AOV网必定不存在环</em><br><img src="https://s2.loli.net/2023/12/11/1ZXOYGFWIHzVB5k.jpg" alt="AOV网中有环的情况.png"></p>
+<h3 id="4-关键路径"><a href="#4-关键路径" class="headerlink" title="(4)关键路径"></a>(4)关键路径</h3><p>(针对有向无环图)</p>
+<p>家庭晚宴活动、办公室装修(已知每项任务历时、前置任务是什么、几点开始，求最迟几点开始准备)</p>
+<p><em><strong>AOE网的表示</strong></em><br>把工程计划表示为边表示活动的网络，即 AOE网用<em><strong>顶点表示事件</strong></em>，<em><strong>弧表示活动</strong></em>，<em><strong>弧的权表示活动持续时间</strong></em>。<br><strong>事件</strong>表示在它之前的活动已经完成，在它之后的活动可以开始    </p>
+<p><em><strong>AOE网的形成</strong></em><br><img src="https://s2.loli.net/2023/12/11/NF216Qx8B7KsAIr.jpg" alt="关键路径示例(AOE网的形成).png"></p>
+<p>例:设一个工程有11项活动，9个事件<br>事件 v1 表示整个工程开始(源点: 入度为0的顶点)<br>事件 v9 表示整个工程结束(汇点: 出度为0的顶点)</p>
+<p>对于AOE网，我们关心两个问题<br>(1)完成整项工程至少需要务少时间?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><strong>关键路径</strong></em><br>(2) 哪些活动是影响工程进度的关键?(缩短哪个工程的时间会使总时间减少)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><strong>关键路径上的关键活动</strong></em></p>
+<p><strong>关键路径</strong> —— 路径长度最长的路径<br><strong>路径长度</strong> —— 路径上各活动持续时间之和。<br><strong>关键活动</strong> —— 关键路径上的活动，即 l(i) &#x3D;&#x3D; e(i) (即 l(i) - e(i) &#x3D;&#x3D; 0 ) 的活动 (最晚开始时间 - 最早开始时间)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;l(i) - e(i) —— 表示完成活动 ai 的<strong>时间余量</strong>。 例: (3) - e(3) &#x3D; 90   </p>
+<p><strong>如何确定关键路径</strong>，需要定义4个描述量：<br><img src="https://s2.loli.net/2023/12/11/eOm9ozJvnYXj1WR.jpg" alt="确定关键路径的4个描述量.png">   </p>
+<p><strong>如何找到 l(i) &#x3D;&#x3D; e(i) 的关键活动？</strong><br><img src="https://s2.loli.net/2023/12/11/Qp5hj8EUmqvPgyf.jpg" alt="如何求最早and最晚.png">   </p>
+<p><strong>求关键路径步骤：</strong><br>最早发生时间<strong>ve</strong> &#x3D; 最大的和(从头往后算)<br>最迟发生时间<strong>vl</strong> &#x3D; 最小的差(从汇点往回算)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;汇点的最迟发生时间与其最早发生时间相同<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前一个顶点的最晚发生时间 - 权值<br>活动最早开始时间<strong>e</strong>：查弧尾的最早发生时间<br>活动最迟开始时间<strong>l</strong>：查弧头的最迟发生时间 - 弧的权值(活动持续时间)<br><img src="https://s2.loli.net/2023/12/12/qlTypaPEhOfCS6x.jpg" alt="求关键路径步骤.png">   </p>
+<ol>
+<li>若网中有几条关键路径，则需加快同时在几条关键路径上的关键活动<br>如: a11、a10、a8、a7。   </li>
+<li>如果一个活动处于所有的关键路径上，那么提高这个活动的速度，就能缩短整个工程的完成时间。如: a1、a4   </li>
+<li>处于所有的关键路径上的活动完成时间不能缩短太多否则会使原来的关键路径变成不是关键路径。这时，必须重新寻找关键路径。如:a1由6天变成3天，就会改变关键路径</li>
+</ol>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2023/12/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9B%BE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/12/09/LeetCode%E5%88%B7%E9%A2%98/31-40/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            LeetCode刷题31-40
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/12/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">数组和广义表</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

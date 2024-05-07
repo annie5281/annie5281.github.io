@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>资源管理 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/资源管理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  资源管理
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/02/02/Android/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" class="article-date">
+  <time datetime="2024-02-02T13:05:35.000Z" itemprop="datePublished">2024-02-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">9 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>anim 补间动画<br>layout 布局资源<br>navigation 导航<br>values(colors,strings) 值<br>drawable 图片<br>font 字体<br>transition 转换的动画资源<br>menu 菜单<br>raw 文件资源<br>interpolator 拦截器  </p>
+<h1 id="一-drawable"><a href="#一-drawable" class="headerlink" title="(一)drawable"></a>(一)drawable</h1><p>res -&gt; drawable -&gt; New -&gt; Image Asset(图片资源)  </p>
+<p>corners 设置四个角(圆角)<br>stroke 描边 画笔颜色<br>solid 填充色<br>gradient 渐变色<br>padding 内间距<br>size 尺寸  </p>
+<p>除了<code>shape</code>类型和<code>selector</code>类型之外，Android开发中的<code>drawable</code>资源还有<code>layer-list</code>类型和<code>bitmap</code>类型等。下面简要介绍了这些类型的功能作用：  </p>
+<ol>
+<li><code>shape</code>类型：<br><code>shape</code>类型用于创建简单的图形，如矩形、圆角矩形、圆形等。可以通过设置<code>shape</code>标签的属性来定义不同的形状、颜色、边框等样式。  </li>
+<li><code>selector</code>类型：<br><code>selector</code>类型用于创建状态选择器，可以根据控件的不同状态（如按下、选中、正常等）显示不同的图像或颜色。<code>selector</code>文件中包含了多个<code>item</code>标签，每个<code>item</code>标签定义了一个状态和对应的图像或颜色。  </li>
+<li><code>layer-list</code>类型：<br><code>layer-list</code>类型用于创建图层列表，可以将多个图形或图片叠加在一起，形成一个复合的图像。可以通过<code>item</code>标签来定义每个图层的位置、大小、颜色等属性。   </li>
+<li><code>bitmap</code>类型：<br><code>bitmap</code>类型用于引用位图图像资源，通常用于显示图片。可以通过<code>src</code>属性指定位图资源的路径。<br>这些<code>drawable</code>资源类型在Android开发中可以用来定义控件的背景、前景、边框等样式，以及根据不同状态显示不同的图像或颜色。通过合理使用这些资源类型，可以实现丰富多彩的界面效果。</li>
+</ol>
+<p><strong>shape</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">shape</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:shape</span>=<span class="string">&quot;rectangle&quot;</span>&gt;</span> <span class="comment">&lt;!--强调是矩形--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:radius</span>=<span class="string">&quot;29dp&quot;</span>/&gt;</span> <span class="comment">&lt;!--设置全圆角--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;@color/text_gray&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">shape</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:topLeftRadius</span>=<span class="string">&quot;15dp&quot;</span></span></span><br><span class="line"><span class="tag">             <span class="attr">android:topRightRadius</span>=<span class="string">&quot;15dp&quot;</span> /&gt;</span> <span class="comment">&lt;!--设置左上/右上圆角--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;@color/alpha_blue&quot;</span>/&gt;</span> <span class="comment">&lt;!--纯色--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>selector</strong><br>注意使用选择器时只能使用<code>&lt;item android:drawable</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--selector 选择器 给系统使用--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--当控件的enabled状态是false 显示color为灰色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span> = <span class="string">&quot;@drawable/shape_button_round_corner_gray&quot;</span> <span class="attr">android:state_enabled</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--true 显示color为蓝色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span> = <span class="string">&quot;@drawable/shape_button_round_corner_blue&quot;</span> <span class="attr">android:state_enabled</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>在Android Studio中的Drawable文件夹下可以存放以下类型的资源：</p>
+<ol>
+<li>图片资源(.png, .jpg, .gif等)：可以存放应用中使用的各种图片资源，例如应用图标、背景图片、按钮图标等。  </li>
+<li>矢量图资源(.xml)：可以存放矢量图形资源，使用 XML 描述的矢量图可以实现在不同分辨率下的自适应缩放。  </li>
+<li>图层列表资源(layer-list)：可以使用 layer-list 标签定义的XML文件，用于创建多层次的图形效果。  </li>
+<li>形状资源(shape)：可以使用 shape 标签定义的 XML 文件，用于创建各种形状的 Drawable 资源，例如矩形、圆角矩形、圆形等。  </li>
+<li>旋转动画资源(rotate)：可以使用 rotate 标签定义的 XML 文件，用于创建旋转动画效果。  </li>
+<li>缩放动画资源(scale)：可以使用 scale 标签定义的XML文件，用于创建缩放动画效果。</li>
+<li>渐变资源(gradient)：可 gradient 以使用 gradient 标签定义的 XML 文件，用于创建渐变效果。  </li>
+<li>透明度资源(alpha)：可以使用 alpha 标签定义的 XML 文件，用于创建透明度动画效果。<br>总的来说， Drawable 文件夹下可以存放各种静态和动态的视觉效果资源，用于在应用中实现各种UI设计需求。</li>
+</ol>
+<h1 id="二-values"><a href="#二-values" class="headerlink" title="(二)values"></a>(二)values</h1><h2 id="1-colors"><a href="#1-colors" class="headerlink" title="(1)colors"></a>(1)colors</h2><p>默认值：<br>作为一个参数而且有很多种情况，可以指定默认值，不传就是默认的<br>统一管理资源（values color）：<br>①文字的大小颜色粗细相同，可以采用同一套样式，统⼀管理所有的颜⾊资源<br> res → values → colors → 添加颜⾊资源<br><code>@color/text_white</code> &#x2F;&#x2F;调用  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>&gt;</span>#FF000000<span class="tag">&lt;/<span class="name">color</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color</span> <span class="attr">name</span>=<span class="string">&quot;white&quot;</span>&gt;</span>#FFFFFFFF<span class="tag">&lt;/<span class="name">color</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-strings"><a href="#2-strings" class="headerlink" title="(2)strings"></a>(2)strings</h2><p>②统⼀管理字符串资源<br> res → values → strings<br><code>@string/app_name</code> &#x2F;&#x2F;调用  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;app_name&quot;</span>&gt;</span>LoginAnnie<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;welcome_title&quot;</span>&gt;</span>欢迎回来<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-styles"><a href="#3-styles" class="headerlink" title="(3)styles"></a>(3)styles</h2><p>③统⼀管理某个控件的样式 控件在多个地⽅出现 并且⻓得差不多 [style样式]<br>定义样式 颜色 大小 粗细<br><code>style = &quot;@style/TextTitle&quot;</code> &#x2F;&#x2F;调用  </p>
+<p>textStyle 是设置文本字体样式,<br>Android 提供了三个样式  </p>
+<ol>
+<li>normal 正常字体  </li>
+<li>bold 粗体  </li>
+<li>italic 斜体</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--主标题--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;TextTitle&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:textSize&quot;</span>&gt;</span>36sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span> <span class="comment">&lt;!--字体大小--&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:textColor&quot;</span>&gt;</span>@color/text_white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:textStyle&quot;</span>&gt;</span>bold<span class="tag">&lt;/<span class="name">item</span>&gt;</span> <span class="comment">&lt;!--设置文字字体--&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--副标题--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;SubTextTitle&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:textSize&quot;</span>&gt;</span>10sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:textColor&quot;</span>&gt;</span>@color/text_gray<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--提示用户操作的文本样式--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;AlertTextTitle&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:textSize&quot;</span>&gt;</span>18sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:textColor&quot;</span>&gt;</span>@color/light_blue<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-attrs"><a href="#4-attrs" class="headerlink" title="(4)attrs"></a>(4)attrs</h2><p>自定义属性</p>
+<p>format：<br>string 字符串<br>color 颜色 @color&#x2F;xx #ffffff<br>boolean 布尔值<br>dimension 具体尺寸 20dp(icon_sizs dp值)<br>enum 定义枚举 这个属性可能有多种可能<br>float 浮点数 20.0f<br>integer 整数<br>reference 引用 @color&#x2F; @drawable @string&#x2F;<br>fraction 比例 10%<br>flags 标签  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">&quot;UserInputView&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--颜色--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;uniColor&quot;</span> <span class="attr">format</span>=<span class="string">&quot;reference|color&quot;</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--标题--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;title&quot;</span> <span class="attr">format</span>=<span class="string">&quot;string|reference&quot;</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--默认提示内容--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;placeholder&quot;</span> <span class="attr">format</span>=<span class="string">&quot;string|reference&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--错误时提示内容--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;error_title&quot;</span> <span class="attr">format</span>=<span class="string">&quot;string|reference&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--设置类型： 密码输入 or 正常输入--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;input_type&quot;</span> <span class="attr">format</span>=<span class="string">&quot;integer&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">&quot;normal&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-thems-屏幕显示设置"><a href="#5-thems-屏幕显示设置" class="headerlink" title="(5)thems 屏幕显示设置"></a>(5)thems 屏幕显示设置</h2><p>去掉ActionBar导航栏和状态栏<br>res → values →themes → NoActionBar  </p>
+<p>设置全屏显示 windowFullscreen</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span> <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Base application theme. --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;Base.Theme.LoginAnnie&quot;</span> <span class="attr">parent</span>=<span class="string">&quot;Theme.Material3.DayNight.NoActionBar&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:windowFullscreen&quot;</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;Theme.LoginAnnie&quot;</span> <span class="attr">parent</span>=<span class="string">&quot;Base.Theme.LoginAnnie&quot;</span> /&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"></span></span><br></pre></td></tr></table></figure>
+<p>windowFullscreen 和 windowTranslucentStatus 是两个不同的属性，它们分别用于控制Activity的全屏显示和状态栏的透明度。它们的区别如下：</p>
+<ol>
+<li><p>windowFullscreen：设置为true时，Activity会全屏显示，包括状态栏和导航栏的区域也会被占据。这样可以让应用的界面完全覆盖整个屏幕，实现全屏显示的效果。</p>
+</li>
+<li><p>windowTranslucentStatus：设置为true时，状态栏会变为半透明状态，让应用的内容可以延伸到状态栏的下方，实现沉浸式的界面效果。这个属性主要用于控制状态栏的透明度，而不是控制整个Activity的全屏显示。</p>
+</li>
+</ol>
+<p>综上所述，windowFullscreen用于控制Activity是否全屏显示，而windowTranslucentStatus用于控制状态栏的透明度。根据应用的需求，可以根据情况选择使用这两个属性，或者同时使用它们来实现更加灵活的界面效果。</p>
+<h1 id="三-font"><a href="#三-font" class="headerlink" title="(三)font"></a>(三)font</h1><p>res -&gt; font</p>
+<p>MAC字体天下<br>选择字体下载下来，将字体名称改为小写，将字体拷贝到font中</p>
+<p>自定义属性 </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 自定义视图显示文本内容--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">&quot;CustomTextView&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;text&quot;</span> <span class="attr">format</span>=<span class="string">&quot;stringreference&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;fontSize&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension/reference&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&#x27;textFont&quot; format=&quot;integer&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">&quot;normal&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">&quot;zitiaozichang&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>导入字体<br>自己的字体使用 : xmI textFont&#x3D;”@font&#x2F;xxx.ttf代码中 TypeFace.Default</p>
+<h1 id="四-raw"><a href="#四-raw" class="headerlink" title="(四)raw"></a>(四)raw</h1><p>动画资源：lottiefiles.com  </p>
+<p>lottie动画  </p>
+<ol>
+<li>导入implementation ‘com.airbnb.android:lottie:6.1.0’资源（使用 LottieAnimationView 控件必须导入该资源）  </li>
+<li>创建资源文件夹res —-&gt;raw （音频视频 test文件 json文件）—-&gt; file下载导入动画资源  </li>
+<li>在 fragment 中添加代码 <strong>LottieAnimationView</strong> 控件</li>
+</ol>
+<p>app:<strong>lottie_rawRes</strong>&#x3D;”@raw&#x2F;delivery” &#x2F;&#x2F;显示哪个资源<br>app:<strong>lottie_autoPlay</strong>&#x3D;”true” &#x2F;&#x2F;是否自动播放<br>app:<strong>lottie_loop</strong>&#x3D;”@raw&#x2F;delivery” &#x2F;&#x2F;是否循环播放  </p>
+<p>&#x2F;&#x2F;Lottie File<br><code>implementation&#39;com.airbnb.android:lottie:6.1.0&#39;</code></p>
+<p>图片资源：<br>image.baidu.com</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/02/02/Android/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/values/" rel="tag">values</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/02/03/Android/%E5%A4%9A%E6%8E%A7%E4%BB%B6%E7%BB%84%E5%90%88%E5%A4%8D%E7%94%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            多控件组合复用
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/02/02/Android/AlertDialog%20%E5%BC%B9%E7%AA%97/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">AlertDialog 弹窗</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

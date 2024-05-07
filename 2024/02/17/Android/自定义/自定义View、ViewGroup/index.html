@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>自定义 View、ViewGroup |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/自定义/自定义View、ViewGroup"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  自定义 View、ViewGroup
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/02/17/Android/%E8%87%AA%E5%AE%9A%E4%B9%89/%E8%87%AA%E5%AE%9A%E4%B9%89View%E3%80%81ViewGroup/" class="article-date">
+  <time datetime="2024-02-17T13:05:35.000Z" itemprop="datePublished">2024-02-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a> / <a class="article-category-link" href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89/">自定义</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">3.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">14 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="自定义View"><a href="#自定义View" class="headerlink" title="自定义View"></a>自定义View</h1><p><em><strong>自定义一个view步骤：</strong></em>   </p>
+<p><strong>a.创建一个类继承于 View</strong>  </p>
+<p><strong>b.重写构造函数 (次构造函数)</strong><br>&nbsp;&nbsp;<code>class CustomView(context:Context,attrs:AttributeSet?):View(context,attrs)&#123;&#125;</code>  </p>
+<p><strong>c.自定义属性:什么是需要外部配置的</strong><br>要先判断需不需要自定义属性？<br>需不需要在 xml 中配置这个 View<br>&nbsp;&nbsp;①在 values 里创建 attr 的 xml 文件<br>&nbsp;&nbsp;②Xml中使用自定义的属性<br>&nbsp;&nbsp;③在自定义的View中，解析xml中自定义的属性(init{}中)<br>&nbsp;&nbsp;并把这些属性的值设置给对应的控件 &#x2F;&#x2F;使用</p>
+<p><strong>d.onMeasure()测量视图的尺寸</strong><br>&nbsp;&nbsp;①获取外部设置的尺寸的 mode sizeMeasureSpec getMode getSize<br>&nbsp;&nbsp;②判断mode<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXACTLY使用外部的值<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AT MOST UNSPECIFIED自己确定自己的尺寸<br>&nbsp;&nbsp;③将尺寸传递给外部viewGroup<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setMeasureDimession(width,height)  </p>
+<p><strong>e.onDraw()绘制</strong><br>&nbsp;&nbsp;画笔 Paint<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color 画笔颜色<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strokewidth 画笔的粗细<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style Paint.style.FILL 填满   STROKE描边 FILL AND_STROKE<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isAntialias:抗锯齿<br>&nbsp;&nbsp;canvas</p>
+<p>绘制：<br>①画 v .纸 笔 颜料<br><strong>画笔：Paint</strong> （画文本用TextPaint）<br><strong>画板：Canvas</strong> 扮演的是人的角色 画东西<br>Bitmap 才是真正的画板 画布</p>
+<p>②画 n. 画的东西（一条线段、圆形、矩形、图片、文字）<br>  <strong>路径：Path</strong>   </p>
+<h2 id="一-onMeasure-确定尺寸"><a href="#一-onMeasure-确定尺寸" class="headerlink" title="(一)onMeasure()确定尺寸"></a>(一)onMeasure()确定尺寸</h2><p>onMeasure方法会在View需要进行测量时被调用，开发者可以在这个方法中根据测量模式和大小来计算View的实际大小，并调用setMeasuredDimension方法设置View的测量大小。</p>
+<p>View的测量 —&gt; 决定控件的大小<br>onMeasure()会被调用多次，进行多次测量</p>
+<p><em><strong>MeasureSpec</strong></em>（测量规格）：是32位的整数（2+30位）测量参数<br><strong>2：外部指定测量方式</strong> <code>MeasureSpec.getMode</code> &#x2F;&#x2F;得到测量模式  </p>
+<p>Mode（三种）：用来做限定的，外部给当前这个View设置的一些限制<br><strong>①Unspecified</strong> [未知名的] ：无限制(几乎不用)<br><strong>②Exactly</strong> [精确的] ：确定了的尺寸，就不需要计算，直接使用外部尺寸<br><strong>③AtMost</strong> [最多不超过] ：最多多少尺寸 子控件不能超过这个尺寸 ——&gt; 具体多大由自己定  </p>
+<p>例子：<br>Layout_width：<br>200dp —&gt; Exactly<br>wrap_content —&gt; AtMost<br>match_parent —&gt; Exactly<br>match_constraint —&gt; Exactly 匹配约束<br> -&gt;所以如果是 wrap_content 或者模式是 AtMost ，需要自己测量自己的尺寸 宽 高<br> -&gt;其他如果是Exactly，不需要测量自身尺寸  </p>
+<p><strong>30.具体的值</strong> <code>MeasureSpec.getSize</code> &#x2F;&#x2F;具体给多大的值  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">override fun <span class="title function_">onMeasure</span><span class="params">(widthMeasureSpec: Int, heightMeasureSpec: Int)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec)</span><br><span class="line">        <span class="type">var</span> <span class="variable">mWidth</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="type">var</span> <span class="variable">mHeight</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//确定高度</span></span><br><span class="line">        <span class="type">val</span> <span class="variable">widthMode</span> <span class="operator">=</span> MeasureSpec.getMode(widthMeasureSpec)</span><br><span class="line">        <span class="type">val</span> <span class="variable">widthSize</span> <span class="operator">=</span> MeasureSpec.getSize(widthMeasureSpec)</span><br><span class="line">        mWidth = when(widthMode)&#123;</span><br><span class="line">            MeasureSpec.EXACTLY -&gt; widthSize</span><br><span class="line">            <span class="keyword">else</span> -&gt; <span class="number">6</span>*mRadius + <span class="number">4</span>*mSpace</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//确定宽度</span></span><br><span class="line">        <span class="type">val</span> <span class="variable">heightMode</span> <span class="operator">=</span> MeasureSpec.getMode(heightMeasureSpec)</span><br><span class="line">        <span class="type">val</span> <span class="variable">heightSize</span> <span class="operator">=</span> MeasureSpec.getSize(heightMeasureSpec)</span><br><span class="line">        mHeight = when(heightMode)&#123;</span><br><span class="line">            MeasureSpec.EXACTLY -&gt; heightSize</span><br><span class="line">            <span class="keyword">else</span> -&gt; <span class="number">6</span>*mRadius + <span class="number">4</span>*mSpace</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//告诉外部(父容器)自己的尺寸</span></span><br><span class="line">        setMeasuredDimension(mWidth,mHeight)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以将getMode和getSize给View写个扩展方法方便使用</span></span><br><span class="line"><span class="comment">//获取测量的模式和尺寸</span></span><br><span class="line">fun View.getMode(measureSpec:Int) = MeasureSpec.getMode(measureSpec)</span><br><span class="line">fun View.getSize(measureSpec:Int) = MeasureSpec.getSize(measureSpec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//提供默认宽高</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">val</span> <span class="variable">mDefaultWidth</span> <span class="operator">=</span> context.dp2px(<span class="number">200</span>)</span><br><span class="line"><span class="keyword">private</span> <span class="type">val</span> <span class="variable">mDefaultHeight</span> <span class="operator">=</span> context.dp2px(<span class="number">60</span>)</span><br><span class="line"></span><br><span class="line">override fun <span class="title function_">onMeasure</span><span class="params">(widthMeasureSpec: Int, heightMeasureSpec: Int)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec)</span><br><span class="line">        <span class="type">var</span> <span class="variable">mWidth</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="type">var</span> <span class="variable">mHeight</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算宽度</span></span><br><span class="line">        mWidth = When(getMode(widthMeasureSpec))&#123;</span><br><span class="line">          MeasureSpec.EXACTLY -&gt; getSize(widthMeasureSpec)</span><br><span class="line">          <span class="keyword">else</span> -&gt; mDefaultWidth.toInt()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算高度</span></span><br><span class="line">        mHeight = when(getSize(heightMeasureSpec))&#123;</span><br><span class="line">          MeasureSpec.EXACTLY -&gt; getSize(widthMeasureSpec)</span><br><span class="line">          <span class="keyword">else</span> -&gt; mDefaultHeight.toInt()</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//告诉外部(父容器)自己的尺寸</span></span><br><span class="line">        setMeasuredDimension(mWidth,mHeight)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-onSizeChanged"><a href="#二-onSizeChanged" class="headerlink" title="(二)onSizeChanged()"></a>(二)onSizeChanged()</h2><p>onSizeChanged() 方法会在View的大小发生变化时被调用，可以在这个方法中执行一些逻辑，比如更新UI或者重新计算布局等操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">override fun <span class="title function_">onSizeChanged</span><span class="params">(w: Int, h: Int, oldw: Int, oldh: Int)</span>&#123;</span><br><span class="line">  <span class="built_in">super</span>.onSizeChanged(w, h, oldw, oldh)</span><br><span class="line">  <span class="comment">//如果外部规定了宽高，就需要从新计算音浪的尺寸</span></span><br><span class="line">        <span class="keyword">if</span>(height != mWaveHeight)&#123;</span><br><span class="line">            mWaveHeight = height</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(width != (<span class="number">2</span>*mSpace + <span class="number">3</span>*mWaveWidth))&#123;</span><br><span class="line">            mSpace = (width * <span class="number">0.1</span>).toInt()</span><br><span class="line">            mWaveWidth = (width - <span class="number">2</span>*mSpace)/<span class="number">3</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="三-onDraw-绘制"><a href="#三-onDraw-绘制" class="headerlink" title="(三)onDraw()绘制"></a>(三)onDraw()绘制</h2><p>onDraw方法会在View需要进行绘制时被调用，开发者可以在这个方法中使用Canvas和Paint来绘制View的内容  </p>
+<p>一个视图通过onMeasure计算自己的尺寸，计算完之后，通过onDraw绘制将其显示出来</p>
+<p><em>Canvas</em> 提供了一系列绘制的方法 画线 画圆 画弧线 画文字<br><em>Bitmap</em> 所有绘制的东西都是绘制到这个bitmap位图上的  </p>
+<p><strong>invalidate()</strong> 重新绘制，重新调用onDraw()方法</p>
+<h3 id="1-画笔-Paint"><a href="#1-画笔-Paint" class="headerlink" title="(1)画笔 Paint"></a>(1)画笔 Paint</h3><p>颜色、粗细、样式、抗锯齿</p>
+<ol>
+<li><strong>color</strong> &#x3D; Color.MAGENTA   &#x2F;&#x2F;画笔的颜色</li>
+</ol>
+<ul>
+<li>color &#x3D; Color.rgb(172,51,241)  &#x2F;&#x2F;要转化成对应的十进制值  </li>
+<li>color &#x3D; Color.argb( )  &#x2F;&#x2F;有透明度  </li>
+<li>color &#x3D; Color.parseColor(“#00BAAD”)  </li>
+<li>color &#x3D; resource.getColor(R.color.dot_bg_color,null) &#x2F;&#x2F;引用资源颜色</li>
+</ul>
+<ol start="2">
+<li><strong>strokeWidth</strong> &#x3D; dp2px (20)  &#x2F;&#x2F;画笔的粗细宽度 要的是像素  </li>
+<li><strong>isAntiAlias</strong> &#x3D; true  &#x2F;&#x2F;抗锯齿  </li>
+<li><strong>style</strong> &#x3D; Paint.Style.STROKE &#x2F;&#x2F;画笔样式</li>
+</ol>
+<ul>
+<li>stroke 描边    </li>
+<li>fill  有颜色 有填充   </li>
+<li>strokeandfill  都有</li>
+</ul>
+<ol start="5">
+<li><strong>strokeCap</strong> &#x3D;Paint.Cap.ROUND &#x2F;&#x2F;变圆润 &#x2F;&#x2F;两端的切面效果 &#x2F;&#x2F;画弧线的笔<br>(线条的端点样式)</li>
+</ol>
+<ul>
+<li>BUTT 截面   </li>
+<li>ROUND    </li>
+<li>SQUARE 方形(根BUTT一样)</li>
+</ul>
+<ol start="6">
+<li><strong>strokeJoin</strong> &#x3D; Paint.Join.ROUND &#x2F;&#x2F;拐角连接处连接处<br>(线条的连接样式)</li>
+</ol>
+<ul>
+<li>ROUND 圆角   </li>
+<li>BUTT 横切</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> val mPaint:TextPaint by lazy&#123;</span><br><span class="line">  TextPaint().apply&#123;</span><br><span class="line">    color = Color.GRAY</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-画板-Canvas-绘制工具-——-Bitmap"><a href="#2-画板-Canvas-绘制工具-——-Bitmap" class="headerlink" title="(2)画板 Canvas(绘制工具) ——&gt; Bitmap"></a>(2)画板 Canvas(绘制工具) ——&gt; Bitmap</h3><ol>
+<li><strong>canvas?.drawCircle</strong>(cx[中心点x],cy[中心点y],radius[半径],Paint):画圆  </li>
+<li><strong>canvas?.drawOval</strong>(left,top,right,bottom,paint) 画椭圆  </li>
+<li><strong>canvas?.drawArc</strong>(left,top,right,bottom,startAngle[从哪开始画],sweepAngle[弧线扫过的角度],useCenter[是否连接中心点],paint) 画弧</li>
+</ol>
+<ul>
+<li>-90开始 顺时针转动</li>
+</ul>
+<ol start="4">
+<li><strong>canvas?.drawText</strong>(text[要画的文本],x,y,paint) 画文本</li>
+</ol>
+<ul>
+<li>mPaint.measureText(String text)   —&gt;  返回文本框的宽度  </li>
+<li>mPaint.fontMetrics  —&gt;  Returns the font metrics value for the given text</li>
+</ul>
+<ol start="5">
+<li><strong>canvas?.drawRoundRect</strong>(left,top,right,bottom,rx[圆角x半径],ry[圆角y半径])&#x2F;&#x2F;圆角矩形(圆角半径不一定都相同所以要分别填写rx，ry) 画圆角矩形  </li>
+<li><strong>canvas?.drawBitmap()</strong> 画图片  </li>
+<li><strong>canvas?.drawPath()</strong>   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">var</span> <span class="variable">mPath</span> <span class="operator">=</span> Path()</span><br><span class="line">mPath.reset()<span class="comment">//重置(之前有的路径全重置了 重新画)</span></span><br><span class="line"></span><br><span class="line">mPath.moveTo(x , y) <span class="comment">//设置起点</span></span><br><span class="line">mPath.LineTo(x , y) <span class="comment">//从上一个起点到当前点画一条线</span></span><br><span class="line"></span><br><span class="line">mPath.cubicTo(x1,y1,x2,y2,x3,y3)</span><br><span class="line">mPath.close()  <span class="comment">//两端连起来形成封闭曲线</span></span><br><span class="line">canvas?.drawPath(mPath,mPaint)</span><br><span class="line"></span><br><span class="line">mPath.addArc() <span class="comment">//画弧线</span></span><br><span class="line">mPaint.strokeCap =Paint.Cap.ROUND<span class="comment">//变圆润</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>path.<strong>offset</strong>()<br>用于在路径的基础上进行偏移操作。<br>偏移操作可以沿着路径的方向将路径的位置移动一定距离。这个方法通常需要传入一个偏移量作为参数，用来指定路径偏移的距离和方向。<br>偏移后的路径将会保持原路径的形状和曲线，只是位置发生了改变。<br>这个方法在绘制图形时可以用来实现路径的平移、旋转等效果。</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>moveTo(x: Float, y: Float)：将路径移动到指定的坐标点(x, y)   </li>
+<li>lineTo(x: Float, y: Float)：从当前位置画一条直线到指定的坐标点(x, y)   </li>
+<li><strong>quadTo</strong>(x1: Float, y1: Float, x2: Float, y2: Float)：从当前位置画一条<u>二次贝塞尔曲线</u>到指定的坐标点(x2, y2)，控制点为(x1, y1)  </li>
+<li><strong>cubicTo</strong>(x1: Float, y1: Float, x2: Float, y2: Float, x3: Float, y3: Float)：从当前位置画一条<u>三次贝塞尔曲线</u>到指定的坐标点(x3, y3)，控制点为(x1, y1)和(x2, y2)   </li>
+<li>addRect(left: Float, top: Float, right: Float, bottom: Float, dir: Path.Direction)：添加一个矩形路径   </li>
+<li>addCircle(x: Float, y: Float, radius: Float, dir: Path.Direction)：添加一个圆形路径   </li>
+<li>addRoundRect(left: Float, top: Float, right: Float, bottom: Float, radii: FloatArray, dir: Path.Direction)：添加一个圆角矩形路径   </li>
+<li>close()：闭合路径，将路径起点和终点连接起来</li>
+</ul>
+<ol start="8">
+<li><strong>canvas?.drawLine(sx,xy,ex,ey,paint)</strong> 画线</li>
+</ol>
+<h3 id="3-示例"><a href="#3-示例" class="headerlink" title="(3)示例"></a>(3)示例</h3><h4 id="①canvas-drawCircle-画圆"><a href="#①canvas-drawCircle-画圆" class="headerlink" title="①canvas?.drawCircle 画圆"></a>①canvas?.drawCircle 画圆</h4><p>① <strong>canvas?.drawCircle</strong>(cx[中心点x],cy[中心点y],radius[半径],Paint):画圆</p>
+<p>canvas?.drawCircle(cx[中心点x],cy[中心点y],radius[半径],Paint):画圆</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//画笔</span></span><br><span class="line"><span class="keyword">private</span> val mCirclePaint: Paint by lazy&#123;</span><br><span class="line">  Paint().apply&#123;</span><br><span class="line">     Paintcolor = Color.MAGENTA <span class="comment">//画笔的颜色</span></span><br><span class="line">     strokeWidth = dp2px( dp: <span class="number">20</span>)<span class="comment">//画笔粗细</span></span><br><span class="line">     isAntiAlias = <span class="literal">true</span> <span class="comment">//抗锯齿</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">overrde fun <span class="title function_">onDraw</span><span class="params">(canvas:Canvas?)</span>&#123;</span><br><span class="line">  drawCircle(canvas)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun <span class="title function_">drawCircle</span><span class="params">(canvas:Canvas?)</span>&#123;</span><br><span class="line">  <span class="type">val</span> <span class="variable">cx</span> <span class="operator">=</span> (width/<span class="number">2</span>).toFloat()</span><br><span class="line">  <span class="type">val</span> <span class="variable">cy</span> <span class="operator">=</span> (height/<span class="number">2</span>).toFloat()</span><br><span class="line">  <span class="type">val</span> <span class="variable">radius</span> <span class="operator">=</span> Math.min(width,height)/<span class="number">2</span> - dp2px(<span class="number">20</span>)</span><br><span class="line">  canvas?.drawCircle(cx,cy,radius,mCirclePaint)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="②canvas-drawArc-画弧"><a href="#②canvas-drawArc-画弧" class="headerlink" title="②canvas?.drawArc 画弧"></a>②canvas?.drawArc 画弧</h4><p>② <strong>canvas?.drawArc</strong>(left,top,right,bottom,startAngle[从哪开始画],sweepAngle[弧线扫过的角度],useCenter[是否连接中心点],paint)<br>&#x2F;&#x2F;左上右下是先确定一个矩形，也就是确定了中心点</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//画笔</span></span><br><span class="line"><span class="keyword">private</span> val mArcPaint: Paint by lazy&#123;</span><br><span class="line">  Paint().apply&#123;</span><br><span class="line">     color = Color.GREEN <span class="comment">//画笔的颜色</span></span><br><span class="line">     strokeWidth = dp2px( dp: <span class="number">20</span>)<span class="comment">//画笔粗细</span></span><br><span class="line">     isAntiAlias = <span class="literal">true</span> <span class="comment">//抗锯齿</span></span><br><span class="line">     style = Paint.Style.STROKE</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">overrde fun <span class="title function_">onDraw</span><span class="params">(canvas:Canvas?)</span>&#123;</span><br><span class="line">  drawCircle(canvas)</span><br><span class="line">  drawArc(canvas)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun <span class="title function_">drawArc</span><span class="params">(canvas:Canvas?)</span>&#123;</span><br><span class="line">  <span class="type">val</span> <span class="variable">cx</span> <span class="operator">=</span> (width/<span class="number">2</span>).toFloat()</span><br><span class="line">  <span class="type">val</span> <span class="variable">cy</span> <span class="operator">=</span> (height/<span class="number">2</span>).toFloat()</span><br><span class="line">  <span class="type">val</span> <span class="variable">radius</span> <span class="operator">=</span> Math.min(width,height)/<span class="number">2</span> - dp2px(<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//左 上 右 下 起始角度 扫过的角度 是否连接中心点 画笔</span></span><br><span class="line">  canvas?.drawArc(cx - radius,cy - radius,cx + radius,cy - radius,-<span class="number">90f</span>,<span class="number">90f</span>,<span class="literal">false</span>,mArcPaint)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h4 id="③canvas-drawText-画文本"><a href="#③canvas-drawText-画文本" class="headerlink" title="③canvas?.drawText 画文本"></a>③canvas?.drawText 画文本</h4><p>绘制中最难的<br>自定义绘制文本可以在一个视图中控制文字显示不同的颜色<br><img src="https://s2.loli.net/2024/03/03/d3KRm98UMy6r5xF.png" alt="图示.png"></p>
+<p>③ <strong>canvas?.drawText</strong>(text[要画的文本],x,y,paint)  </p>
+<p><strong>mPaint.fontMetrics</strong>: top bottom acent decent 相对于 <strong>baseline</strong><br>acent top 负<br>bottom decent 正<br>文字高度: bottom -tope<br>让文字显示在：  </p>
+<ul>
+<li>左上角: x: 0 y:-tope  </li>
+<li>左下角: x: 0 y: view.height - bottome  </li>
+<li>右上角: x: view.width - text.width y &#x3D; -top  </li>
+<li>右上角: x: view.width-text.width y &#x3D; view.height - bottom<br>正中心:<br>x:(view.width-text.width)&#x2F;2<br>halfHeight: (bottom-top) 2<br>baselineToCenter: halfHeight- bottom<br>y &#x3D; view.height&#x2F;2 + baselineToCenter<br>&nbsp;&nbsp;&nbsp;&nbsp;height&#x2F;2 +(bottom-top)2 - bottom<br>&nbsp;&nbsp;&nbsp;&nbsp;height&#x2F;2 - top&#x2F;2 - bottom&#x2F;2<br>&nbsp;&nbsp;&nbsp;&nbsp;(height - top - bottom)2</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//居中公式</span></span><br><span class="line"><span class="type">val</span> <span class="variable">sx</span> <span class="operator">=</span> (width-mPaint.measureText(mText))/<span class="number">2</span></span><br><span class="line"><span class="type">val</span> <span class="variable">metrics</span> <span class="operator">=</span> mPaint.fontMetrics</span><br><span class="line"><span class="type">val</span> <span class="variable">sy</span> <span class="operator">=</span> (height- metrics.bottom - metrics.top)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">mPaint.color = Color.GRAY</span><br><span class="line">canvas?.drawText(mText,sx,sy.toFloat(),mPaint)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">var</span> <span class="variable">rateText</span> <span class="operator">=</span> <span class="string">&quot;0%&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//画笔</span></span><br><span class="line"><span class="keyword">private</span> val mRatePaint: TextPaint by lazy&#123;</span><br><span class="line">  TextPaint().apply&#123;</span><br><span class="line">     color = Color.<span class="type">MAGENTA</span> </span><br><span class="line">     <span class="variable">textSize</span> <span class="operator">=</span> sp2px(<span class="number">18f</span>)</span><br><span class="line">     typeface = Typeface.DEFAULT <span class="comment">//系统字体</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun <span class="title function_">drawProgressText</span><span class="params">(canvas:Canvas?)</span>&#123;</span><br><span class="line">  <span class="type">val</span> <span class="variable">fontMetrics</span> <span class="operator">=</span> mRatePaint.fontMetrics</span><br><span class="line">  <span class="type">val</span> <span class="variable">sx</span> <span class="operator">=</span> (width - mRatePaint.measureText(rateText))/<span class="number">2</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">sy</span> <span class="operator">=</span> (height - fontMetrics.top - fontMetrics.bottom)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">  canvas?.drawText(rateText,sx,sy,mRatePaint)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//onMeasure中调用</span></span><br><span class="line"><span class="comment">//调用画笔的方法 measureText()测量文字的宽度</span></span><br><span class="line"><span class="comment">//val textWidth = mTextPaint.measure(text)</span></span><br><span class="line">fun Paint.textWidth(text: String): Float &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.measureText(text)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//测量文字的高度</span></span><br><span class="line">fun Paint.textHeight(): Float &#123;</span><br><span class="line">    <span class="type">val</span> <span class="variable">fontMetrics</span> <span class="operator">=</span> <span class="built_in">this</span>.fontMetrics</span><br><span class="line">    <span class="keyword">return</span> fontMetrics.bottom - fontMetrics.top</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="⑤-canvas-drawBitmap-画图片"><a href="#⑤-canvas-drawBitmap-画图片" class="headerlink" title="⑤ canvas?.drawBitmap 画图片"></a>⑤ canvas?.drawBitmap 画图片</h4><p>⑤ <strong>canvas?.drawBitmap()</strong> &#x2F;&#x2F;画图片  </p>
+<p>BitmapFactory类是用于创建Bitmap对象的工具类。<br>BitmapFactory类提供了一些静态方法，可以从不同的数据源（如资源、文件、流等）中加载图像数据，并将其转换为Bitmap对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">fun <span class="title function_">drawPicture</span><span class="params">(canvas:Canvas?)</span>&#123;</span><br><span class="line">  <span class="comment">//1.获取需要绘制的图片 -&gt; Bitmap</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">okBitmap</span> <span class="operator">=</span> BitmapFactory..decodeResource(context.resources,R.drawable.icon ok foreground) <span class="comment">//传入的drawable资源必须是png资源，不能是xml文件</span></span><br><span class="line">  <span class="comment">//2.确定绘制的位置</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">bx</span> <span class="operator">=</span> (width - okBitmap.width).toFloat()/<span class="number">2</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">by</span> <span class="operator">=</span> (height- okBitmap.height).toFloat()/<span class="number">2</span></span><br><span class="line">  <span class="comment">//3.画笔</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">picPaint</span> <span class="operator">=</span> Paint()</span><br><span class="line">  <span class="comment">//4.绘制</span></span><br><span class="line">  canvas?.drawBitmap(okBitmap,bx,by, paint: <span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="onAttachedToWindow"><a href="#onAttachedToWindow" class="headerlink" title="onAttachedToWindow()"></a>onAttachedToWindow()</h2><h2 id="onWindowVisibilityChanged"><a href="#onWindowVisibilityChanged" class="headerlink" title="onWindowVisibilityChanged()"></a>onWindowVisibilityChanged()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以实现进入界面就开始动画</span></span><br><span class="line">override fun <span class="title function_">onAttachedToWindow</span><span class="params">()</span>&#123;</span><br><span class="line">  <span class="built_in">super</span>.onAttachedToWindow()</span><br><span class="line">  mAnimatorSet.start()</span><br><span class="line">&#125;</span><br><span class="line">n</span><br><span class="line">override fun <span class="title function_">onWindowVisibilityChanged</span><span class="params">(visibility: Int)</span>&#123;</span><br><span class="line">  <span class="built_in">super</span>.onWindowVisibilityChanged(visibility)</span><br><span class="line">  <span class="keyword">if</span> (visibility == INVISIBLE)&#123;</span><br><span class="line">    mAnimatorSet.cancel()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Canvas-画布操作"><a href="#Canvas-画布操作" class="headerlink" title="Canvas 画布操作"></a>Canvas 画布操作</h2><p>在 Canvas 中，可以使用以下方法对图形进行操作：</p>
+<ol>
+<li>translate() - 平移画布的原点</li>
+<li>rotate() - 旋转画布</li>
+<li>scale() - 缩放画布</li>
+<li>skew() - 倾斜画布(斜切面移动)</li>
+<li>clipRect() - 裁剪画布的区域</li>
+<li>clipPath() - 使用路径来裁剪画布</li>
+<li>save() - 保存当前画布状态<blockquote>
+<p>将需要操作的图形单独移动到一个画布上<br>保存其他不作操作的图形到一个画布上  </p>
+</blockquote>
+</li>
+<li>restore() - 恢复之前保存的画布状态<blockquote>
+<p>将操作之后的图形和其他图形合并到同一个画布上</p>
+</blockquote>
+</li>
+</ol>
+<p>这些方法可以帮助开发者对画布进行各种变换和操作，从而实现更加复杂和有趣的图形效果。通过组合这些方法，可以实现各种炫酷的动画和交互效果。</p>
+<h1 id="自定义-ViewGroup"><a href="#自定义-ViewGroup" class="headerlink" title="自定义 ViewGroup"></a>自定义 ViewGroup</h1><p>方法的调用顺序是init -&gt; onMeasure -&gt; onSizeChanged -&gt; onLayout</p>
+<ol>
+<li><p>init{自定义属性、添加子控件}</p>
+</li>
+<li><p>得到容器的尺寸 onMeasure()</p>
+</li>
+</ol>
+<p>在 onMeasure() 方法之后可以得到 measureWidth 和 measureHeight  </p>
+<ol start="3">
+<li><strong>onLayout</strong>()布局子控件<br>  方法必须实现(子控件的摆放方式)</li>
+</ol>
+<p>childCount 于控件个数<br>getChildAt() 获取某个子控件<br>child.layout(l,t,r,b)  </p>
+<p>在Android开发中自定义ViewGroup时，子控件能够得到容器的width和height的值的时机通常是在<code>onLayout</code>方法中。在<code>onLayout</code>方法中，会确定每个子View的位置并调用子View的<code>layout</code>方法来放置子View。在这个过程中，子View可以通过<code>getWidth()</code>和<code>getHeight()</code>方法来获取容器的宽度和高度。</p>
+<p>因此，在<code>onLayout</code>方法中，子View可以得到容器的width和height的值，并根据这些值来进行布局和绘制。开发者可以在<code>onLayout</code>方法中实现子View的布局逻辑，确保子View能够正确获取容器的尺寸信息。</p>
+<p>onSizeChanged  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/02/17/Android/%E8%87%AA%E5%AE%9A%E4%B9%89/%E8%87%AA%E5%AE%9A%E4%B9%89View%E3%80%81ViewGroup/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/02/17/Android/SharedPreferences/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            SharedPreferences
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/02/10/Android/%E8%87%AA%E5%AE%9A%E4%B9%89/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">自定义属性</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>LeetCode刷题1-10 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-LeetCode刷题/1-10"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  LeetCode刷题1-10
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/10/LeetCode%E5%88%B7%E9%A2%98/1-10/" class="article-date">
+  <time datetime="2023-11-10T09:04:14.000Z" itemprop="datePublished">2023-11-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode%E5%88%B7%E9%A2%98/">LeetCode刷题</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">3.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">14 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="58-最后一个单词的长度①"><a href="#58-最后一个单词的长度①" class="headerlink" title="58.最后一个单词的长度①"></a>58.最后一个单词的长度①</h1><p>题目：给你一个字符串s，由若干单词组成，单词前后用一些空格字符隔开。返回字符串中最后一个单词的长度。<br>单词是指仅由字母组成、不包含任何空格字符的最大子字符串。</p>
+<ol>
+<li>charAt():检索字符串中指定位置的字符<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;Hello, World!&quot;;</span><br><span class="line">char ch = str.charAt(7); </span><br><span class="line">System.out.println(ch);</span><br></pre></td></tr></table></figure></li>
+<li>trim():函数是String类的一个方法。它用于去除字符串两端的空格。（注意只是两端的字符，中间的空格无法删除）</li>
+<li>split(“ ”):字符串按照指定的分隔符进行拆分，并返回拆分后的子字符串数组</li>
+<li>last()：方法的作用是返回集合中的最后一个元素。注意：只有Kotlin中有，java中没有</li>
+</ol>
+<p><strong>注意在java中：</strong><br>length()：用于获取字符串的长度。length()是String类的一个方法，可以用于返回字符串中字符的数量。<br>length：用于获取数组的长度。length是数组的一个属性，可以用于返回数组(字符串数组也是)中元素的数量。</p>
+<p><strong>注意在Kotlin中：</strong><br>String类的length是一个属性而不是方法。因此，可以直接通过splitWords.last().length来获取字符串的长度。</p>
+<p>该题目考虑以下情况[]表示空格：<br>Annie[]study[][][]<br>用反向遍历法，从后往前遍历</p>
+<h1 id="66-加一②"><a href="#66-加一②" class="headerlink" title="66.加一②"></a>66.加一②</h1><p>题目：给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。<br>最高位数字存放在数组的首位，数组中每个元素只存储单个数字。<br>你可以假设除了整数 0 之外，这个整数不会以零开头。</p>
+<ol>
+<li>java中倒置循环遍历数组： for(int i &#x3D; last; i &gt;&#x3D; 0; i–)</li>
+<li>kotlin中倒置循环遍历数组：for(i in digits.indices.reversed())<br><strong>numbers.indices</strong> 是 numbers 数组的索引范围<br><strong>.reversed()</strong> 将索引范围进行反转，即倒序排列</li>
+</ol>
+<p>思考：需要考虑进位  </p>
+<ol>
+<li>末尾无进位  </li>
+<li>末尾有进位<br>①(数字位数保持不变)在中间位置停止，当前位置加,1后为0，则前一位继续加1，直到不为0为止，如499+1&#x3D;500<br>②(数字位数多1位)999+1&#x3D;1000</li>
+</ol>
+<h1 id="67-二进制求和③"><a href="#67-二进制求和③" class="headerlink" title="67.二进制求和③"></a>67.二进制求和③</h1><p>题目：给你两个二进制字符串 a 和 b，以二进制字符串的形式返回它们的和。</p>
+<ol>
+<li>在 Java 中，我们可以像这样使用 charAt() 方法来获取字符串中指定位置的字符，然后通过减去字符 ‘0’(ASCII码值为48)，获取该字符对应的数字。<br>例如：   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char c = &#x27;5&#x27;;</span><br><span class="line">int digit = c - &#x27;0&#x27;</span><br></pre></td></tr></table></figure>
+字符 ‘5’ 的 ASCII 码值为 53，字符 ‘0’ 的 ASCII 码值为 48。<br>因此，当我们将字符 ‘0’ 的 ASCII 码值从字符 c 的 ASCII 码值中减去时，就可以得到字符’5’对应的数字5。  </li>
+<li>java中StringBuilder用法  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建对象</span><br><span class="line">StringBuilder sb = new StringBuilder();</span><br><span class="line">//append()里面可以追加任意类型</span><br><span class="line">//sb得到的是StringBuilder类型,需要toSting()才是字符串类型</span><br><span class="line">sb.append();</span><br></pre></td></tr></table></figure></li>
+<li>java中获取字符串某一位置字符a.charAt(i)<br>  kotlin中获取字符串某一位置字符可以用a[i]  </li>
+<li>java中有三元运算符  condition ? then : else<br>  Kotlin中没有三元运算符 val max &#x3D; if (a &gt; b) a else b</li>
+</ol>
+<p>思考：<br>可以逐位计算两个二进制的和<br>将字符串 a 和 b 的每一位字符转化为数字先加到sum上，如果超过索引范围，则加0<br>sum % 2; sum对2取余，可以得到当前位置上二进制的值<br>sum &#x2F; 2; sum对2取商，可以得到当前位置对下一位置是否有一个进位<br>循环结束后如果还有一个进位，则再追加一位<br>在StringBuilder中得到的是倒序的二进制字符串，需要倒置</p>
+<h1 id="69-x的平方根④"><a href="#69-x的平方根④" class="headerlink" title="69.x的平方根④"></a>69.x的平方根④</h1><p>题目：给你一个非负整数 x ，计算并返回 x 的 算术平方根 。由于返回类型是整数，结果只保留整数部分 ，小数部分将被舍去 。注意：不允许使用任何内置指数函数和算符，例如 pow(x, 0.5) 或者 x ** 0.5</p>
+<p>java中<br>**Math.floor();**向下取整</p>
+<p><strong>二分查找</strong>   </p>
+<ol>
+<li>前提：数组A必须是有序的<br>确定范围后用范围中间的值进行比较  </li>
+<li>定义左边界L,有边界R,确定搜索范围，循环执行二分查找(3、4两步)  </li>
+<li>获取中间索引M &#x3D; Math.floor((L+R)&#x2F;2)  </li>
+<li>中间索引值 A[M] 与待搜索的值 T 进行比较</li>
+</ol>
+<ul>
+<li>中间索引值A[M] &#x3D;&#x3D; T表示找到  </li>
+<li>A[M] &gt; T,继续向左边找，M - 1设置为右边界，重新查找  </li>
+<li>A[M] &lt; T,继续向右边找，M + 1设置为左边界，重新查找</li>
+</ul>
+<ol start="5">
+<li>当 L &gt; R时，表示没有找到，结束循环     </li>
+<li>解决整数溢出的方法：<br>(1) 找中间值(L+R)&#x2F;2时，如果 L 和 R 很大时，有可能会超出整数取值的最大值<br>(尤其范围在右侧查找的情况)<br>(l + r)&#x2F;2 &#x3D; l&#x2F;2 + r&#x2F;2<br>   &#x3D; l - l&#x2F;2 + r&#x2F;2<br>   &#x3D; l - (l&#x2F;2 - r&#x2F;2)<br>   &#x3D; l - (l - r)&#x2F;2<br>   <strong>&#x3D; 1 + (r - l)&#x2F;2</strong></li>
+</ol>
+<p>(2) 无符号的右移运算代替除法 → 更高效<br><strong>(l + r) &gt;&gt;&gt; 1;</strong> (还是相当于除以2)<br>7. 在二分查找算法中，中间位置的计算取决于搜索区间的性质。这里根据搜索区间是否为左闭右开来确定是否需要在计算中间位置时加上+1。</p>
+<ul>
+<li>搜索区间为左闭右开：如果搜索区间是左闭右开的，即右边界是开区间，那么计算中间位置时不需要加+1。<br>例如：int mid &#x3D; (left + right) &#x2F; 2;<br>这种情况适用于数组的索引范围或者是区间表示中不包括右边界的场景。</li>
+<li>搜索区间为左闭右闭：如果搜索区间是左闭右闭的，即右边界是闭区间，那么计算中间位置时需要加+1，以确保取到右边更接近中间的数。<br>例如：int mid &#x3D; left + (right - left + 1) &#x2F; 2;<br>这种情况适用于某些数据结构中，或者是区间表示中包括右边界的场景。</li>
+</ul>
+<p>在该代码中，初始的搜索区间是 [0, arr.length)，即左闭右开区间，搜索的范围是 [0, arr.length-1]。因此，在计算中间位置时，我们使用 (left + right) &#x2F; 2，而不需要加 +1 来调整中间位置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">private int binarySearch(int[] arr, int target) &#123;</span><br><span class="line">        int l = 0;</span><br><span class="line">        int r = arr.length - 1;</span><br><span class="line">        int m;</span><br><span class="line">        while (l &lt;= r) &#123;</span><br><span class="line">            m = (l + r) / 2;</span><br><span class="line">            if (arr[m] == target) &#123;</span><br><span class="line">                return m;</span><br><span class="line">            &#125;</span><br><span class="line">            if (arr[m] &gt; target) &#123;</span><br><span class="line">                r = m - 1;</span><br><span class="line">            &#125;</span><br><span class="line">            if (arr[m] &lt; target) &#123;</span><br><span class="line">                l = m + 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>左闭右闭</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int mySqrt(int x) &#123;</span><br><span class="line">        if(x == 0) return 0;</span><br><span class="line">        if(x == 1) return 1;</span><br><span class="line">        int left = 1;</span><br><span class="line">        int right = x/2;</span><br><span class="line">        while(left &lt; right) &#123;</span><br><span class="line">            **int mid = left + (right - left + 1)/2;**</span><br><span class="line">            if(mid * mid == x)&#123;</span><br><span class="line">                return mid;</span><br><span class="line">            &#125;</span><br><span class="line">            if(mid &gt; x/mid)&#123;</span><br><span class="line">                right = mid - 1;</span><br><span class="line">            &#125;</span><br><span class="line">            if(mid &lt; x/mid)&#123;</span><br><span class="line">                left = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return left;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>思考：<br>除了 0 和 1 的算数平方根是自己<br>一个数的平方根不会大于自己的1&#x2F;2<br>问题转化为 → 在[0 - x&#x2F;2]之间找一个特定的值</p>
+<table>
+<thead>
+<tr>
+<th align="center">x</th>
+<th align="center">- √x</th>
+<th align="center">x&#x2F;2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0.5</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">1</td>
+<td align="center">1.5</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">2</td>
+<td align="center">2.5</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">16</td>
+<td align="center">3</td>
+</tr>
+</tbody></table>
+<h1 id="70-爬楼梯⑤"><a href="#70-爬楼梯⑤" class="headerlink" title="70.爬楼梯⑤"></a>70.爬楼梯⑤</h1><p>题目：假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
+<p><strong>递归</strong>   </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    //递归方法</span><br><span class="line">    public int climbStairs(int n) &#123;</span><br><span class="line">        if(n == 1) return 1;</span><br><span class="line">        if(n == 2) return 2;</span><br><span class="line">        return climbStairs(n-1) + climbStairs(n - 2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>动态规划</strong><br>解决最优化问题的一种方法<br>动态规划的转移方法<br>滚动数组法<br>f(n) &#x3D; f(n-1) + f(n-2)  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public int climbStairs(int n) &#123;</span><br><span class="line">   /**</span><br><span class="line">       p  n-2步</span><br><span class="line">       q  n-1步</span><br><span class="line">       r  目标n阶</span><br><span class="line">   */</span><br><span class="line">       int p = 0,q = 0,r = 1;</span><br><span class="line">       for(int i = 1; i&lt;=n ; i++)&#123;</span><br><span class="line">           p = q;</span><br><span class="line">           q = r;</span><br><span class="line">           r = p+q;</span><br><span class="line">       &#125;</span><br><span class="line">       return r;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>Kotlin  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun climbStairs(n: Int): Int &#123;</span><br><span class="line">        if(n&lt;2) return 1</span><br><span class="line">        val step = IntArray(n + 1)</span><br><span class="line">        step[0] = 1</span><br><span class="line">        step[1] = 1</span><br><span class="line">        for(i in 2 until n+1)&#123;</span><br><span class="line">            step[i] = step[i-1] + step[i-2]</span><br><span class="line">        &#125;</span><br><span class="line">        return step[n]</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>思考：<br>n<br>1     1<br>2     1  1<br>      2<br>3     1  1  1<br>      1  2<br>      2  1<br>4     1  1  1  1<br>      2  2<br>      1  1  2<br>      1  2  1<br>      2  1  1<br>递推公式：<br>dp(n) &#x3D; dp(n-1) + dp(n-2)<br>最终到达n,有两种方法，从n-1再走1步，从n-2再走两步<br>dp(1) &#x3D; 1<br>dp(2) &#x3D; dp(1) + dp(0) &#x3D; 2<br>dp(3) &#x3D; dp(1) + dp(2) &#x3D; 3<br>dp(4) &#x3D; dp(3) + dp(2) &#x3D; 5   </p>
+<h1 id="83-删除排序链表中的重复元素⑥"><a href="#83-删除排序链表中的重复元素⑥" class="headerlink" title="83.删除排序链表中的重复元素⑥"></a>83.删除排序链表中的重复元素⑥</h1><p>题目：给定一个已排序的链表的头 head ， 删除所有重复的元素，使每个元素只出现一次 。返回 已排序的链表 。</p>
+<p>思考：<br>是一个简单的 <strong>单向链表</strong><br>删除重复元素：将当前指针，指向下下一个节点(绕过下一个节点)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public ListNode deleteDuplicates(ListNode head) &#123;</span><br><span class="line">        if(head == null) return head;</span><br><span class="line">        ListNode cur = head;</span><br><span class="line">        while(cur.next != null)&#123;</span><br><span class="line">            if(cur.val == cur.next.val)&#123;</span><br><span class="line">                cur.next = cur.next.next; //内容重复就跳到下下个节点</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                cur = cur.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="88-合并两个有序数组⑦"><a href="#88-合并两个有序数组⑦" class="headerlink" title="88. 合并两个有序数组⑦"></a>88. 合并两个有序数组⑦</h1><p>题目：给你两个按 非递减顺序 排列的整数数组 nums1 和 nums2，另有两个整数 m 和 n ，分别表示 nums1 和 nums2 中的元素数目。<br>请你 合并 nums2 到 nums1 中，使合并后的数组同样按 非递减顺序 排列。<br>注意：最终，合并后数组不应由函数返回，而是存储在数组 nums1 中。为了应对这种情况，nums1 的初始长度为 m + n，其中前 m 个元素表示应合并的元素，后 n 个元素为 0 ，应忽略。nums2 的长度为 n 。<br>输入：nums1 &#x3D; [1,2,3,0,0,0], m &#x3D; 3, nums2 &#x3D; [2,5,6], n &#x3D; 3<br>输出：[1,2,2,3,5,6]<br>解释：需要合并 [1,2,3] 和 [2,5,6]<br>合并结果是 [1,2,2,3,5,6] ，其中斜体加粗标注的为 nums1 中的元素。<br><strong>Array.sort()</strong>:将数组中的数字按照升序排列   </p>
+<p><em>合并后直接排序</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">        for(int i=0; i&lt;n; i++)&#123;</span><br><span class="line">            nums1[m + i] = nums2[i]; </span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(nums1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>双指针</em><br>注意<br>必须先判断指针是否到达边界  否则会出现数组下标越界的错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//双指针 将数组看做队列</span><br><span class="line">   public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">       int p1 = 0;</span><br><span class="line">       int p2 = 0;</span><br><span class="line">       int cur;</span><br><span class="line">       int [] sorted = new int[m + n];</span><br><span class="line">       //注意 必须先判断指针是否到达边界</span><br><span class="line">       //否则会出现数组下标越界的错误</span><br><span class="line">       while(p1 &lt; m || p2 &lt; n)&#123;</span><br><span class="line">            if(p1 == m)&#123;</span><br><span class="line">               cur = nums2[p2++];</span><br><span class="line">           &#125;else if(p2 == n)&#123;</span><br><span class="line">               cur = nums1[p1++];</span><br><span class="line">           &#125;else if(nums1[p1] &lt; nums2[p2])&#123;</span><br><span class="line">               cur = nums1[p1++];</span><br><span class="line">           &#125;else&#123;</span><br><span class="line">               cur = nums2[p2++];</span><br><span class="line">           &#125;</span><br><span class="line">          </span><br><span class="line">          //注意cur = nums2[p2++];是先将p2位置的数给cur再加一的，赋值后p2已经加一指向下一个位置</span><br><span class="line">           sorted[p1 + p2 -1] = cur;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i = 0; i&lt;m+n; i++)&#123;</span><br><span class="line">           nums1[i] = sorted[i];</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="94-二叉树的中序遍历⑧"><a href="#94-二叉树的中序遍历⑧" class="headerlink" title="94.二叉树的中序遍历⑧"></a>94.二叉树的中序遍历⑧</h1><p>题目：给定一个二叉树的根节点 root ，返回它的 <strong>中序</strong> 遍历。<br>思考：二叉树的中序遍历是指按照<strong>左子树 -&gt; 根节点 -&gt; 右子树</strong>的顺序遍历二叉树(从最下方开始)。</p>
+<p>前中后序遍历是针对根节点来说的   </p>
+<ol>
+<li>前序遍历：根节点 -&gt; 左子树 -&gt; 右子树(根左右 )  </li>
+<li>中序遍历：左子树 -&gt; 根节点 -&gt; 右子树(左根右)   </li>
+<li>后序遍历：左子树 -&gt; 右子树 -&gt; 根节点<br>有一个巧妙的方法：在每个节点的左下右(分别对应前中后序的遍历)方分别画圆圈，从根节点开始画线，把整个数用连续的线包裹起来，点被连到的顺序就是其</li>
+</ol>
+<p>思考：我们先递归遍历左子树，然后把当前结点的值加入到 List 实例中，最后再递归遍历右子树。这样可以确保在访问某个结点之前，先遍历它的左子树；在访问某个结点之后，再遍历它的右子树。最终，返回存储遍历结果的 List 实例 res。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public List&lt;Integer&gt; inorderTraversal(TreeNode root) &#123;</span><br><span class="line">        List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();</span><br><span class="line">        inorder(root, res);</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void inorder(TreeNode root, List&lt;Integer&gt; res) &#123;</span><br><span class="line">        if (root == null) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        inorder(root.left, res);</span><br><span class="line">        res.add(root.val);</span><br><span class="line">        inorder(root.right, res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="100-相同的树⑨"><a href="#100-相同的树⑨" class="headerlink" title="100.相同的树⑨"></a>100.相同的树⑨</h1><p>题目：给你两棵二叉树的根节点 p 和 q ，编写一个函数来检验这两棵树是否相同。<br>如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isSameTree(TreeNode p, TreeNode q) &#123;</span><br><span class="line">        if (p == null &amp;&amp; q == null) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125; else if (p == null || q == null) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125; else if (p.val != q.val) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return isSameTree(p.left, q.left) &amp;&amp; isSameTree(p.right, q.right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="101-对称二叉树⑩"><a href="#101-对称二叉树⑩" class="headerlink" title="101.对称二叉树⑩"></a>101.对称二叉树⑩</h1><p>题目：给你一个二叉树的根节点 root ， 检查它是否轴对称。<br><img src="https://s2.loli.net/2023/11/18/VXKymn4DP35Ze6Q.png" alt="对称二叉树.png"></p>
+<p>思考：<br>问题可以转化为给出两个二叉树，判断它们是不是镜像的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isSymmetric(TreeNode root) &#123;</span><br><span class="line">        return check(root.left,root.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean check(TreeNode p,TreeNode q)&#123;</span><br><span class="line">        if(p==null &amp;&amp; q==null) return true;</span><br><span class="line">        if(p==null || q==null) return false;</span><br><span class="line">        return p.val == q.val &amp;&amp; check(p.left,q.right) &amp;&amp; check(p.right,q.left);</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2023/11/10/LeetCode%E5%88%B7%E9%A2%98/1-10/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/11/14/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(%E7%BB%AA%E8%AE%BA)%20&&%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数据结构与算法(绪论) &amp;&amp; 线性表
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2022/05/01/hello-world/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Thread 线程</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

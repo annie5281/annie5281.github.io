@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Leetcode刷题51-60 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-LeetCode刷题/51-60"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Leetcode刷题51-60
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/29/LeetCode%E5%88%B7%E9%A2%98/51-60/" class="article-date">
+  <time datetime="2023-12-29T09:36:25.000Z" itemprop="datePublished">2023-12-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode%E5%88%B7%E9%A2%98/">LeetCode刷题</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">10 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="①1379-找出克隆二叉树中的相同节点"><a href="#①1379-找出克隆二叉树中的相同节点" class="headerlink" title="①1379.找出克隆二叉树中的相同节点"></a>①1379.找出克隆二叉树中的相同节点</h1><p>题目：给你两棵二叉树，原始树 original 和克隆树 cloned，以及一个位于原始树 original 中的目标节点 target。<br>其中，克隆树 cloned 是原始树 original 的一个 副本 。<br>请找出在树 cloned 中，与 target 相同 的节点，并返回对该节点的引用。<br>注意：你 不能 对两棵二叉树，以及 target 节点进行更改。只能 返回对克隆树 cloned 中已有的节点的引用  </p>
+<p><em>中序遍历+递归</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) &#123;</span><br><span class="line">       if(original == null)&#123;</span><br><span class="line">           return null;</span><br><span class="line">       &#125;</span><br><span class="line">       if(original == target)&#123;</span><br><span class="line">           return cloned;</span><br><span class="line">       &#125;</span><br><span class="line">       TreeNode node1 = getTargetCopy(original.left,cloned.left,target);</span><br><span class="line">       if(node1 != null)&#123;</span><br><span class="line">           return node1;</span><br><span class="line">       &#125;</span><br><span class="line">       TreeNode node2 = getTargetCopy(original.right,cloned.right,target);</span><br><span class="line">       if(node2 != null)&#123;</span><br><span class="line">           return node2;</span><br><span class="line">       &#125;</span><br><span class="line">       return null;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>层次遍历+队列</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) &#123;</span><br><span class="line">        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line">        Queue&lt;TreeNode&gt; clomedQueue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line">        queue.offer(original);</span><br><span class="line">        clomedQueue.offer(cloned);</span><br><span class="line">        TreeNode node1;</span><br><span class="line">        TreeNode node2;</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            node1 = queue.poll();</span><br><span class="line">            node2 = clomedQueue.poll();</span><br><span class="line">            if(node1 == target)&#123;</span><br><span class="line">                return node2;</span><br><span class="line">            &#125;</span><br><span class="line">            if(node1.left != null)&#123;</span><br><span class="line">                queue.offer(node1.left);</span><br><span class="line">                clomedQueue.offer(node2.left);</span><br><span class="line">            &#125;</span><br><span class="line">            if(node1.right != null)&#123;</span><br><span class="line">                queue.offer(node1.right);</span><br><span class="line">                clomedQueue.offer(node2.right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="②2331-计算布尔二叉树的值"><a href="#②2331-计算布尔二叉树的值" class="headerlink" title="②2331.计算布尔二叉树的值"></a>②2331.计算布尔二叉树的值</h1><p>题目：给你一棵 完整二叉树 的根，这棵树有以下特征：<br>叶子节点 要么值为 0 要么值为 1 ，其中 0 表示 False ，1 表示 True 。<br>非叶子节点 要么值为 2 要么值为 3 ， 其中 2 表示逻辑或 OR ，3 表示逻辑与 AND 。  </p>
+<p>计算 一个节点的值方式如下：<br>如果节点是个叶子节点，那么节点的 值 为它本身，即 True 或者 False 。<br>否则，计算 两个孩子的节点值，然后将该节点的运算符对两个孩子值进行 运算 。<br>返回根节点 root 的布尔运算值。  </p>
+<p>完整二叉树 是每个节点有 0 个或者 2 个孩子的二叉树。<br>叶子节点 是没有孩子的节点。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public boolean evaluateTree(TreeNode root) &#123;</span><br><span class="line">      if(root.left == null)&#123;</span><br><span class="line">          return root.val == 1;</span><br><span class="line">      &#125;</span><br><span class="line">      if(root.val == 2)&#123;</span><br><span class="line">          return evaluateTree(root.left) || evaluateTree(root.right);</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">          return evaluateTree(root.left) &amp;&amp; evaluateTree(root.right);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="③LCP-44-开幕式焰火"><a href="#③LCP-44-开幕式焰火" class="headerlink" title="③LCP 44.开幕式焰火"></a>③LCP 44.开幕式焰火</h1><p>2023.12.31<br>题目：「力扣挑战赛」开幕式开始了，空中绽放了一颗二叉树形的巨型焰火。<br>给定一棵二叉树 root 代表焰火，节点值表示巨型焰火这一位置的颜色种类。<br>请帮小扣计算巨型焰火有多少种不同的颜色。</p>
+<p>思路：将树的结点值存在哈希表中(不存在重复数字)，返回哈希白的长度，即不同颜色的种类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    Set&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();</span><br><span class="line">    public int numColor(TreeNode root) &#123;</span><br><span class="line">        dfs(root);</span><br><span class="line">        return set.size();</span><br><span class="line">    &#125;</span><br><span class="line">    public void dfs(TreeNode root)&#123;</span><br><span class="line">        if(root == null) return;</span><br><span class="line"></span><br><span class="line">        set.add(root.val); // 先序遍历</span><br><span class="line">        dfs(root.left);</span><br><span class="line">        dfs(root.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="④LCR-052-递增顺序搜索树"><a href="#④LCR-052-递增顺序搜索树" class="headerlink" title="④LCR 052.递增顺序搜索树"></a>④LCR 052.递增顺序搜索树</h1><p>2024.1.1<br>题目：给你一棵二叉搜索树，请 按中序遍历 将其重新排列为一棵递增顺序搜索树，使树中最左边的节点成为树的根节点，并且每个节点没有左子节点，只有一个右子节点。</p>
+<p><img src="https://s2.loli.net/2024/01/01/qUPf6B2KFg1dmn8.png" alt="image.png"></p>
+<p>思路1：中序遍历，将结点的值放在List里面，用List里面的值产生一个全新的树</p>
+<p><em>中序遍历后生成一颗新的树</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public TreeNode increasingBST(TreeNode root) &#123;</span><br><span class="line">        List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();</span><br><span class="line">        inorder(root,res);</span><br><span class="line">        TreeNode result = new TreeNode(-1);</span><br><span class="line">        TreeNode current = result;</span><br><span class="line">        for(int value:res)&#123;</span><br><span class="line">            current.right = new TreeNode(value);</span><br><span class="line">            current = current.right;</span><br><span class="line">        &#125;</span><br><span class="line">        return result.right;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void inorder(TreeNode root,List res)&#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        inorder(root.left,res);</span><br><span class="line">        res.add(root.val);</span><br><span class="line">        inorder(root.right,res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：在中序遍历的过程中，直接在原有树的基础上改变原来结点的指向</p>
+<p><strong>current.right &#x3D; root;<br>root.left &#x3D; null;<br>current &#x3D; root;</strong></p>
+<p><em>直接改变结点指向</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    TreeNode current;</span><br><span class="line">    public TreeNode increasingBST(TreeNode root) &#123;</span><br><span class="line">        TreeNode result = new TreeNode(-1);</span><br><span class="line">        current = result;</span><br><span class="line">        inorder(root);</span><br><span class="line">        return result.right;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">     public void inorder(TreeNode root)&#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        inorder(root.left);</span><br><span class="line"></span><br><span class="line">        current.right = root;</span><br><span class="line">        root.left = null;</span><br><span class="line">        current = root;</span><br><span class="line">        </span><br><span class="line">        inorder(root.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="⑤LCR-193-二叉搜索树的最近公共祖先"><a href="#⑤LCR-193-二叉搜索树的最近公共祖先" class="headerlink" title="⑤LCR 193.二叉搜索树的最近公共祖先"></a>⑤LCR 193.二叉搜索树的最近公共祖先</h1><p>2024.1.2<br>题目：给定一个二叉搜索树, 找到该树中两个指定节点的<strong>最近公共祖先</strong>。<br>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，<br>满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。</p>
+<p>说明:<br>所有节点的值都是唯一的。<br>p、q 为不同节点且均存在于给定的二叉搜索树中。  </p>
+<p>思路：利用二叉搜索树的特点，如果p和q的值都小于根节点，则去左子树找，如果都大于根节点值则去右子树找，<br>如果刚好不在一边，则root就是它们的最近公共祖先(在两侧&#x2F;有一点是root)</p>
+<p><em>方法1</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) &#123;</span><br><span class="line">       if(root == null)&#123;</span><br><span class="line">           return null;</span><br><span class="line">       &#125;</span><br><span class="line">       if(p.val &lt; root.val &amp;&amp; q.val &lt; root.val)&#123;</span><br><span class="line">           return lowestCommonAncestor(root.left,p,q);</span><br><span class="line">       &#125;</span><br><span class="line">       if(p.val &gt; root.val &amp;&amp; q.val &gt; root.val)&#123;</span><br><span class="line">           return lowestCommonAncestor(root.right,p,q);</span><br><span class="line">       &#125;</span><br><span class="line">       return root;    </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>方法2</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) &#123;</span><br><span class="line">      if(root == null || root == p || root == q || (root.val - p.val)*(root.val - q.val) &lt; 0) return root;</span><br><span class="line">      if(root.val &lt; p.val &amp;&amp; root.val &lt; q.val) return lowestCommonAncestor(root.right,p,q);</span><br><span class="line">      return lowestCommonAncestor(root.left,p,q);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑥LCR-144-翻转二叉树"><a href="#⑥LCR-144-翻转二叉树" class="headerlink" title="⑥LCR 144.翻转二叉树"></a>⑥LCR 144.翻转二叉树</h1><p>2024.1.3<br>题目：给定一棵二叉树的根节点 root，请左右翻转这棵二叉树，并返回其根节点。<br><img src="https://s2.loli.net/2024/01/03/o1IspqtQ92zcmSv.png" alt="image.png">  </p>
+<p>思路：交换左右子树</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public TreeNode mirrorTree(TreeNode root) &#123;</span><br><span class="line">       if(root == null || root.left == null &amp;&amp; root.right == null) return root;</span><br><span class="line">       TreeNode left = root.left;</span><br><span class="line">       root.left = mirrorTree(root.right);</span><br><span class="line">       root.right = mirrorTree(left);</span><br><span class="line">       return root;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="⑦LCR-145-判断对称二叉树"><a href="#⑦LCR-145-判断对称二叉树" class="headerlink" title="⑦LCR 145.判断对称二叉树"></a>⑦LCR 145.判断对称二叉树</h1><p>2024.1.4<br>请设计一个函数判断一棵二叉树是否 轴对称 。<br><img src="https://s2.loli.net/2024/01/04/YX8LWuRtKjpCgsP.png" alt="image.png">  </p>
+<p>思考：<br>对应轴对称位置结点，如果同为空则true，不同空则false<br>对应轴对称位置结点的值要相同<br>注意要判断根节点if(root &#x3D;&#x3D; null) return true;  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean checkSymmetricTree(TreeNode root) &#123;</span><br><span class="line">        if(root == null) return true;</span><br><span class="line">        return check(root.left,root.right);</span><br><span class="line">    &#125;</span><br><span class="line">    //判断对应结点的值是否相同</span><br><span class="line">    public boolean check(TreeNode p,TreeNode q)&#123;</span><br><span class="line">        if(p == null &amp;&amp; q == null) return true;</span><br><span class="line">        if(p == null || q == null) return false;</span><br><span class="line">        return p.val == q.val &amp;&amp; check(p.left,q.right) &amp;&amp; check(p.right,q.left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑧LCR-150-彩灯装饰记录Ⅱ"><a href="#⑧LCR-150-彩灯装饰记录Ⅱ" class="headerlink" title="⑧LCR 150.彩灯装饰记录Ⅱ"></a>⑧LCR 150.彩灯装饰记录Ⅱ</h1><p>2024.1.5<br>题目：一棵圣诞树记作根节点为 root 的二叉树，节点值为该位置装饰彩灯的颜色编号。<br>请按照从左到右的顺序返回每一层彩灯编号，每一层的结果记录于一行<br><img src="https://s2.loli.net/2024/01/05/fyikFs4H76xbclM.png" alt="image.png">  </p>
+<p>思考1：<br>每一层记录在一个 tempList 中，最终返回每一层List的集合<br>层次遍历：用队列<br>要把当前层的结点全部取出来放在tempList中，将tempList加入最终的List</p>
+<p><em>层次遍历(广度优先)</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;Integer&gt;&gt; decorateRecord(TreeNode root) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();</span><br><span class="line">        if(root == null) return result;</span><br><span class="line"></span><br><span class="line">        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line">        queue.offer(root);</span><br><span class="line">        while(!queue.isEmpty())&#123;</span><br><span class="line">            //要确定poll出几个加在temp中</span><br><span class="line">            int size = queue.size();</span><br><span class="line">            List&lt;Integer&gt; temp = new ArrayList&lt;Integer&gt;();</span><br><span class="line">            for(int i = 0;i &lt; size;i++)&#123;</span><br><span class="line">                TreeNode node = queue.poll();</span><br><span class="line">                temp.add(node.val);</span><br><span class="line">                //queue中加入下一层的结点</span><br><span class="line">                if(node.left != null)&#123;</span><br><span class="line">                    queue.offer(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">                if(node.right != null)&#123;</span><br><span class="line">                    queue.offer(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            result.add(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>思考2：<br>根据对应的层次，将该结点加入到对应深度的列表中</p>
+<p><em>更优解(递归)</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public List&lt;List&lt;Integer&gt;&gt; decorateRecord(TreeNode root) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();</span><br><span class="line">        getResult(root,0,result);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    public void getResult(TreeNode root,int hight,List&lt;List&lt;Integer&gt;&gt; res)&#123;</span><br><span class="line">        if(root == null) return;</span><br><span class="line">        //建立新的一层(空层)</span><br><span class="line">        if(res.size() == hight)&#123;</span><br><span class="line">            res.add(new ArrayList&lt;Integer&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">        //将当前结点放在对应层的位置</span><br><span class="line">        res.get(hight).add(root.val);</span><br><span class="line"></span><br><span class="line">        getResult(root.left,hight+1,res);</span><br><span class="line">        getResult(root.right,hight+1,res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="⑨LCR-174-寻找二叉搜索树中的目标结点"><a href="#⑨LCR-174-寻找二叉搜索树中的目标结点" class="headerlink" title="⑨LCR 174.寻找二叉搜索树中的目标结点"></a>⑨LCR 174.寻找二叉搜索树中的目标结点</h1><p>2024.1.6<br>题目：某公司组织架构以二叉搜索树形式记录，节点值为处于该职位的员工编号。请返回第 cnt 大的员工编号。  </p>
+<p>思路1：中序遍历，得到升序序列</p>
+<p><em>升序</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int findTargetNode(TreeNode root, int cnt) &#123;</span><br><span class="line">        List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();</span><br><span class="line">        inorder(root,res);</span><br><span class="line">        return res.get(res.size() - cnt);</span><br><span class="line">    &#125;</span><br><span class="line">    public void inorder(TreeNode root,List&lt;Integer&gt; res)&#123;</span><br><span class="line">        if(root == null) return;</span><br><span class="line">        inorder(root.left,res);</span><br><span class="line">        res.add(root.val);</span><br><span class="line">        inorder(root.right,res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路2：也可让其进行降序排列，在排列的过程中直接返回</p>
+<p><em>降序 更好</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    int sum;</span><br><span class="line">    int res;</span><br><span class="line">    public int findTargetNode(TreeNode root, int cnt) &#123;</span><br><span class="line">        getNode(root,cnt);</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">    public void getNode(TreeNode root,int cnt)&#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        getNode(root.right,cnt);</span><br><span class="line">        sum++;</span><br><span class="line">        if(sum == cnt)&#123;</span><br><span class="line">            res = root.val;</span><br><span class="line">        &#125;</span><br><span class="line">        getNode(root.left,cnt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="⑩LCR-175-计算二叉树的深度"><a href="#⑩LCR-175-计算二叉树的深度" class="headerlink" title="⑩LCR 175.计算二叉树的深度"></a>⑩LCR 175.计算二叉树的深度</h1><p>2024.1.7<br>题目：某公司架构以二叉树形式记录，请返回该公司的层级数。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int calculateDepth(TreeNode root) &#123;</span><br><span class="line">        return getDepth(root);</span><br><span class="line">    &#125;</span><br><span class="line">    public int getDepth(TreeNode root)&#123;</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        return 1 + Math.max(getDepth(root.left),getDepth(root.right));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2023/12/29/LeetCode%E5%88%B7%E9%A2%98/51-60/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/12/30/Java%E5%9F%BA%E7%A1%80/IDEA/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            IDEA
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/12/19/LeetCode%E5%88%B7%E9%A2%98/41-50/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Leetcode刷题41-50</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

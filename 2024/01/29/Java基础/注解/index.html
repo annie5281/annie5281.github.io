@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>注解 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Java基础/注解"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  注解
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/29/Java%E5%9F%BA%E7%A1%80/%E6%B3%A8%E8%A7%A3/" class="article-date">
+  <time datetime="2024-01-29T02:56:35.000Z" itemprop="datePublished">2024-01-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">5 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><p>注解(Annotation)<br>也叫元数据，一种代码级别的说明，它是]DK1.5及以后版本引入的一个特性它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明。</p>
+<p>注解和注释:<br>注解:用来说明程序，给计算机(虚拟机)看的<br>注释:用来对程序进行说明的文字，给程序员看的  </p>
+<p>Java中的常见注解：<br><strong>@Override</strong><br>用于指定方法是重写父类的方法，只能修饰方法，不能修饰其他程序元素。<br>@Override的作用是告诉编译器检查这个方法，保证父类要包含一个被该方法重写的方法。  </p>
+<p><strong>@Deprecated</strong><br>用于表示某个程序元素(类、方法等)已过时，当其他程序使用已过时的类、方法时，编译器将会给出警告<br>Java 9为@Deprecated增加了两个属性:<br>since:该String类型的属性指定该API从哪个版本被标记为过时;<br>forRemoval:该boolean类型的属性指定该API在将来是否会被删除  </p>
+<p><strong>@SuppressWarnings</strong><br>指示被该注解修饰的程序元素(以及该程序元素中的所有子元素)取消显示指定的编译器警告(抑制警告，阻止编译器显示警告信息)。<br>使用注解来关闭编译器警告时，一定要在括号里使用name &#x3D;value 的形式为该注解的成员变量设置值。<br>(取消编译器的检查)<br>@SuppressWarnings(value &#x3D;”all”)  </p>
+<p>[@SuppressWarnings注解的存在意义是告诉编译器忽略特定的警告信息，这样可以在特定情况下避免编译器产生警告，例如在一些特定的情况下，我们知道某些代码是安全的，但编译器可能会产生警告，这时可以使用@SuppressWarnings注解来告诉编译器忽略这些警告。这样可以提高代码的可读性和可维护性。然而，需要谨慎使用@SuppressWarnings注解，因为它可以隐藏潜在的问题，应该尽量避免使用。]</p>
+<p><strong>@Functionallnterface</strong><br>Java 8新增的，只能用来修饰接口，表示该接口是一个函数式接口；<br>函数式接口:接口中有且仅有一个抽象方法；<br>Lambda表达式的使用前提: 接口中有且仅有一个抽象方法。  </p>
+<h1 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h1><p>对注解进行注解的注解。也就是写在注解上面的注解。  </p>
+<p><em><strong>两个常用元注解</strong></em><br>@Retention  保留<br>@Target  目标  </p>
+<p><strong>@Retention</strong><br>只能用于修饰注解定义，用于指定被修饰的注解可以保留多长时间。<br>包含了一个RetentionPolicy类型的value成员变量，所以使用的@Retention时必须为该value成员变量指定。</p>
+<p>@Retention中可使用的值定义在RetentionPolicy中，常用值如下:<br><strong>RetentionPolicy.CLASS</strong>: 编译器把注解纪录在class文件中，当运行Java程序时，JVM不可获取注解信息，这是默认值<br><strong>RetentionPolicy.RUNTIME</strong>: 编译器把注解纪录在lass文件中，当运行Java程序时，JVM也可获取注解信息，开发中常用<br><strong>RetentionPolicy.SOURCE</strong>:注解只保留在源代码中，编译器直接丢弃这种注解  </p>
+<p><strong>@Target</strong><br>只能用于修饰注解定义，用于指定被修饰的注解能用于修饰哪些程序单元，包含一个名为value的成员变量</p>
+<p>@Target中可使用的值定义在ElementType中，常用值如下<br>@Target(<strong>ElementType.TYPE</strong>): 可以用于接口、类、枚举、注解<br>@Target(<strong>ElementType.FIELD</strong>): 可以用于属性字段、枚举的常量<br>@Target(<strong>ElementType.METHOD</strong>): 可以用于方法<br>@Target(<strong>ElementType.PARAMETER</strong>): 可以用于方法参数<br>@Target(<strong>ElementType.CONSTRUCTOR</strong>): 可以用于构造函数<br>@Target(<strong>ElementType.LOCAL_VARIABLE</strong>):可以用于局部变量  </p>
+<h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><p>定义格式:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//元注解</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> name&#123;</span><br><span class="line">  <span class="comment">//属性列表;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注解的本质:<br>public interface MyAnnotation extends Annotation{}<br>是一个接口，该接口默认继承Annotation接口<br>既然是接口，那么内部定义的内容，就是接口中可以定义的内容  </p>
+<p>属性:接口中的抽象方法<br>格式:返回值类型 属性名称()[default 默认值]  </p>
+<p>注解属性类型可以有以下列出的类型:<br>基本数据类型<br>String<br>枚举类型<br>注解类型<br>Class类型<br>以上类型的一维数组类型  </p>
+<h1 id="注解的使用和解析"><a href="#注解的使用和解析" class="headerlink" title="注解的使用和解析"></a>注解的使用和解析</h1><h2 id="使用注解"><a href="#使用注解" class="headerlink" title="使用注解"></a>使用注解</h2><p>如果注解有多个属性，则可以在注解括号中用“,”号隔开分别给对应的属性赋值。<br>如果定义属性时，使用default关键字给属性默认初始化值，则使用注解时，可以不进行属性的赋值。<br>如果只有一个属性需要赋值，并且属性的名称是value，则value可以省略，直接定义值即可。<br>数组赋值时，值使用{}包裹。如果数组中只有一个值，则什可以省略。</p>
+<h2 id="解析注解"><a href="#解析注解" class="headerlink" title="解析注解"></a>解析注解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取字节码文件对象，获取谁的呢?谁使用了注解，就获取谁的</span></span><br><span class="line">Class&lt;MyAnnotationTest&gt; c= MyAnnotationTest.class;</span><br><span class="line"><span class="comment">//获取字节码对象上的注解信息</span></span><br><span class="line"><span class="type">MyAnnotation</span> <span class="variable">annotation</span> <span class="operator">=</span>c.getAnnotation(MyAnnotation.class);</span><br><span class="line"><span class="comment">//解析注解</span></span><br><span class="line"><span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> annotation.name();</span><br><span class="line"><span class="type">int</span> <span class="variable">age</span> <span class="operator">=</span> annotation.age();</span><br></pre></td></tr></table></figure>
+
+<h1 id="框架运行原理-通过注解运行指定类中的指定方法"><a href="#框架运行原理-通过注解运行指定类中的指定方法" class="headerlink" title="框架运行原理(通过注解运行指定类中的指定方法)"></a>框架运行原理(通过注解运行指定类中的指定方法)</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注解</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span> </span><br><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyAnnotation&#123;</span><br><span class="line">  String <span class="title function_">className</span><span class="params">()</span>;</span><br><span class="line">  String <span class="title function_">methodName</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用类</span></span><br><span class="line"><span class="meta">@MyAnnotation(className = &quot;com.itheima_05.Student&quot;,methodName = &quot;study&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAnnotation</span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="comment">//获取字节码对象</span></span><br><span class="line">    Class&lt;MyAnnotationTest&gt; cc = MyAnnotationTest.class;</span><br><span class="line">    <span class="comment">//通过字节码文件对象获取注解对象</span></span><br><span class="line">    <span class="type">MyAnnotation</span> <span class="variable">myAnnotation</span> <span class="operator">=</span> cc.getAnnotation(MyAnnotation.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过注解对象的属性获取值</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> myAnnotation.className();</span><br><span class="line">    <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> myAnnotation.methodName();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//反射操作</span></span><br><span class="line">    <span class="comment">//通过类名反射得到Class对象</span></span><br><span class="line">    Class&lt;?&gt; c = Class.forName(className); </span><br><span class="line">    <span class="comment">//通过Class对象创建一个对象</span></span><br><span class="line">    Constructor&lt;?&gt; con = c.getConstructor();</span><br><span class="line">    <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> con.newInstance();</span><br><span class="line">    <span class="comment">//通过Class得到方法对象</span></span><br><span class="line">    <span class="type">Method</span> <span class="variable">m</span> <span class="operator">=</span> c.getMethod(methodName);</span><br><span class="line">    <span class="comment">//调用方法</span></span><br><span class="line">    m.invoke(obj);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/29/Java%E5%9F%BA%E7%A1%80/%E6%B3%A8%E8%A7%A3/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/29/Java%E5%9F%BA%E7%A1%80/XML/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            XML
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/29/Android/git/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">git</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

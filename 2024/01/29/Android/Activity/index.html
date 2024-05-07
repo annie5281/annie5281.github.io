@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Activity |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/Activity"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Activity
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/29/Android/Activity/" class="article-date">
+  <time datetime="2024-01-29T12:55:35.000Z" itemprop="datePublished">2024-01-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">10 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>了解Activity的生命周期 任务栈 切换动画 传值  </p>
+<h1 id="一-Activity概述-配置"><a href="#一-Activity概述-配置" class="headerlink" title="(一)Activity概述+配置"></a>(一)Activity概述+配置</h1><p>理解为一个舞台，表演由fragment来扮演<br>一个Activity就是一个独立的界面。<br>所有的Activity都必须在Manifest文件中注册(首相首先自己清楚有哪些界面)</p>
+<p>在清单文件(manifests -&gt; AndroidManifest.xml)中  </p>
+<p><strong>exported</strong>：指示给定的应用程序组件<strong>是否可用于其他应用程序</strong>。<br>如果为false，则只能由具有相同用途的应用程序访问(这通常意味着只能通过自己包中的代码)。<br>如果为true，它可以被外部实体调用，尽管哪些实体可以这样做可能会通过权限来控制。   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">...</span> &gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">application</span> &gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;.MainActivity&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:exported</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:launchMode</span>=<span class="string">&quot;&quot;</span>&gt;</span> <span class="comment">&lt;!--改成true外部也可以访问--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 别人通过什么动作找到我--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--属于什么类别--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">&lt;/manifest &gt;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="二-Intent意图"><a href="#二-Intent意图" class="headerlink" title="(二)Intent意图"></a>(二)Intent意图</h1><p>finish() &#x2F;&#x2F;关闭当前界面，返回上一界面</p>
+<h2 id="1-显⽰意图"><a href="#1-显⽰意图" class="headerlink" title="(1)显⽰意图"></a>(1)显⽰意图</h2><p>app内部跳转，在自己应用内做跳转，明确指定跳转⻚⾯<br>startActivity(Intent(this,HomeActivity::class.java))  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//点击主界面跳转到下一个界面</span></span><br><span class="line">override fun <span class="title function_">onTouchEvent</span><span class="params">(event: MotionEvent?)</span>: Boolean &#123;</span><br><span class="line">        <span class="keyword">if</span> (event?.action == MotionEvent.ACTION_DOWN)&#123;</span><br><span class="line">            <span class="type">val</span> <span class="variable">intent</span> <span class="operator">=</span> Intent(<span class="built_in">this</span>,HomeActivity::class.java)</span><br><span class="line">            startActivity(intent)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-隐示意图"><a href="#2-隐示意图" class="headerlink" title="(2)隐示意图"></a>(2)隐示意图</h2><p>跳转到同一部手机上的其他应用的某个界面<br>同⼀部⼿机上 其他APP A -&gt; B app ⽀付功能(exported为true)<br><intent-filter> (action category) &#x2F;&#x2F;意图过滤器  </p>
+<p>如果同一部手机中的app配置文件中的action name重复了，在跳转时会有弹窗提示你到底想要跳转到哪个app。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前app写入另一个app配置文件中的action name</span></span><br><span class="line"><span class="type">val</span> <span class="variable">intent</span> <span class="operator">=</span> Intent(<span class="string">&quot;com.example.dongge.pay&quot;</span>)</span><br><span class="line"><span class="comment">//界面传值</span></span><br><span class="line">intent.putExtra(name:<span class="string">&quot;testKey&quot;</span>,viewModel.number)</span><br><span class="line">startActivity(intent)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//另一个界面获取值</span></span><br><span class="line"><span class="type">val</span> <span class="variable">value</span> <span class="operator">=</span> intent.getlntExtra(name: <span class="string">&quot;testKey&quot;</span>, defaultValue: <span class="number">0</span>)</span><br><span class="line">binding.textView.text = <span class="string">&quot;$value&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="常用意图"><a href="#常用意图" class="headerlink" title="常用意图"></a>常用意图</h2><p><strong>Intent.ACTION_DIAL</strong><br>打开拨号界面并显示指定的电话号码，但不会直接拨打电话。用户可以在拨号界面中确认号码并手动拨打电话(手动拨号)  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">phoneNumber</span> <span class="operator">=</span> <span class="string">&quot;1234567890&quot;</span></span><br><span class="line"><span class="type">val</span> <span class="variable">intent</span> <span class="operator">=</span> Intent(Intent.ACTION_DIAL,Uri.parse(<span class="string">&quot;tel:$phoneNumber&quot;</span>))</span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Intent.ACTION_CALL</strong>  这个动作是直接拨打指定的电话号码，不需要用户确认。(直接呼叫)<br>需要注意的是，使用ACTION_CALL需要在AndroidManifest.xml中添加CALL_PHONE权限。  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--这样做会在应用安装时向用户显示权限请求，用户需要授予应用拨打电话的权限才能使用ACTION_CALL。--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.CALL_PHONE&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>实际上，从Android 6.0（API级别23）开始，仅在AndroidManifest.xml文件中添加CALL_PHONE权限是不够的。应用程序还需要在运行时请求CALL_PHONE权限，并且用户必须在应用程序中明确授予此权限。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TakePicture请求图片</span></span><br><span class="line"><span class="type">val</span> <span class="variable">permissionLauncher</span> <span class="operator">=</span> registerForActivityResult(ActivityResultContracts.RequestPermission())&#123;</span><br><span class="line">            <span class="keyword">if</span> (it)&#123;</span><br><span class="line">                <span class="comment">//用户同意</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//用户不同意</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        permissionLauncher.launch(Manifest.permission.CALL_PHONE)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">phoneNumber</span> <span class="operator">=</span> <span class="string">&quot;1234567890&quot;</span></span><br><span class="line"><span class="type">val</span> <span class="variable">callIntent</span> <span class="operator">=</span> Intent(Intent.ACTION_CALL).apply &#123;</span><br><span class="line">    data = Uri.parse(<span class="string">&quot;tel:$phoneNumber&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">startActivity(callIntent)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="三-权限申请"><a href="#三-权限申请" class="headerlink" title="(三)权限申请"></a>(三)权限申请</h1><p>(相机 相片 联系人列表 打电话 使用网络)<br>权限是一种安全机制，用于限制应用程序对系统资源和用户数据的访问。<br>在应用程序需要访问受保护的资源或执行敏感操作时，必须请求相应的权限。<br>在Android中，权限通常在清单文件（AndroidManifest.xml）中声明，并且需要在运行时动态请求。</p>
+<p>在AndroidManifest.xml文件声明自己需要什么权限</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;android.hardware.telephony&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:required</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.CALL_PHONE&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>先检测是否有对应权限(用户是否已经同意过了)，没有权限再去申请权限<br><strong>checkSelfPermission</strong><br><strong>registerForActivityResult</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)&#123;</span><br><span class="line">    <span class="comment">//申请具体权限</span></span><br><span class="line">    <span class="comment">//registerForActivityResult() 申请的结果</span></span><br><span class="line">    <span class="comment">//ActivityResultContracts.RequestPermission() 申请什么权限：权限/访问视频/访问图片</span></span><br><span class="line">     <span class="type">val</span> <span class="variable">permissionLauncher</span> <span class="operator">=</span> registerForActivityResult(ActivityResultContracts.RequestPermission())&#123;</span><br><span class="line">        <span class="comment">//处理的结果，用户同意或者不同意需要做什么</span></span><br><span class="line">        <span class="keyword">if</span> (it)&#123;</span><br><span class="line">            <span class="comment">//用户同意</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 用户拒绝了拨打电话权限，处理拒绝权限的逻辑</span></span><br><span class="line">            Toast.makeText(<span class="built_in">this</span>, <span class="string">&quot;拨打电话权限被拒绝&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//具体申请什么权限，触发系统权限请求对话框，提示用户允许或拒绝电话权限</span></span><br><span class="line">    permissionLauncher.launch(Manifest.permission.CALL_PHONE)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="跳转动画"><a href="#跳转动画" class="headerlink" title="跳转动画"></a>跳转动画</h1><p>创建资源文件夹<br>res -&gt; New -&gt; Android Resource Directory   </p>
+<p>anim -&gt; New -&gt; Android Resource File<br>Root element:scale缩放 alpha渐变 translate平移 rotate旋转  </p>
+<p>enter exit popEnter popExit</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">translate</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromXDelta</span>=<span class="string">&quot;100%&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toXDelta</span>=<span class="string">&quot;0%&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:duration</span> = <span class="string">&quot;500&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>给activity添加切换动画<br><code>overridePendingTransition(R.anim.enter from rightR.anim.exit to left)</code></p>
+<h1 id="Activity-生命周期"><a href="#Activity-生命周期" class="headerlink" title="Activity 生命周期"></a>Activity 生命周期</h1><p>为了在 activity 生命周期的各个阶段之间导航过渡，Activity 类提供了六个核心回调：onCreate()、onStart()、onResume()、onPause()、onStop() 和 onDestroy()。当 activity 进入新状态时，系统会调用其中每个回调。  </p>
+<p><img src="https://s2.loli.net/2024/01/31/mY2M9vxj8aGB7H6.png" alt="生命周期.png"><br>(界面的生命周期从创建一销毁经历的过程)<br>onCreate()<br>onStart()<br>onResume()<br>onPause()<br>onStop()<br>onRestart()<br>onDestroy()  </p>
+<ol>
+<li><p><strong>onCreate()</strong><br>当activity第一次创建时调用，用于初始化activity的基本组件，例如布局、视图和数据。<br>创建界面<br>还在创建，正在配置<br>配置界面长什么样子  </p>
+</li>
+<li><p><strong>onStart()</strong><br>当 activity 变得可见但还没有获得焦点时调用，用于准备开始用户交互。(Activity 变为可见时调用)</p>
+</li>
+</ol>
+<p>渲染界面<br>启动<br>渲染 &#x3D; 绘制  </p>
+<ol start="3">
+<li><p><strong>onResume()</strong><br>当 activity 获得焦点并开始与用户交互时调用，用于启动动画、音乐播放等用户体验相关的任务。( Activity 获得焦点并开始与用户交互时调用)<br>渲染完毕，<strong>等待用户交互</strong>(界面看得见，可以进行交互了)<br>展现在面前，等待交互,用户拖拉点拽<br>↓activity开始运行了  </p>
+</li>
+<li><p><strong>onPause()</strong><br>当activity失去焦点但仍然可见时调用，用于暂停动画、音乐播放等用户体验相关的任务。(Activity失去焦点但仍可见时调用，通常用于保存数据或释放资源)<br>在当前Activity被其他Activity覆盖或锁屏时调用；<br>停止一切交互事件  </p>
+</li>
+<li><p><strong>onStop()</strong><br>界面不可见(Activity完全不可见时调用)<br>当activity不再可见时调用，用于释放资源、保存数据等清理工作。  </p>
+</li>
+<li><p><strong>onRestart()</strong><br>在Activity从停止状态再次启动时调用(Activity由停止状态变为运行状态之前调用)  </p>
+</li>
+<li><p><strong>onDestroy()</strong><br>当activity被销毁时调用，用于释放所有资源、取消注册的监听器等最终的清理工作(Activity销毁时调用，释放资源)。</p>
+</li>
+</ol>
+<hr>
+<p>进入后台：onPause() -&gt; onStop()<br>从后台返回界面：onRestart() -&gt; onStart() -&gt; onResume()</p>
+<hr>
+<p>从A界面切换到B界面<br>A -&gt; B<br>A onPause()  </p>
+<p>B onCreate()<br>B onStart()<br>B onResume()  </p>
+<p>A onStop()  </p>
+<p>再从B界面返回到A界面<br>B onPause()  </p>
+<p>A onRestart()<br>A onStart()<br>A onResume()  </p>
+<p>B onStop()<br>B onDestory()  (由于栈的原因，B返回到A界面就要被销毁了)</p>
+<hr>
+<ol start="8">
+<li><p><code>onSaveInstanceState(outState: Bundle)</code>：Activity即将被销毁前调用，用于保存临时数据，以便在Activity重新创建时恢复状态。</p>
+</li>
+<li><p><code>onBackPressed()</code>：用户按下返回键时调用，通常用于处理返回键的逻辑。</p>
+</li>
+</ol>
+<hr>
+<h1 id="launchMode启动模式"><a href="#launchMode启动模式" class="headerlink" title="launchMode启动模式"></a>launchMode启动模式</h1><p>android:launchMode&#x3D;””限制activity在栈里面出现的方式<br><img src="https://s2.loli.net/2024/01/31/KDNEkeyg9jwbPoG.png" alt="launchMode启动模式.png"><br>如上表所示，”standard” 是默认模式，适用于大多数类型的 activity。对众多类型的 activity 而言，”singleTop” 也是常见且有用的启动模式。其他模式（”singleTask”、”singleInstance” 和 “singleInstancePerTask”）不适用于大多数应用。它们所形成的交互模式可能让用户感到陌生，并且与大多数其他应用差别较大。</p>
+<p><em><strong>android:launchMode&#x3D;””</strong></em><br><strong>standard</strong> 默认的启动模式(标准) ——&gt; A-&gt;B-&gt;C-&gt;D-&gt;A-&gt;B 始终创建新的activity实例<br><strong>singleTop</strong>(栈顶复用) ——&gt; 如果在栈的顶部有一个需要启用的对象，就直接用即可，不会再创建一个新的对象<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A-&gt;B-&gt;C-&gt;D-&gt;C(这里的C就无法复用，只能复用栈顶的)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A-&gt;B-&gt;C(此时C在栈顶，若还想再启动一个C，此时就无需再创建新的，直接复用)<br><strong>singleTask</strong>(栈内复用)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A-&gt;B-&gt;C(栈内已有)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果想启用D(被singleTask修饰)则会另起一个任务栈<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D-&gt;<br><strong>singleInstance</strong>(单例) ——&gt; 栈里面如果存在某个界面，就直接从栈里面弹出来 复用，不会创建新的实例，把栈中已有的弹出来，该activity<br>始终是其任务中的唯一，同一个界面在栈里面只有一个对象。<br><strong>singleInstancePerTask</strong>  </p>
+<h1 id="手机屏幕的横竖屏"><a href="#手机屏幕的横竖屏" class="headerlink" title="手机屏幕的横竖屏"></a>手机屏幕的横竖屏</h1><p>在清单文件(manifests -&gt; AndroidManifest.xml)中  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.MainActivity&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:screenOrientation</span>=<span class="string">&quot;sensor&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>android:screenOrientation&#x3D;”landscape” &#x2F;&#x2F;横屏<br>android:screenOrientation&#x3D;”portrait” &#x2F;&#x2F;竖屏<br>android:screenOrientation&#x3D;”sensor” &#x2F;&#x2F;横竖交替<br>android:screenOrientation&#x3D;”sensorLandscape” &#x2F;&#x2F;会在横屏状态下开始，并自动旋转到竖屏模式<br>android:screenOrientation&#x3D;”sensorPortrait”  &#x2F;&#x2F;会在竖屏状态下开始，并自动旋转到横屏模式<br>android:screenOrientation&#x3D;”reversePortrait” &#x2F;&#x2F;倒立<br>android:screenOrientation&#x3D;”<strong>fullSensor</strong>“  &#x2F;&#x2F;全自动切换(可以在四个方向上进行旋转)(一般用这个)  </p>
+<h2 id="onSaveInstanceState"><a href="#onSaveInstanceState" class="headerlink" title="onSaveInstanceState()"></a>onSaveInstanceState()</h2><p>(单界面、少变量时可以这么操作，但是最好使用 ViewModel)</p>
+<p>旋转时（Activity状态发生变化时）界面会丢失数据  </p>
+<p>Activity先销毁再重建  </p>
+<p>界面销毁之前会调用<br>onSaveInstanceState 来存储丢失的数据<br>使用putInt()存储数据，在下一次创建时，在OnCreate中先判断Bundle中是否有存储的数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">override fun <span class="title function_">onSaveInstanceState</span><span class="params">(outState: Bundle)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onSaveInstanceState(outState)</span><br><span class="line">    </span><br><span class="line">    <span class="type">val</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">5</span></span><br><span class="line">    outState.putInt(<span class="string">&quot;countKey&quot;</span>, count)</span><br><span class="line">    </span><br><span class="line">    <span class="type">val</span> <span class="variable">user</span> <span class="operator">=</span> User(<span class="string">&quot;John&quot;</span>, <span class="number">30</span>) <span class="comment">// 自定义的Parcelable对象User</span></span><br><span class="line">    outState.putParcelable(<span class="string">&quot;userKey&quot;</span>, user)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">override fun <span class="title function_">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (savedInstanceState != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="type">val</span> <span class="variable">count</span> <span class="operator">=</span> savedInstanceState.getInt(<span class="string">&quot;countKey&quot;</span>)</span><br><span class="line">        <span class="type">val</span> <span class="variable">user</span> <span class="operator">=</span> savedInstanceState.getParcelable&lt;User&gt;(<span class="string">&quot;userKey&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 根据保存的数据进行相应的操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/29/Android/Activity/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Intent/" rel="tag">Intent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/launchMode%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F/" rel="tag">launchMode启动模式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/" rel="tag">四大组件</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%89%8B%E6%9C%BA%E5%B1%8F%E5%B9%95%E7%9A%84%E6%A8%AA%E7%AB%96%E5%B1%8F/" rel="tag">手机屏幕的横竖屏</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%83%E9%99%90%E7%94%B3%E8%AF%B7/" rel="tag">权限申请</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/31/Android/Fragment/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Fragment
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/29/Java%E5%9F%BA%E7%A1%80/XML/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">XML</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
