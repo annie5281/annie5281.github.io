@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.4k</span>
+            <span class="post-count">1.7k</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">5 min</span>
+            <span class="post-count">6 min</span>
         </span>
     </span>
 </div>
@@ -134,7 +134,7 @@
 <li>pivotYType ：旋转轴点的y坐标的模式  </li>
 <li>pivotYValue ：旋转轴点y坐标的相对值</li>
 </ul>
-<p>pivotXType &#x3D; Animation.ABSOLUTE:旋转轴点的x坐标&#x3D; View左上角的原点 在x方向 加上 pivotXValue数值的点(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_SELF:旋转轴点的x坐标&#x3D; View左上角的原点在x方向加上自身宽度乘上pivotXValue数值的值(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_PARENT:旋转轴点的x坐&#x3D; View左上角的原点在x方向加 父控件宽度乘上pivotXValue数值的值 (y方向同理)  </p>
+<p>pivotXType &#x3D; Animation.ABSOLUTE:旋转轴点的x坐标&#x3D; View左上角的原点 在x方向 加上 pivotXValue 数值的点(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_SELF:旋转轴点的x坐标&#x3D; View左上角的原点在x方向加上自身宽度乘上pivotXValue数值的值(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_PARENT:旋转轴点的x坐&#x3D; View左上角的原点在x方向加 父控件宽度乘上pivotXValue数值的值 (y方向同理)  </p>
 <ol start="3">
 <li><strong>ScaleAnimation</strong> (缩放动画)<br>参数：</li>
 </ol>
@@ -148,7 +148,7 @@
 <li>pivotYType:缩放轴点的y坐标的模式  </li>
 <li>pivotYValue:缩放轴点y坐标的相对值</li>
 </ul>
-<p>pivotXType &#x3D; Animation.ABSOLUTE:缩放轴点的x坐标 &#x3D;  View左上角的原点 在x方向 加上 pivotXValue数值的点(y方向同理)<br>pivotXType &#x3D; Animation.<strong>RELATIVE_TO_SELF</strong>:缩放轴点的x坐标&#x3D;View左上角的原点 在x方向加上自身宽度乘上pivotXValue数值的值(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_PARENT:缩放轴点的x坐标&#x3D;View左上角的原点 在x方向加上父控件宽度乘上pivotXValue数值的值 (y方向同理)  </p>
+<p>pivotXType &#x3D; Animation.ABSOLUTE:缩放轴点的x坐标 &#x3D;  View左上角的原点 在x方向 加上 pivotXValue 数值的点(y方向同理)<br>pivotXType &#x3D; Animation.<strong>RELATIVE_TO_SELF</strong>:缩放轴点的x坐标&#x3D;View左上角的原点 在x方向加上自身宽度乘上 pivotXValue 数值的值(y方向同理)<br>pivotXType &#x3D; Animation.RELATIVE_TO_PARENT:缩放轴点的x坐标&#x3D;View左上角的原点 在x方向加上父控件宽度乘上 pivotXValue 数值的值 (y方向同理)  </p>
 <ol start="4">
 <li><strong>TranslateAnimation</strong> (平移动画)</li>
 </ol>
@@ -159,6 +159,9 @@
 <li>toYDelta：视图在竖直方向y 移动的结束值</li>
 </ul>
 <p>动画的同一属性<br>以下参数是4种动画效果的公共属性,即都有的属性（即可写在set中也可以在自己的属性中写）<br>    android:duration&#x3D;”3000” &#x2F;&#x2F; 动画持续时间（ms），必须设置，动画才有效果<br>    android:startOffset &#x3D;”1000” &#x2F;&#x2F; 动画延迟开始时间（ms）<br>    android:fillBefore &#x3D; “true” &#x2F;&#x2F; 动画播放完后，视图是否会停留在动画开始的状态，默认为true<br>    android:fillAfter &#x3D; “false” &#x2F;&#x2F; 动画播放完后，视图是否会停留在动画结束的状态，优先于fillBefore值，默认为false<br>    android:fillEnabled&#x3D; “true” &#x2F;&#x2F; 是否应用fillBefore值，对fillAfter值无影响，默认为true<br>    android:repeatMode&#x3D; “restart” &#x2F;&#x2F; 选择重复播放动画模式，restart代表正序重放，reverse代表倒序回放，默认为restart<br>    android:repeatCount &#x3D; “0” &#x2F;&#x2F; 重放次数（所以动画的播放次数&#x3D;重放次数+1），为infinite时无限重复<br>    android:interpolator &#x3D; @[package:]anim&#x2F;interpolator_resource &#x2F;&#x2F; 插值器，即影响动画的播放速度  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">fun <span class="title function_">slideOutToTopAnimation</span><span class="params">(onEnd:()</span>-&gt;Unit = &#123;&#125;):Animation&#123;</span><br><span class="line">    <span class="keyword">return</span> TranslateAnimation(</span><br><span class="line">        Animation.RELATIVE_TO_SELF,</span><br><span class="line">        fromXValue: <span class="number">0f</span>,</span><br><span class="line">        Animation.RELATIVE_TO_SELF,</span><br><span class="line">        toXValue: <span class="number">0f</span>,</span><br><span class="line">        Animation.RELATIVE_TO_SELF,</span><br><span class="line">        fromYValue: <span class="number">0f</span>,</span><br><span class="line">        Animation.RELATIVE_TO_SELF,</span><br><span class="line">        toYValue: -<span class="number">1f</span></span><br><span class="line">    ).apply &#123; <span class="built_in">this</span>: <span class="type">TranslateAnimation</span></span><br><span class="line">        <span class="variable">duration</span> <span class="operator">=</span> <span class="number">200</span></span><br><span class="line">        setAnimationListener(Object:Animation.AnimationListener&#123;</span><br><span class="line">            override fun <span class="title function_">onAnimationStart</span><span class="params">(animation: Animation?)</span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            override fun <span class="title function_">onAnimationEnd</span><span class="params">(animation: Animation?)</span>&#123;</span><br><span class="line">                onEnd()</span><br><span class="line">            &#125;</span><br><span class="line">            override fun <span class="title function_">onAnimationRepeat</span><span class="params">(animation: Animation?)</span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h1 id="AnimationSet"><a href="#AnimationSet" class="headerlink" title="AnimationSet"></a>AnimationSet</h1><p>在Android中，AnimationSet是一个用于组合多个动画效果的类。通过AnimationSet，可以将多个动画效果按照一定的顺序或同时播放。<br>AnimationSet可以包含多个Animation对象，每个Animation对象可以是AlphaAnimation（透明度动画）、ScaleAnimation（缩放动画）、TranslateAnimation（位移动画）或RotateAnimation（旋转动画）等。</p>
 <p>以下是AnimationSet的常用方法及其作用：</p>
 <ol>
@@ -176,7 +179,7 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> animationSet = AnimationSet(<span class="literal">true</span>).apply &#123;</span><br><span class="line">    addAnimation(AlphaAnimation(<span class="number">0.0f</span>, <span class="number">1.0f</span>).apply &#123;</span><br><span class="line">        duration = <span class="number">1000</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    addAnimation(ScaleAnimation(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>).apply &#123;</span><br><span class="line">        duration = <span class="number">1000</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">view.startAnimation(animationSet)</span><br></pre></td></tr></table></figure>
 
 <p>在这个示例中，我们创建了一个包含透明度动画和缩放动画的AnimationSet，并将其应用到一个View上。</p>
-<p>在Android中，AnimationSet类中常用的属性有：</p>
+<p>AnimationSet 类中常用的属性有：</p>
 <ol>
 <li>animations ：用于存储AnimationSet中包含的动画效果列表。</li>
 <li><strong>duration</strong> ：动画的持续时间，单位为毫秒。</li>
@@ -187,6 +190,12 @@
 <li>startOffset ：动画开始之前的延迟时间，单位为毫秒。</li>
 <li>startTime ：动画开始的时间，单位为毫秒。</li>
 </ol>
+<h1 id="从-anim-资源中加载动画资源"><a href="#从-anim-资源中加载动画资源" class="headerlink" title="从 anim 资源中加载动画资源"></a>从 anim 资源中加载动画资源</h1><p>fillAfter ：动画结束后是否保持最终状态  </p>
+<p><strong>AnimationUtils.loadAnimation</strong> 是一个用于从资源文件中加载动画资源的静态方法。<br>它会解析并加载指定的资源文件，并返回一个 Animation 对象，该对象表示了加载的动画资源。<br>通过调用此方法，可以在Android应用程序中直接使用 XML 定义的动画资源，而无需手动创建和配置动画对象。  </p>
+<p>例如，可以通过调用AnimationUtils.loadAnimation方法从res&#x2F;anim文件夹中加载一个定义好的动画资源，并将其应用于一个View对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Object IndicatorAnimation&#123;</span><br><span class="line">    fun <span class="title function_">startAnimation</span><span class="params">(target:View)</span>&#123;</span><br><span class="line">        AnimationUtils.loadAnimation(target.context, R.anim.fade_in).apply&#123;</span><br><span class="line">            fillAfter = <span class="literal">true</span></span><br><span class="line">            target.startAnimation(<span class="built_in">this</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，loadAnimation方法加载了res&#x2F;anim文件夹中的fade_in.xml动画资源，并将其应用于名为view的View对象，使其显示一个淡入的动画效果。</p>
  
       <!-- reward -->
       

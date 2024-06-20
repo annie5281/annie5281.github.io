@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">210</span>
+            <span class="post-count">1.5k</span>
         </span>
     </span>
 
@@ -98,45 +98,97 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">6 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>使用 Room 持久保留数据</p>
-<p>使用 Android Jetpack 的 Room 部分将数据保存到本地数据库</p>
-<p>room 使用频率很高，只要使用缓存就需要 room </p>
-<p>本地数据存储：</p>
+  <p>本地数据存储：</p>
 <ol>
 <li>SharedPreference  </li>
 <li>File  </li>
 <li>Room Database -&gt; SQLite3移动端的小型数据库 -&gt; MySql数据库   </li>
 <li>DataStore Coroutine  </li>
-<li>Remote</li>
+<li>Remote<br>使用 Room 持久保留数据</li>
 </ol>
-<p>Room 对 MySQL语句进行高度封装<br>数据库对象:RoomDatabase<br>数据类表:Entity<br>操作:Dao  </p>
-<p>Room 包含三个主要组件：   </p>
+<p>依赖：<br>implementation(“androidx.room:room-runtime:2.5.2”)<br>annotationProcessor(“androidx.room:room-compiler:2.5.2”)<br>kapt(“androidx.room:room-compiler:2.5.2”)<br>implementation(“androidx.room:room-ktx:2.5.2”)<br>导入插件：id ‘kotlin-kapt’  </p>
+<hr>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>使用 Android Jetpack 的 Room 部分将数据保存到本地数据库<br>room 使用频率很高，只要使用缓存就需要 room  </p>
+<p>Room 是 Android 官方推出的持久性库，用于简化 SQLite 数据库的操作。<br>它提供了一个抽象层，使开发者可以更轻松地访问数据库，同时提供了编译时检查和类型安全的查询。<br>Room包含三个主要组件： Entity(实体)、 Dao(数据访问对象)和 Database(数据库)。<br>通过这些组件，开发者可以轻松地定义数据库表结构、执行数据库操作和管理数据库连接。<br>Room 的出现大大简化了 Android 开发中对数据库的操作，提高了开发效率。</p>
+<p>Room 对 MySQL语句进行高度封装   </p>
+<p>数据库里面只能存放基本的数据类型<br>integer bool char(20) varchar float double long bytes  </p>
+<h2 id="三个主要组件"><a href="#三个主要组件" class="headerlink" title="三个主要组件"></a>三个主要组件</h2><p>Room 由三个主要组件组成：  </p>
 <ol>
-<li>数据库类 ：database class 用于保存数据库并作为应用持久性数据底层连接的主要访问点。  </li>
-<li>数据实体 ：Data entities 用于表示应用的数据库中的表。</li>
+<li>Entity ：表示数据库中的表结构，每个 Entity 对应数据库中的一张表。(数据实体)</li>
 </ol>
 <ul>
 <li>表名：类名  </li>
 <li>字段：属性</li>
 </ul>
-<ol start="3">
-<li>数据访问对象(DAO) ：Data access objects 提供您的应用可用于查询、更新、插入和删除数据库中的数据的方法。</li>
+<ol start="2">
+<li>DAO (Data Access Object) ：定义了对数据库进行操作的方法，通过DAO可以执行 CRUD 操作。</li>
 </ol>
-<p>thumbnail 缩略图</p>
- 
+<ul>
+<li>分离业务层(应用)和持久化层(数据库)  </li>
+<li>提供您的应用可用于查询、更新、插入和删除数据库中的数据的方法</li>
+</ul>
+<ol start="3">
+<li>Database ：表示整个数据库，包含了 Entity 和 DAO 的定义，并且提供了获取数据库实例的方法。用于保存数据库并作为应用持久性数据底层连接的主要访问点。(数据库类)</li>
+</ol>
+<p>通过使用 Room ，开发者可以更加方便地进行数据库操作，同时避免了手动编写SQL语句的繁琐和错误。<br>Room 还提供了 LiveData 和 RxJava 等功能，可以方便地处理数据库中数据的变化和异步操作。  </p>
+<h1 id="实现实例步骤"><a href="#实现实例步骤" class="headerlink" title="实现实例步骤"></a>实现实例步骤</h1><h2 id="0-导入依赖"><a href="#0-导入依赖" class="headerlink" title="(0)导入依赖"></a>(0)导入依赖</h2><h2 id="1-数据实体-Entity-创建表"><a href="#1-数据实体-Entity-创建表" class="headerlink" title="(1)数据实体 Entity(创建表)"></a>(1)数据实体 Entity(创建表)</h2><p>是一个 data clas  </p>
+<p>如果类名和在数据库中的表名不同：<br><code>@Entity(tableName = &quot;picture table&quot;)</code><br>如果属性名和在数据库中的列名不同：<br><code>@ColumnInfo(name = &quot;first_name&quot;)</code><br>标识主键：<br><code>@PrimaryKey(autoGenerate = true)</code>  </p>
+<p>每个实例都代表应用数据库中 picture_table 表中的一行  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity(tableName = &quot;picture_table&quot;)</span></span><br><span class="line">data <span class="keyword">class</span> <span class="title class_">Picture</span>(</span><br><span class="line">  <span class="meta">@PrimaryKey(autoGenerate = true)</span> <span class="comment">//主键自增长</span></span><br><span class="line">  val pid:lnt</span><br><span class="line">  <span class="keyword">var</span> name:String</span><br><span class="line">  <span class="keyword">var</span> time:String</span><br><span class="line">  <span class="keyword">var</span> url: Int,</span><br><span class="line">  val thumbnail:Bitmap</span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-数据访问对象-DAO"><a href="#2-数据访问对象-DAO" class="headerlink" title="(2)数据访问对象(DAO)"></a>(2)数据访问对象(DAO)</h2><p>是一个 interface 接口    </p>
+<p>DAO 数据访问层，直接操作数据库表，进行增删改查等操作。  </p>
+<p>提供了app的其余部分与 Picture 表中的数据交互的方法。<br>使用 <strong>@Dao</strong> 注解</p>
+<p>每个 DAO 定义为一个 <strong>接口</strong> ，定义了一个或多个方法，可用于与应用数据库中的数据进行交互。</p>
+<p>数据库的相关操作都是比较好使的，都放在协程中操作  </p>
+<p>@Insert 插入<br>@Updata 更新<br>@Delete 删除<br>@Query(“查询语句”) 查询  </p>
+<p>(无需实现 编译器自动完成)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">PictureDao</span>&#123;</span><br><span class="line">  <span class="meta">@Insert(onConflict = OnConflictStrategy.IGNORE)</span></span><br><span class="line">  suspend fun <span class="title function_">insertPicture</span><span class="params">(picture: Picture)</span></span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Delete</span> <span class="comment">//删除多个</span></span><br><span class="line">  suspend fun <span class="title function_">deleteAll</span><span class="params">(pictures: List&lt;Picture&gt;)</span></span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Delete</span> <span class="comment">//删除单个</span></span><br><span class="line">  suspend fun <span class="title function_">deletePicture</span><span class="params">(picture: Picture)</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Update</span></span><br><span class="line">  suspend fun <span class="title function_">updatePicture</span><span class="params">(picture: Picture)</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Query(&quot;select * from picture table&quot;)</span></span><br><span class="line">  fun <span class="title function_">queryPictures</span><span class="params">()</span>:LiveData&lt;List&lt;Picture&gt;&gt;</span><br><span class="line">  <span class="comment">//or</span></span><br><span class="line">  <span class="comment">//fun queryPictures():Flow&lt;List&lt;Picture&gt;&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-数据库-Database"><a href="#3-数据库-Database" class="headerlink" title="(3)数据库(Database)"></a>(3)数据库(Database)</h2><p>是一个 abstract 抽象类  </p>
+<p>定义了用于保存数据库的类  </p>
+<ul>
+<li>该类必须带有 <strong>@Database</strong> 注解，该注解包含列出所有与数据库关联的数据实体的 entities 数组。  </li>
+<li>该类必须是一个<strong>抽象类</strong> ，用于扩展 <strong>RoomDatabase</strong> 。  </li>
+<li>对于与数据库关联的每个 DAO 类，数据库类必须定义一个具有零参数的<strong>抽象方法</strong> ，并<strong>返回 DAO 类的实例</strong> 。</li>
+</ul>
+<p><strong>@TypeConverters()</strong> 是一个用于 Room 数据库库的注解，用于<br>指定将自定义数据类型转换为数据库可识别的数据类型的转换器。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Database(entities = [User::class], version = 1,exportSchema = false)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@TypeConverters(BitmapConverter::class)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">PictureDatabase</span> : RoomDatabase() &#123; <span class="comment">//抽象类 实现类由编译器完成</span></span><br><span class="line">    <span class="comment">//获取PictureDao对象的抽象方法</span></span><br><span class="line">    <span class="keyword">abstract</span> fun <span class="title function_">userDao</span><span class="params">()</span>: PictureDao</span><br><span class="line"></span><br><span class="line">    <span class="comment">//提供单例 数据库对象只能有一个</span></span><br><span class="line">    companion object&#123;</span><br><span class="line">      <span class="keyword">private</span> <span class="keyword">var</span> database:PictureDatabase? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">      fun <span class="title function_">db</span><span class="params">()</span>:PictureDatabase&#123;</span><br><span class="line">        <span class="keyword">if</span> (database != <span class="literal">null</span>) <span class="keyword">return</span> database!!</span><br><span class="line">        <span class="keyword">synchronized</span>(<span class="built_in">this</span>)&#123;</span><br><span class="line">          <span class="keyword">if</span> (database == <span class="literal">null</span>)&#123;</span><br><span class="line">            database = Room.databaseBuilder(</span><br><span class="line">              Helper.mContextget()!!,</span><br><span class="line">              PictureDatabase::class.java,</span><br><span class="line">              <span class="string">&quot;picture.db&quot;</span></span><br><span class="line">            ).build()</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> database!!</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><em>数据类型转换类</em><br>数据类型转换方法用 <strong>@TypeConverter</strong> 标注  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BitmapConverter</span>&#123;</span><br><span class="line">  <span class="comment">//Bitmap -&gt; ByteArray</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@TypeConverter</span></span><br><span class="line">  fun <span class="title function_">bitmapToByteArray</span><span class="params">(bitmap: Bitmap)</span>:ByteArray&#123;</span><br><span class="line">    ByteArrayOutputStream().use &#123; baos -&gt;</span><br><span class="line">      bitmap.compress(Bitmap.CompressFormat.JPEG, quality: <span class="number">100</span>,baos)</span><br><span class="line">      <span class="keyword">return</span> baos.toByteArray()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//ByteArray -&gt; Bitmap</span></span><br><span class="line">  <span class="meta">@TypeConverter</span></span><br><span class="line">  fun <span class="title function_">byteArrayToBitmap</span><span class="params">(byteArray: ByteArray)</span>: Bitmap &#123;</span><br><span class="line">    <span class="keyword">return</span> BitmapFactory.decodeByteArray(byteArray, <span class="number">0</span>, byteArray.size)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="4-Repository-仓库"><a href="#4-Repository-仓库" class="headerlink" title="(4)Repository 仓库"></a>(4)Repository 仓库</h2><p>Repository(仓库)主要是针对数据进行操作，包括对不同类型数据库(如mysqsl、redis、mongodb等)中的数据进行整合。<br>业务层(ViewModel)应该直接和 Repository 打交道。  </p>
+<ol>
+<li>数据库  </li>
+<li>文件  </li>
+<li>网络  </li>
+<li>自己的数据</li>
+</ol>
+<p>Repository是中转站，统一的数据库存取方法，<br>对于外部来说，暴露的方法永远都是 Repository 中的方法，<br>如果突然有一天不想用这个数据库了，想使用网络或者其他的数据库了，但是不影响外部调用 ，<br>只需要在 Repository 中将 DAO 换成网络或者其他数据库的的 DAO 即可。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">dass Repository &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="type">val</span> <span class="variable">dao</span> <span class="operator">=</span> PictureDatabase.db().pictureDao()</span><br><span class="line">  suspend fun <span class="title function_">addPicture</span><span class="params">(picture: Picture)</span>&#123;</span><br><span class="line">    dao.insertPicture(picture)</span><br><span class="line">  &#125;</span><br><span class="line">  suspend fun <span class="title function_">loadDatas</span><span class="params">()</span>:List&lt;Picture&gt;&#123;</span><br><span class="line">    <span class="keyword">return</span> dao.queryPictures()</span><br><span class="line">  &#125;</span><br><span class="line">  suspend fun <span class="title function_">deleteAll</span><span class="params">(pictures: List&lt;Picture&gt;)</span>&#123;</span><br><span class="line">    dao.deleteAll(pictures)</span><br><span class="line">  &#125;</span><br><span class="line">  suspend fun <span class="title function_">deletePicture</span><span class="params">(picture: Picture)</span>&#123;</span><br><span class="line">    dao.deletePicture(picture)</span><br><span class="line">  &#125;</span><br><span class="line">  suspend fun <span class="title function_">updatePicture</span><span class="params">(picture: Picture)</span>&#123;</span><br><span class="line">    dao.updatePicture(picture)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果数据库类不用单例，该怎么创建数据库对象？  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Room.databaseBuilder(</span><br><span class="line">  AudioHelper.instance.context.</span><br><span class="line">  MusicDatabase::class .java,</span><br><span class="line">  name:<span class="string">&quot;musicdb&quot;</span></span><br><span class="line">).build()I</span><br></pre></td></tr></table></figure> 
       <!-- reward -->
       
       <div id="reword-out">
@@ -216,6 +268,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2024/05/09/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/MVVM/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            MVVM
+          
+        </div>
+      </a>
     
     
       <a href="/2024/05/01/Android/%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C/Coroutine%20%E5%8D%8F%E7%A8%8B/" class="article-nav-link">

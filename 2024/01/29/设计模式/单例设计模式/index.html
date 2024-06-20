@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2k</span>
+            <span class="post-count">2.1k</span>
         </span>
     </span>
 
@@ -126,22 +126,22 @@
 <h1 id="一般使用步骤："><a href="#一般使用步骤：" class="headerlink" title="一般使用步骤："></a>一般使用步骤：</h1><ol>
 <li><p>创建一个类，并<strong>私有化构造函数</strong> (控制类的实例化，确保类只能在其所在的类或伴生对象内部被实例化)，并定义一个<strong>私有的静态内部类 companion object</strong> (伴生对象)，用于实现单例模式。</p>
 </li>
-<li><p>在companion object中定义一个<strong>私有的静态变量</strong> (instance)，用于存储单例对象。将该变量的初始值设置为 null 。</p>
+<li><p>在companion object中定义一个<strong>私有的静态变量</strong> (instance)，用于存储单例对象。将该变量的初始值设置为 null 。   </p>
 </li>
 <li><p>定义一个<strong>公共的静态方法</strong> (getInstance)，用于获取单例对象。</p>
 </li>
 </ol>
 <p>在该方法中，检查instance变量是否为null。<br>如果为 null (即还没有被初始化)，则在一个 synchronized 块中再次检查 instance 是否为 null。<br>如果仍然为null，则创建一个新的 UserManager 实例并将其赋值给 instance。<br>如果 instance 不为 null，则直接返回该实例。  </p>
+<hr>
 <p><strong>synchronized</strong> —&gt; 这是因为多线程环境下，可能同时有多个线程尝试创建instance，而synchronized(this)就保证了在同一时间只有一个线程可以执行if(instance &#x3D;&#x3D; null)后面的代码。<br>最后，return instance!!得到对象。</p>
-<p>synchronized：涉及线程之间的安全问题(多个对象去抢夺这一个对象的时候可能会出现线程不安全问题)<br>如果 instance 没有就去创建，创建过程中加把锁，先别急着访问，先把这个对象创建好了再来访问，进来之后再来判断一次（有可能刚刚进来的时候刚好已经创建好了，创好了就没有必要去再做一次了），即将要创建了还是空则去创建这个对象<br>（ 当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访问目的的锁，也就是说当一个共享数据被当前正在访问的线程加上互斥锁后，在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。<br>在 Java 中，关键字 synchronized 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块(主要是对方法或者代码块中存在共享数据的操作)，同时我们还应该注意到 synchronized 另外一个重要的作用， synchronized 可保证一个线程的变化(主要是共享数据的变化)被其他线程所看到（保证可见性，完全可以替代 Volatile 功能），这点确实也是很重要的。）</p>
-<p>在Kotlin中，伴生对象（Companion Object）是一个在类内部定义的对象，它与类的实例无关，类似于Java中的静态成员。伴生对象在Kotlin中有以下几个重要的作用：  </p>
+<h2 id="synchronized：涉及线程之间的安全问题-多个对象去抢夺这一个对象的时候可能会出现线程不安全问题-如果-instance-没有就去创建，创建过程中加把锁，先别急着访问，先把这个对象创建好了再来访问，进来之后再来判断一次（有可能刚刚进来的时候刚好已经创建好了，创好了就没有必要去再做一次了），即将要创建了还是空则去创建这个对象（-当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访问目的的锁，也就是说当一个共享数据被当前正在访问的线程加上互斥锁后，在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。在-Java-中，关键字-synchronized-可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块-主要是对方法或者代码块中存在共享数据的操作-，同时我们还应该注意到-synchronized-另外一个重要的作用，-synchronized-可保证一个线程的变化-主要是共享数据的变化-被其他线程所看到（保证可见性，完全可以替代-Volatile-功能），这点确实也是很重要的。）"><a href="#synchronized：涉及线程之间的安全问题-多个对象去抢夺这一个对象的时候可能会出现线程不安全问题-如果-instance-没有就去创建，创建过程中加把锁，先别急着访问，先把这个对象创建好了再来访问，进来之后再来判断一次（有可能刚刚进来的时候刚好已经创建好了，创好了就没有必要去再做一次了），即将要创建了还是空则去创建这个对象（-当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访问目的的锁，也就是说当一个共享数据被当前正在访问的线程加上互斥锁后，在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。在-Java-中，关键字-synchronized-可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块-主要是对方法或者代码块中存在共享数据的操作-，同时我们还应该注意到-synchronized-另外一个重要的作用，-synchronized-可保证一个线程的变化-主要是共享数据的变化-被其他线程所看到（保证可见性，完全可以替代-Volatile-功能），这点确实也是很重要的。）" class="headerlink" title="synchronized：涉及线程之间的安全问题(多个对象去抢夺这一个对象的时候可能会出现线程不安全问题)如果 instance 没有就去创建，创建过程中加把锁，先别急着访问，先把这个对象创建好了再来访问，进来之后再来判断一次（有可能刚刚进来的时候刚好已经创建好了，创好了就没有必要去再做一次了），即将要创建了还是空则去创建这个对象（ 当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访问目的的锁，也就是说当一个共享数据被当前正在访问的线程加上互斥锁后，在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。在 Java 中，关键字 synchronized 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块(主要是对方法或者代码块中存在共享数据的操作)，同时我们还应该注意到 synchronized 另外一个重要的作用， synchronized 可保证一个线程的变化(主要是共享数据的变化)被其他线程所看到（保证可见性，完全可以替代 Volatile 功能），这点确实也是很重要的。）"></a>synchronized：涉及线程之间的安全问题(多个对象去抢夺这一个对象的时候可能会出现线程不安全问题)<br>如果 instance 没有就去创建，创建过程中加把锁，先别急着访问，先把这个对象创建好了再来访问，进来之后再来判断一次<br>（有可能刚刚进来的时候刚好已经创建好了，创好了就没有必要去再做一次了），即将要创建了还是空则去创建这个对象<br>（ 当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，即能达到互斥访问目的的锁，也就是说当一个共享数据被当前正在访问的线程加上互斥锁后，在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。<br>在 Java 中，关键字 synchronized 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块(主要是对方法或者代码块中存在共享数据的操作)，同时我们还应该注意到 synchronized 另外一个重要的作用， synchronized 可保证一个线程的变化(主要是共享数据的变化)被其他线程所看到（保证可见性，完全可以替代 Volatile 功能），这点确实也是很重要的。）</h2><p>在Kotlin中，伴生对象（Companion Object）是一个在类内部定义的对象，它与类的实例无关，类似于Java中的静态成员。(可以实现类似静态类的功能)伴生对象在Kotlin中有以下几个重要的作用：  </p>
 <ol>
-<li><strong>替代静态成员</strong>：Kotlin中没有静态成员的概念，可以使用伴生对象来模拟静态成员，包括静态属性和静态方法。</li>
-<li><strong>访问私有构造函数</strong>：伴生对象可以访问类的私有构造函数，因此可以在伴生对象中实现单例模式，保证类只有一个实例。</li>
-<li><strong>实现工厂方法</strong>：伴生对象可以包含工厂方法，用于创建类的实例，而不需要直接调用构造函数。</li>
+<li><strong>替代静态成员</strong>：Kotlin中没有静态成员的概念，可以使用伴生对象来模拟静态成员，包括静态属性和静态方法。  </li>
+<li><strong>访问私有构造函数</strong>：伴生对象可以访问类的私有构造函数，因此可以在伴生对象中实现单例模式，保证类只有一个实例。   </li>
+<li><strong>实现工厂方法</strong>：伴生对象可以包含工厂方法，用于创建类的实例，而不需要直接调用构造函数。  </li>
 <li><strong>实现接口</strong>：伴生对象可以实现接口，使得类可以通过伴生对象来实现特定的接口方法。</li>
 </ol>
-<p>总的来说，伴生对象在Kotlin中是一个非常灵活和有用的特性，可以帮助我们更好地组织代码结构，实现单例模式、工厂方法等设计模式，以及提供静态成员的功能。</p>
+<p>总的来说，伴生对象在Kotlin中是一个非常灵活和有用的特性，可以帮助我们更好地组织代码结构，实现单例模式、工厂方法等设计模式，以及提供静态成员的功能。<br>companion object 是一个在类内部定义的对象，可以用来存储类的静态变量和方法。<br>在Android开发中，companion object经常被用来创建工具类或者管理静态资源。<br>通过companion object，可以在不创建类的实例的情况下访问类的静态成员。   </p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FileManager</span> <span class="keyword">private</span> <span class="keyword">constructor</span>()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">var</span> instance:FileManager?= <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">sharedInstance</span><span class="params">()</span></span>:FileManager&#123; <span class="comment">//只有调用这个方法的时候才去创建这个对象</span></span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)&#123;</span><br><span class="line">                synchronized(<span class="keyword">this</span>)&#123;  <span class="comment">//每一个类、每个对象都有一把锁，</span></span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)&#123;</span><br><span class="line">                        instance = FileManager()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance!!</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
@@ -255,9 +255,9 @@
       </a>
     
     
-      <a href="/2024/01/29/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/" class="article-nav-link">
+      <a href="/2024/01/29/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A6%82%E8%BF%B0/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">设计模式概述</div>
+        <div class="article-nav-title">概述</div>
       </a>
     
   </nav>

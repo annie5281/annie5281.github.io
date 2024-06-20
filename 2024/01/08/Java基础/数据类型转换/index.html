@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1k</span>
+            <span class="post-count">720</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">4 min</span>
+            <span class="post-count">2 min</span>
         </span>
     </span>
 </div>
@@ -156,9 +156,7 @@
 </ol>
 <h2 id="ArrayList-数组"><a href="#ArrayList-数组" class="headerlink" title="ArrayList - 数组"></a>ArrayList - 数组</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String[] array = list.toArray(<span class="keyword">new</span> <span class="title class_">String</span>[list.size()]);</span><br></pre></td></tr></table></figure>
 
-<h2 id="dp-px-sp"><a href="#dp-px-sp" class="headerlink" title="dp px sp"></a>dp px sp</h2><p>px 像素<br>dp -&gt; density-independent pixel（密度无关像素）  dp 是一种基于设备独立像素的单位，它会根据设备的屏幕密度进行自适应缩放，以确保在不同密度的设备上显示相同大小的视图元素。<br>sp -&gt; scaled pixels（缩放像素）sp 用于设置文本的大小，会根据用户的字体大小偏好进行缩放，适合用于用户界面中的文本大小设置。    </p>
-<p>px(像素)&#x2F;密度&#x3D;dp(长度)  <strong>dp x 密度 &#x3D; px</strong><br>sp(字体) ——&gt;px(像素)<br>①px：指像素，是指基本原色素及其 灰度 的基本编码。<br>②dp： 安卓 开发时的 长度单位(一个圆点里面有多少个像素)<br>③sp：与缩放无关的抽象像素，是字体单位</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//density 得到屏幕的密度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**px 转化为 dp*/</span></span><br><span class="line">fun <span class="title function_">px2dp</span><span class="params">(px:lnt)</span>:Int&#123;</span><br><span class="line">    <span class="keyword">return</span> (px / context.resources.displayMetrics.density).tolnt() </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**dp 转化为 px*/</span></span><br><span class="line">fun <span class="title function_">dp2px</span><span class="params">(dp:lnt)</span> = context.resources.displayMetrics.density * dp</span><br><span class="line"></span><br><span class="line"><span class="comment">//↓ 可以直接给 View / Context 加扩展</span></span><br><span class="line">fun View.dp2px(dp:lnt):Int&#123;</span><br><span class="line">    <span class="keyword">return</span> (context.resources.displayMetrics.density*dp).tolnt()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**sp 转化为 px*/</span></span><br><span class="line"><span class="comment">//也可以直接给 Context 加扩展函数</span></span><br><span class="line">fun <span class="title function_">sp2px</span><span class="params">(sp:Float)</span>:Float&#123;</span><br><span class="line">    <span class="keyword">return</span> TypedValue.applyDimension(TypedValue.COMPLEX UNITSP,sp,context.resources.displayMetrics)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+ 
       <!-- reward -->
       
       <div id="reword-out">

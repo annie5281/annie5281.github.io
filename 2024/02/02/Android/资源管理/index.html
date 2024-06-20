@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.2k</span>
+            <span class="post-count">2.5k</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">9 min</span>
+            <span class="post-count">10 min</span>
         </span>
     </span>
 </div>
@@ -115,23 +115,66 @@
        
   <p>anim 补间动画<br>layout 布局资源<br>navigation 导航<br>values(colors,strings) 值<br>drawable 图片<br>font 字体<br>transition 转换的动画资源<br>menu 菜单<br>raw 文件资源<br>interpolator 拦截器  </p>
 <h1 id="一-drawable"><a href="#一-drawable" class="headerlink" title="(一)drawable"></a>(一)drawable</h1><p>res -&gt; drawable -&gt; New -&gt; Image Asset(图片资源)  </p>
-<p>corners 设置四个角(圆角)<br>stroke 描边 画笔颜色<br>solid 填充色<br>gradient 渐变色<br>padding 内间距<br>size 尺寸  </p>
-<p>除了<code>shape</code>类型和<code>selector</code>类型之外，Android开发中的<code>drawable</code>资源还有<code>layer-list</code>类型和<code>bitmap</code>类型等。下面简要介绍了这些类型的功能作用：  </p>
+<h2 id="1-shape"><a href="#1-shape" class="headerlink" title="(1)shape"></a>(1)shape</h2><ol>
+<li>gradient ：设置渐变颜色</li>
+</ol>
+<ul>
+<li>startColor 、 centerColor 、 endColor (设置渐变颜色的起止颜色)    </li>
+<li>type —— linear 线性渐变、radial 放射状渐变、 sweep 扫描式渐变 (设置渐变类型)  </li>
+<li>angle (设置渐变角度)<br>&nbsp;&nbsp;&nbsp;0: 从左往右<br>&nbsp;&nbsp;&nbsp;45: 从左上往右下<br>&nbsp;&nbsp;&nbsp;90: 从上往下<br>&nbsp;&nbsp;&nbsp;135: 从右上往左下<br>&nbsp;&nbsp;&nbsp;180: 从右往左<br>&nbsp;&nbsp;&nbsp;225: 从右下往左上<br>&nbsp;&nbsp;&nbsp;270: 从下往上<br>&nbsp;&nbsp;&nbsp;315: 从左下往右上</li>
+</ul>
+<ol start="2">
+<li>corners 设置四个角(圆角)</li>
+</ol>
+<ul>
+<li>radius <!--设置全圆角-->  </li>
+<li>topLeftRadius 、 topRightRadius 、 bottomLeftRadius 、 bottomRightRadius ：设置四个圆角的半径值</li>
+</ul>
+<ol start="2">
+<li>size ：设置形状大小尺寸</li>
+</ol>
+<ul>
+<li>width、height：设置形状的宽高值</li>
+</ul>
+<ol start="3">
+<li>stroke ：设置边框</li>
+</ol>
+<ul>
+<li>width  </li>
+<li>color  </li>
+<li>dashWidth  </li>
+<li>dashGap</li>
+</ul>
+<ol start="4">
+<li>solid 填充色   </li>
+<li>padding ：设置填充 内间距</li>
+</ol>
+<ul>
+<li>left、top、right、bottom</li>
+</ul>
+<ol start="5">
+<li>innerRadiusRatio、thicknessRatio：设置内外半径比例  </li>
+<li>shape：设置形状类型，如矩形、椭圆等   </li>
+<li></li>
+</ol>
+<p><strong>shape 例子</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">shape</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:shape</span>=<span class="string">&quot;rectangle&quot;</span>&gt;</span> <span class="comment">&lt;!--强调是矩形--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:radius</span>=<span class="string">&quot;29dp&quot;</span>/&gt;</span> <span class="comment">&lt;!--设置全圆角--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;@color/text_gray&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">shape</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:topLeftRadius</span>=<span class="string">&quot;15dp&quot;</span></span></span><br><span class="line"><span class="tag">             <span class="attr">android:topRightRadius</span>=<span class="string">&quot;15dp&quot;</span> /&gt;</span> <span class="comment">&lt;!--设置左上/右上圆角--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;@color/alpha_blue&quot;</span>/&gt;</span> <span class="comment">&lt;!--纯色--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-selector"><a href="#2-selector" class="headerlink" title="(2)selector"></a>(2)selector</h2><p><strong>selector</strong><br>注意使用选择器时只能使用<code>&lt;item android:drawable</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--selector 选择器 给系统使用--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--当控件的enabled状态是false 显示color为灰色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span> = <span class="string">&quot;@drawable/shape_button_round_corner_gray&quot;</span> <span class="attr">android:state_enabled</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--true 显示color为蓝色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span> = <span class="string">&quot;@drawable/shape_button_round_corner_blue&quot;</span> <span class="attr">android:state_enabled</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-其他"><a href="#3-其他" class="headerlink" title="(3)其他"></a>(3)其他</h2><p>除了<code>shape</code>类型和<code>selector</code>类型之外，Android开发中的<code>drawable</code>资源还有<code>layer-list</code>类型和<code>bitmap</code>类型等。下面简要介绍了这些类型的功能作用：  </p>
 <ol>
 <li><code>shape</code>类型：<br><code>shape</code>类型用于创建简单的图形，如矩形、圆角矩形、圆形等。可以通过设置<code>shape</code>标签的属性来定义不同的形状、颜色、边框等样式。  </li>
 <li><code>selector</code>类型：<br><code>selector</code>类型用于创建状态选择器，可以根据控件的不同状态（如按下、选中、正常等）显示不同的图像或颜色。<code>selector</code>文件中包含了多个<code>item</code>标签，每个<code>item</code>标签定义了一个状态和对应的图像或颜色。  </li>
 <li><code>layer-list</code>类型：<br><code>layer-list</code>类型用于创建图层列表，可以将多个图形或图片叠加在一起，形成一个复合的图像。可以通过<code>item</code>标签来定义每个图层的位置、大小、颜色等属性。   </li>
 <li><code>bitmap</code>类型：<br><code>bitmap</code>类型用于引用位图图像资源，通常用于显示图片。可以通过<code>src</code>属性指定位图资源的路径。<br>这些<code>drawable</code>资源类型在Android开发中可以用来定义控件的背景、前景、边框等样式，以及根据不同状态显示不同的图像或颜色。通过合理使用这些资源类型，可以实现丰富多彩的界面效果。</li>
 </ol>
-<p><strong>shape</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">shape</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:shape</span>=<span class="string">&quot;rectangle&quot;</span>&gt;</span> <span class="comment">&lt;!--强调是矩形--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:radius</span>=<span class="string">&quot;29dp&quot;</span>/&gt;</span> <span class="comment">&lt;!--设置全圆角--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;@color/text_gray&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">shape</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:topLeftRadius</span>=<span class="string">&quot;15dp&quot;</span></span></span><br><span class="line"><span class="tag">             <span class="attr">android:topRightRadius</span>=<span class="string">&quot;15dp&quot;</span> /&gt;</span> <span class="comment">&lt;!--设置左上/右上圆角--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;@color/alpha_blue&quot;</span>/&gt;</span> <span class="comment">&lt;!--纯色--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>selector</strong><br>注意使用选择器时只能使用<code>&lt;item android:drawable</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--selector 选择器 给系统使用--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--当控件的enabled状态是false 显示color为灰色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span> = <span class="string">&quot;@drawable/shape_button_round_corner_gray&quot;</span> <span class="attr">android:state_enabled</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--true 显示color为蓝色--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span> = <span class="string">&quot;@drawable/shape_button_round_corner_blue&quot;</span> <span class="attr">android:state_enabled</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
 <p>在Android Studio中的Drawable文件夹下可以存放以下类型的资源：</p>
 <ol>
 <li>图片资源(.png, .jpg, .gif等)：可以存放应用中使用的各种图片资源，例如应用图标、背景图片、按钮图标等。  </li>
@@ -173,6 +216,10 @@
 </li>
 </ol>
 <p>综上所述，windowFullscreen用于控制Activity是否全屏显示，而windowTranslucentStatus用于控制状态栏的透明度。根据应用的需求，可以根据情况选择使用这两个属性，或者同时使用它们来实现更加灵活的界面效果。</p>
+<h2 id="6-dimens"><a href="#6-dimens" class="headerlink" title="(6) dimens"></a>(6) dimens</h2><p>统一管理尺寸大小<br>使用：android:layout width&#x3D;”@dimen&#x2F;delete_circle_size”    </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dimen</span> <span class="attr">name</span>=<span class="string">&quot;delete_circle_radius&quot;</span>&gt;</span>10dp<span class="tag">&lt;/<span class="name">dimen</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dimen</span> <span class="attr">name</span>=<span class="string">&quot;delete_circle_size&quot;</span>&gt;</span>10dp<span class="tag">&lt;/<span class="name">dimen</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
 <h1 id="三-font"><a href="#三-font" class="headerlink" title="(三)font"></a>(三)font</h1><p>res -&gt; font</p>
 <p>MAC字体天下<br>选择字体下载下来，将字体名称改为小写，将字体拷贝到font中</p>
 <p>自定义属性 </p>
@@ -189,6 +236,8 @@
 <p>app:<strong>lottie_rawRes</strong>&#x3D;”@raw&#x2F;delivery” &#x2F;&#x2F;显示哪个资源<br>app:<strong>lottie_autoPlay</strong>&#x3D;”true” &#x2F;&#x2F;是否自动播放<br>app:<strong>lottie_loop</strong>&#x3D;”@raw&#x2F;delivery” &#x2F;&#x2F;是否循环播放  </p>
 <p>&#x2F;&#x2F;Lottie File<br><code>implementation&#39;com.airbnb.android:lottie:6.1.0&#39;</code></p>
 <p>图片资源：<br>image.baidu.com</p>
+<hr>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f424779bd40f">https://www.jianshu.com/p/f424779bd40f</a></p>
  
       <!-- reward -->
       

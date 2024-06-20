@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>保存图片到手机相册 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/项目/图片处理/保存图片到手机相册"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  保存图片到手机相册
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/05/14/Android/%E9%A1%B9%E7%9B%AE/%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/%E4%BF%9D%E5%AD%98%E5%9B%BE%E7%89%87%E5%88%B0%E6%89%8B%E6%9C%BA%E7%9B%B8%E5%86%8C/" class="article-date">
+  <time datetime="2022-05-14T09:19:30.000Z" itemprop="datePublished">2022-05-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a> / <a class="article-category-link" href="/categories/Android/%E9%A1%B9%E7%9B%AE/">项目</a> / <a class="article-category-link" href="/categories/Android/%E9%A1%B9%E7%9B%AE/%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/">图片处理</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">5 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在 AndroidManifest.xml 文件中添加权限:  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.READ_EXTERNAL_STORAGE&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="保存图片的缩略图-thumbnail"><a href="#保存图片的缩略图-thumbnail" class="headerlink" title="保存图片的缩略图 thumbnail"></a>保存图片的缩略图 thumbnail</h1><p>将 Bitmap 图片下载到相册  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下载图片到相册时，存储图片的url</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> mUri:Uri? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">fun <span class="title function_">download</span><span class="params">(bitmap: Bitmap)</span>&#123;</span><br><span class="line">  <span class="comment">//我到相册对应 uri 地址</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">uri</span> <span class="operator">=</span> <span class="keyword">if</span>(VERSION.SDK_INT&gt; VERSION_CODES.Q)&#123;</span><br><span class="line">    MediaStore.lmages.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    MediaStore.Images.Media.EXTERNAL_CONTENT_URI</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//****************************************************************************** 传统方式 将图片插入到设备的媒体库中</span></span><br><span class="line">  <span class="comment">//将当前的图片地址配置一下</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">contentValues</span> <span class="operator">=</span> ContentValues().apply &#123; <span class="built_in">this</span>: ContentValues</span><br><span class="line">      <span class="title function_">put</span><span class="params">(MediaStore.lmages.Media.DISPLAY_NAME,TimeUtils.timeName()</span>) <span class="comment">//图片名称</span></span><br><span class="line">      put(MediaStore.lmages.Media.MIME_TYPE,<span class="string">&quot;image/jpeg&quot;</span>) <span class="comment">//MIME 类型</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//图片在相册里面的具体 uri</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">imageUri</span> <span class="operator">=</span> requireActivity().contentResolver.insert(uri,contentValues)</span><br><span class="line">  <span class="comment">//******************************************************************************</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//------------------------------------------高于 11 版本方式</span></span><br><span class="line">  <span class="keyword">if</span>(VERSION.SDK_INT &gt; VERSION_CODES.R)&#123;</span><br><span class="line">    MediaStore.createWriteRequest(requireActivity().contentResolver, listOf(imageUri))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//------------------------------------------</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//输出流</span></span><br><span class="line">  requireContext().contentResolver.openOutputStream(imageUril!!).use&#123;it:OutputStream?</span><br><span class="line">    <span class="type">val</span> <span class="variable">result</span> <span class="operator">=</span> bitmap.compress(Bitmap.CompressFormat.JPEG, quality: <span class="number">100</span>,it)</span><br><span class="line">    <span class="keyword">if</span> (result)&#123;</span><br><span class="line">      Toast.makeText(requireContext(), text:<span class="string">&quot;保存成功&quot;</span>,Toast.LENGTH_LONG).show()</span><br><span class="line">      mUri = imageUril</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      Toast.makeText(requireContext(), text:<span class="string">&quot;保存失败&quot;</span>,Toast.LENGTH_LONG).show()</span><br><span class="line">      mUri = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="获取相册-uri"><a href="#获取相册-uri" class="headerlink" title="获取相册 uri"></a>获取相册 uri</h2><p> <code>if (VERSION.SDK_INT &gt; VERSION_CODES.Q)</code> 是根据当前设备的Android版本来选择不同的存储图片的URI。<br>这样做的目的是因为在不同的Android版本中，系统提供的API和存储机制可能会有所不同。</p>
+<p>在Android Q（10）及以上的版本中，Google引入了Scoped Storage (作用域存储)的概念，对应用程序访问外部存储的方式进行了改变。<br>在Scoped Storage中，应用程序只能访问自己的应用特定目录，而无法直接访问外部存储的任意文件。<br>因此，如果设备的Android版本大于Android Q，就需要使用新的方式来获取存储图片的 URI   </p>
+<ul>
+<li>即使用 MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)</li>
+</ul>
+<p>而在Android Q以下的版本中，应用程序可以直接访问外部存储中的文件，因此可以使用传统的方式获取存储图片的URI，   </p>
+<ul>
+<li>即使用MediaStore.Images.Media.EXTERNAL_CONTENT_URI</li>
+</ul>
+<p>通过根据Android版本来选择不同的URI获取方式，可以确保应用程序在不同版本的Android设备上都能正确地保存图片到相册中，以适应不同版本的存储机制和权限要求。<br>这样的做法可以提高应用程序的兼容性和稳定性，确保其在不同设备上的正常运行。  </p>
+<h2 id="MediaStore-createWriteRequest"><a href="#MediaStore-createWriteRequest" class="headerlink" title="MediaStore.createWriteRequest()"></a>MediaStore.createWriteRequest()</h2><p>这段代码是在Android应用中使用了Android 11（Android R）及以上版本的特定功能。让我们逐步解释这段代码：</p>
+<ol>
+<li><p><code>if(VERSION.SDK_INT &gt; VERSION_CODES.R)</code>：这段代码检查当前设备的Android版本是否高于Android 11（即Android R）。<code>SDK_INT</code>是一个表示设备当前Android版本的整数常量，<code>VERSION_CODES.R</code>代表Android 11。因此，这行代码的作用是判断当前设备的Android版本是否高于Android 11。</p>
+</li>
+<li><p><code>MediaStore.createWriteRequest(requireActivity().contentResolver, listOf(imageUri))</code>：如果当前设备的Android版本高于Android 11，那么会执行这行代码。<br>  该代码调用了<code>MediaStore.createWriteRequest</code>方法，传入了Activity的ContentResolver和包含了图片URI的<code>List</code>集合。</p>
+</li>
+</ol>
+<p>为什么要这样做？<br>在Android 11中，引入了Scoped Storage（作用域存储）的概念，这就意味着应用程序无法直接访问设备上的文件系统路径。<br>相反，应用程序必须通过系统提供的 API 来请求对文件的访问权限。<br>在这种情况下，<code>MediaStore.createWriteRequest</code>方法被用来<u>请求写入权限以便应用程序能够将图片插入到设备的媒体库中</u>。<br>这种方式旨在增强设备的安全性和隐私保护，确保应用程序只能访问到其被授权的文件和媒体内容。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(VERSION.SDK_INT &gt; VERSION_CODES.R)&#123;</span><br><span class="line">    MediaStore.createWriteRequest(requireActivity().contentResolver, listOf(imageUri))</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>如果设备的Android版本高于Android 11，则调用MediaStore.createWriteRequest方法来创建一个写入请求，传入当前活动的contentResolver和一个包含imageUri的列表。</p>
+<h1 id="保存原图"><a href="#保存原图" class="headerlink" title="保存原图"></a>保存原图</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下载图片到相册时，存储图片的url</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> mUri:Uri? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">fun <span class="title function_">download</span><span class="params">(filePath:String)</span>&#123;</span><br><span class="line">  <span class="type">val</span> <span class="variable">file</span> <span class="operator">=</span> File(filePath)</span><br><span class="line">  <span class="keyword">if</span>(!file.exist()) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//我到相册对应 uri 地址</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">uri</span> <span class="operator">=</span> <span class="keyword">if</span>(VERSION.SDK INT&gt; VERSION CODES.Q)&#123;</span><br><span class="line">    MediaStore.lmages.Media.getContentUri(MediaStore.VOLUME EXTERNAL PRIMARY</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    MediaStore.Images.Media.EXTERNAL_CONTENT_URI</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//将当前的图片地址配置一下</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">contentValues</span> <span class="operator">=</span> ContentValues().apply &#123; <span class="built_in">this</span>: ContentValues</span><br><span class="line">      <span class="title function_">put</span><span class="params">(MediaStore.lmages.Media.DISPLAY_NAME,TimeUtils.timeName()</span>)</span><br><span class="line">      put(MediaStore.lmages.Media.MIME_TYPE,<span class="string">&quot;image/jpeg&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//图片在相册里面的具体uri</span></span><br><span class="line">  <span class="type">val</span> <span class="variable">imageUri</span> <span class="operator">=</span> requireActivity().contentResolver.insert(uri,contentValues)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(VERSION.SDK_INT &gt; VERSION_CODES.R)&#123;</span><br><span class="line">    MediaStore.createWriteRequest(requireActivity().contentResolver, listOf(imageUri))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//输出流</span></span><br><span class="line">  requireContext().contentResolver.openOutputStream(imageUril!!).use&#123; os -&gt; </span><br><span class="line">    </span><br><span class="line">    BufferedInputStream(FilelnputStream(file)).use&#123; bis -&gt; </span><br><span class="line">      <span class="type">val</span> <span class="variable">bufferArray</span> <span class="operator">=</span> ByteArray(size: <span class="number">1024</span>)</span><br><span class="line">      <span class="comment">//从输入流中读数据到 bufferArray 中</span></span><br><span class="line">      <span class="type">var</span> <span class="variable">len</span> <span class="operator">=</span> bis.read(bufferArray, off: <span class="number">0</span>,len: <span class="number">1024</span>)</span><br><span class="line">      </span><br><span class="line">      <span class="keyword">while</span> (len &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//读多少个就写多少个</span></span><br><span class="line">        os!!.write(bufferArray, off: <span class="number">0</span>,len)</span><br><span class="line">        <span class="comment">//写完了一次再继续读 为下次读写做准备</span></span><br><span class="line">        len = bis.read(bufferArray, off: <span class="number">0</span>, len: <span class="number">1024</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//冲干净</span></span><br><span class="line">      os!!.flush()</span><br><span class="line">      Toast.makeText(requireContext(), text:<span class="string">&quot;保存成功&quot;</span>,Toast.LENGTH LONG).show()</span><br><span class="line">      mUri = imageUri</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>创建输入流对象</p>
+<p>输入流的不断往输出流中写</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2022/05/14/Android/%E9%A1%B9%E7%9B%AE/%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/%E4%BF%9D%E5%AD%98%E5%9B%BE%E7%89%87%E5%88%B0%E6%89%8B%E6%9C%BA%E7%9B%B8%E5%86%8C/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2022/05/15/%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            名词解释
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2022/05/14/Android/%E9%A1%B9%E7%9B%AE/%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/%E5%9B%BE%E7%89%87%E5%88%86%E4%BA%AB%E5%8A%9F%E8%83%BD/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">图片分享功能</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

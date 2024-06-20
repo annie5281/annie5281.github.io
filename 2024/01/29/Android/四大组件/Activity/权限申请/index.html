@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>权限申请 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/四大组件/Activity/权限申请"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  权限申请
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/29/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/%E6%9D%83%E9%99%90%E7%94%B3%E8%AF%B7/" class="article-date">
+  <time datetime="2024-01-29T12:56:35.000Z" itemprop="datePublished">2024-01-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a> / <a class="article-category-link" href="/categories/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a> / <a class="article-category-link" href="/categories/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/">Activity</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">7 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="梗概"><a href="#梗概" class="headerlink" title="梗概"></a>梗概</h1><p>在Android 6.0 (API 级别 23) 以下申请权限是非常简单的，直接在 AndroidManifest.xml 这个配置文件中加入申请权限的列表就可以了   </p>
+<p>但是在Android 6.0 (API 级别 23) 以上的版就不可以这样申请了，因为这样申请权限对用户来说是非常危险的，应用已安装就获取了全部权限，也不知道这些权限应用要来干什么，可能是用户不希望发生的一些操作。<br>所以在Android 6.0之后，一些危险的权限就要动态申请了，哪些是危险权限呢，下面是官方提供的一个需要动态申请的危险权限：    </p>
+<p>这里将其列出，一共9组24个。需要注意的是，权限按组分类，当一个权限被同意时，同一组内的权限自动同时被授权。  </p>
+<table>
+<thead>
+<tr>
+<th align="left">权限组名</th>
+<th align="left">权限名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">CALENDAR（日历）</td>
+<td align="left">READ_CALENDAR<br>WRITE_CALENDAR</td>
+</tr>
+<tr>
+<td align="left">CAMERA（相机）</td>
+<td align="left">CAMERA</td>
+</tr>
+<tr>
+<td align="left">CONTACTS（联系人）</td>
+<td align="left">READ_CONTACTS<br>WRITE_CONTACTS<br>GET_ACCOUNTS</td>
+</tr>
+<tr>
+<td align="left">LOCATION（位置）</td>
+<td align="left">ACCESS_FINE_LOCATION<br>ACCESS_COARSE_LOCATION</td>
+</tr>
+<tr>
+<td align="left">MICROPHONE（麦克风）</td>
+<td align="left">RECORD_AUDIO</td>
+</tr>
+<tr>
+<td align="left">PHONE（手机）</td>
+<td align="left">READ_PHONE_STATE<br>CALL_PHONE<br>ERAD_CALL_LOG<br>WRITE_CALL_LOG<br>ADD_VOICEMAIL<br>USE_SIP<br>PROCESS_OUTGOING_CALLS</td>
+</tr>
+<tr>
+<td align="left">SENSORS（传感器）</td>
+<td align="left">BODY_SENSORS</td>
+</tr>
+<tr>
+<td align="left">SMS（短信）</td>
+<td align="left">SEND_SMS<br>RECEIVE_SMS<br>READ_SMS<br>RECEIVE_WAP_PUSH<br>RECEIVE_MMS</td>
+</tr>
+<tr>
+<td align="left">STORAGE（存储卡）</td>
+<td align="left">READ_EXTERNAL_STORAGE<br>WRITE_EXTERNAL_STORAGE</td>
+</tr>
+</tbody></table>
+<p>如果要使用上面的权限，除了要在 AndroidManifest.xml 这个配置文件声明，还要在代码中增加动态申请  </p>
+<h1 id="一-普通权限"><a href="#一-普通权限" class="headerlink" title="(一)普通权限"></a>(一)普通权限</h1><p><code>&lt;uses-feature&gt;</code> 和 <code>&lt;uses-permission&gt;</code> 是 AndroidManifest.xml 文件中用来声明应用程序所需功能和权限的元素。</p>
+<ol>
+<li><code>&lt;uses-feature&gt;</code>：用来声明应用程序所需的硬件或软件功能特性。<br> 例如，可以使用 <code>&lt;uses-feature&gt;</code> 声明应用程序需要相机、GPS、蓝牙等功能。<br> 这样，Google Play 商店就可以根据设备的功能特性来过滤应用程序，确保只有支持相应功能的设备可以安装该应用程序。</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">&quot;android.hardware.camera&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">&quot;android.hardware.bluetooth&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>&lt;uses-permission&gt;</code>：用来声明应用程序所需的权限<br> Android 系统通过权限来控制应用程序对设备资源的访问。<br> 例如，可以使用 <code>&lt;uses-permission&gt;</code> 声明应用程序需要访问设备的摄像头、存储空间、联系人等权限。</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.CAMERA&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.READ_EXTERNAL_STORAGE&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<ul>
+<li><code>&lt;uses-feature&gt;</code> 用来声明应用程序所需的硬件或软件功能特性。</li>
+<li><code>&lt;uses-permission&gt;</code> 用来声明应用程序所需的权限。</li>
+</ul>
+<h1 id="二-动态申请权限"><a href="#二-动态申请权限" class="headerlink" title="(二)动态申请权限"></a>(二)动态申请权限</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>动态申请权限指的是在应用程序运行时，根据需要向用户请求权限的过程。<br>在Android应用程序中，某些权限属于危险权限，需要获取用户的明确授权才能使用，这些权限一般都需要 <strong>在运行时进行动态请求</strong> 。<br>开发者需要在应用程序代码中进行 <strong>权限检查</strong> ，如果发现权限未被授权，则需要通过系统提供的权限请求机制向用户显示请求权限的对话框，请求用户授权相应的权限。<br>用户可以选择授权或拒绝权限，开发者需要根据用户的选择进行相应的处理。</p>
+<p>动态申请权限可以让用户更直观地了解应用程序对隐私权限的使用情况， <strong>增强用户对应用安全性和隐私保护的信任</strong> 。<br>通过动态权限请求，开发者可以更好地控制应用程序的权限使用，并在权限被拒绝时提供相应的提示和处理，从而提升用户体验和应用程序的安全性。  </p>
+<p>一些权限是属于危险权限(访问受保护的资源或执行敏感操作)，需要动态申请的  </p>
+<h2 id="请求单个权限"><a href="#请求单个权限" class="headerlink" title="请求单个权限"></a>请求单个权限</h2><p>在 AndroidManifest.xml 文件声明自己需要什么权限</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;android.hardware.telephony&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:required</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.CALL_PHONE&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>Activity 的 onCreat() 中 ：  </p>
+<p>先检测是否有对应权限(用户是否已经同意过了)，没有权限再去申请权限<br><strong>checkSelfPermission</strong><br><strong>registerForActivityResult</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)&#123;</span><br><span class="line">    <span class="comment">//申请具体权限</span></span><br><span class="line">    <span class="comment">//registerForActivityResult() 申请的结果</span></span><br><span class="line">    <span class="comment">//ActivityResultContracts.RequestPermission() 申请什么权限：权限/访问视频/访问图片</span></span><br><span class="line">     <span class="type">val</span> <span class="variable">permissionLauncher</span> <span class="operator">=</span> registerForActivityResult(ActivityResultContracts.RequestPermission())&#123;</span><br><span class="line">        <span class="comment">//处理的结果，用户同意或者不同意需要做什么</span></span><br><span class="line">        <span class="keyword">if</span> (it)&#123;</span><br><span class="line">            <span class="comment">//用户同意</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 用户拒绝了拨打电话权限，处理拒绝权限的逻辑</span></span><br><span class="line">            Toast.makeText(<span class="built_in">this</span>, <span class="string">&quot;拨打电话权限被拒绝&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//具体申请什么权限，触发系统权限请求对话框，提示用户允许或拒绝电话权限</span></span><br><span class="line">    permissionLauncher.launch(Manifest.permission.CALL_PHONE)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ActivityResultLauncher  </li>
+<li>registerForActivityResult  </li>
+<li>launch</li>
+</ul>
+<p>写入权限：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : AppCompatActivity() &#123;</span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> writePermissionLauncher: ActivityResultLauncher&lt;String&gt;</span><br><span class="line">    override fun <span class="title function_">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">        writePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission())&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;pxd&quot;</span>,<span class="string">&quot;获取权限结果：$it&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        checkPermission()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> fun <span class="title function_">checkPermission</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//这里的 Manifest 是 android 里面的</span></span><br><span class="line">        <span class="keyword">if</span>(ContextCompat.checkSelfPermission(<span class="built_in">this</span>,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)&#123;</span><br><span class="line">            writePermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="多个权限"><a href="#多个权限" class="headerlink" title="多个权限"></a>多个权限</h2><p>如果需要获取多个权限，可以通过创建多个 ActivityResultLauncher 来分别请求每个权限。以下是一个示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : AppCompatActivity() &#123;</span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> writePermissionLauncher : ActivityResultLauncher&lt;String&gt;</span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> cameraPermissionLauncher : ActivityResultLauncher&lt;String&gt;</span><br><span class="line"></span><br><span class="line">    override fun <span class="title function_">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">        writePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission())&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;pxd&quot;</span>,<span class="string">&quot;写入权限获取结果：$it&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission())&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;pxd&quot;</span>,<span class="string">&quot;相机权限获取结果：$it&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        checkPermissions()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> fun <span class="title function_">checkPermissions</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(ContextCompat.checkSelfPermission(<span class="built_in">this</span>, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)&#123;</span><br><span class="line">            writePermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ContextCompat.checkSelfPermission(<span class="built_in">this</span>, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)&#123;</span><br><span class="line">            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们创建了两个 ActivityResultLauncher 分别用于请求 WRITE_EXTERNAL_STORAGE 和 CAMERA 权限。在 checkPermissions() 方法中，我们分别检查这两个权限是否已经被授予，如果没有就调用对应的 launcher 来请求权限。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : AppCompatActivity() &#123;</span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> multiplePermissionsLauncher: ActivityResultLauncher&lt;Array&lt;String&gt;&gt;</span><br><span class="line"></span><br><span class="line">    override fun <span class="title function_">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">        multiplePermissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) &#123; permissions -&gt;</span><br><span class="line">            permissions.entries.forEach &#123;</span><br><span class="line">                Log.v(<span class="string">&quot;pxd&quot;</span>, <span class="string">&quot;权限 $&#123;it.key&#125; 获取结果：$&#123;it.value&#125;&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        checkPermissions()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> fun <span class="title function_">checkPermissions</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">val</span> <span class="variable">permissionsToRequest</span> <span class="operator">=</span> arrayOf(</span><br><span class="line">            Manifest.permission.WRITE_EXTERNAL_STORAGE,</span><br><span class="line">            Manifest.permission.CAMERA</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="type">val</span> <span class="variable">permissionsMap</span> <span class="operator">=</span> permissionsToRequest.associateWith &#123;</span><br><span class="line">            ContextCompat.checkSelfPermission(<span class="built_in">this</span>, it) != PackageManager.PERMISSION_GRANTED</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">val</span> <span class="variable">permissionsToRequestArray</span> <span class="operator">=</span> permissionsMap.filterValues &#123; it &#125;.keys.toTypedArray()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (permissionsToRequestArray.isNotEmpty()) &#123;</span><br><span class="line">            multiplePermissionsLauncher.launch(permissionsToRequestArray)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="usesCleartextTraffic"><a href="#usesCleartextTraffic" class="headerlink" title="usesCleartextTraffic"></a>usesCleartextTraffic</h1><p>android:usesCleartextTraffic&#x3D;”true”</p>
+<p>在AndroidManifest.xml文件中使用android:usesCleartextTraffic&#x3D;”true”属性可以允许应用程序通过非加密的明文流量发送网络请求。默认情况下，Android 9和更高版本禁用了应用程序使用明文流量进行网络通信，因为明文流量可能会导致安全风险。当使用明文流量时，敏感数据可能会被中间人攻击者拦截和窃取。因此，谨慎使用此属性，并确保网络通信安全。</p>
+<p>如果您的应用程序需要与不支持加密通信的服务器进行通信，您可以使用android:usesCleartextTraffic&#x3D;”true”属性来明确告知系统允许明文流量。但是为了保障通信安全，建议尽可能地使用加密通信，例如HTTPS连接来保护数据传输的安全性。</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/29/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/%E6%9D%83%E9%99%90%E7%94%B3%E8%AF%B7/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/31/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/Fragment/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Fragment
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/29/Android/Activity/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Activity</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

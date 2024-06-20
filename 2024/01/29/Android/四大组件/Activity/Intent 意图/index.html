@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个简单的个人学习博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Intent意图 |  Annie</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/annie.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Android/四大组件/Activity/Intent 意图"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Intent意图
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/29/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/Intent%20%E6%84%8F%E5%9B%BE/" class="article-date">
+  <time datetime="2024-01-29T12:55:35.000Z" itemprop="datePublished">2024-01-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a> / <a class="article-category-link" href="/categories/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a> / <a class="article-category-link" href="/categories/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/">Activity</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">6 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Intent意图"><a href="#Intent意图" class="headerlink" title="Intent意图"></a>Intent意图</h1><p>finish() &#x2F;&#x2F;关闭当前界面，返回上一界面</p>
+<h2 id="1-显⽰意图"><a href="#1-显⽰意图" class="headerlink" title="(1)显⽰意图"></a>(1)显⽰意图</h2><p>app内部跳转，在自己应用内做跳转，明确指定跳转⻚⾯<br>startActivity(Intent(this,HomeActivity::class.java))  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//点击主界面跳转到下一个界面</span></span><br><span class="line">override fun <span class="title function_">onTouchEvent</span><span class="params">(event: MotionEvent?)</span>: Boolean &#123;</span><br><span class="line">        <span class="keyword">if</span> (event?.action == MotionEvent.ACTION_DOWN)&#123;</span><br><span class="line">            <span class="type">val</span> <span class="variable">intent</span> <span class="operator">=</span> Intent(<span class="built_in">this</span>,HomeActivity::class.java)</span><br><span class="line">            startActivity(intent)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-隐示意图"><a href="#2-隐示意图" class="headerlink" title="(2)隐示意图"></a>(2)隐示意图</h2><p>跳转到同一部手机上的其他应用的某个界面<br>同⼀部⼿机上 其他APP A -&gt; B app ⽀付功能(exported为true)<br><intent-filter> (action category) &#x2F;&#x2F;意图过滤器  </p>
+<p>如果同一部手机中的 app 配置文件中的 action name 重复了，在跳转时会有弹窗提示你到底想要跳转到哪个 app   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前app写入另一个app配置文件中的 action name</span></span><br><span class="line"><span class="type">val</span> <span class="variable">intent</span> <span class="operator">=</span> Intent(<span class="string">&quot;com.example.dongge.pay&quot;</span>)</span><br><span class="line"><span class="comment">//界面传值</span></span><br><span class="line">intent.putExtra(name:<span class="string">&quot;testKey&quot;</span>,viewModel.number)</span><br><span class="line">startActivity(intent)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//另一个界面获取值</span></span><br><span class="line"><span class="type">val</span> <span class="variable">value</span> <span class="operator">=</span> intent.getlntExtra(name: <span class="string">&quot;testKey&quot;</span>, defaultValue: <span class="number">0</span>)</span><br><span class="line">binding.textView.text = <span class="string">&quot;$value&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Intent-的常用操作动作-Action"><a href="#Intent-的常用操作动作-Action" class="headerlink" title="Intent 的常用操作动作(Action)"></a>Intent 的常用操作动作(Action)</h3><p>Intent 的操作动作(Action)是用来描述意图的目的或行为的字符串常量。<br>不同的操作动作代表不同的功能或操作，可以告诉系统要执行的操作是什么。<br>以下是一些常用的 Intent 操作动作：</p>
+<ol>
+<li><p>ACTION_VIEW ：查看数据，比如查看网页、图片、视频等。  </p>
+</li>
+<li><p>ACTION_EDIT ：编辑数据，比如编辑文本、图片等。  </p>
+</li>
+<li><p>ACTION_SEND ：发送数据，比如分享文本、图片等。<br> <strong>Intent.ACTION_SEND</strong> 用于启动发送数据的操作(分享)  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">sendIntent</span> <span class="operator">=</span> Intent().apply &#123;</span><br><span class="line">    action = Intent.ACTION_SEND</span><br><span class="line">    <span class="title function_">putExtra</span><span class="params">(Intent.EXTRA_TEXT, <span class="string">&quot;这是要分享的文本内容&quot;</span>)</span></span><br><span class="line">    type = <span class="string">&quot;text/plain&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">startActivity(Intent.createChooser(sendIntent, <span class="string">&quot;分享到&quot;</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ACTION_DIAL ：拨打电话。<br><strong>Intent.ACTION_DIAL</strong><br>打开拨号界面并显示指定的电话号码，但不会直接拨打电话。用户可以在拨号界面中确认号码并手动拨打电话(手动拨号)  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">phoneNumber</span> <span class="operator">=</span> <span class="string">&quot;1234567890&quot;</span></span><br><span class="line"><span class="type">val</span> <span class="variable">intent</span> <span class="operator">=</span> Intent(Intent.ACTION_DIAL,Uri.parse(<span class="string">&quot;tel:$phoneNumber&quot;</span>))</span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ACTION_CALL ：直接呼叫。<br><strong>Intent.ACTION_CALL</strong>  这个动作是直接拨打指定的电话号码，不需要用户确认。(直接呼叫)<br>需要注意的是，使用ACTION_CALL需要在AndroidManifest.xml中添加CALL_PHONE权限。  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--这样做会在应用安装时向用户显示权限请求，用户需要授予应用拨打电话的权限才能使用ACTION_CALL。--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.CALL_PHONE&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>实际上，从Android 6.0（API级别23）开始，仅在AndroidManifest.xml文件中添加CALL_PHONE权限是不够的。应用程序还需要在运行时请求CALL_PHONE权限，并且用户必须在应用程序中明确授予此权限。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TakePicture请求图片</span></span><br><span class="line"><span class="type">val</span> <span class="variable">permissionLauncher</span> <span class="operator">=</span> registerForActivityResult(ActivityResultContracts.RequestPermission())&#123;</span><br><span class="line">            <span class="keyword">if</span> (it)&#123;</span><br><span class="line">                <span class="comment">//用户同意</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//用户不同意</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        permissionLauncher.launch(Manifest.permission.CALL_PHONE)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">phoneNumber</span> <span class="operator">=</span> <span class="string">&quot;1234567890&quot;</span></span><br><span class="line"><span class="type">val</span> <span class="variable">callIntent</span> <span class="operator">=</span> Intent(Intent.ACTION_CALL).apply &#123;</span><br><span class="line">    data = Uri.parse(<span class="string">&quot;tel:$phoneNumber&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">startActivity(callIntent)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>ACTION_PICK ：从数据中选择一个项。  </li>
+<li>ACTION_GET_CONTENT ：获取数据内容。  </li>
+<li>ACTION_MAIN ：启动应用程序的主要入口点。  </li>
+<li>ACTION_INSERT ：插入一条新的数据。  </li>
+<li>ACTION_DELETE ：删除数据。</li>
+</ol>
+<p>通过指定不同的操作动作，开发者可以告诉系统要执行的具体操作，从而实现不同的功能和交互。</p>
+<h3 id="Intent-类常用方法"><a href="#Intent-类常用方法" class="headerlink" title="Intent 类常用方法"></a>Intent 类常用方法</h3><p>Intent 类是一个非常重要的类，用于在应用程序中实现组件之间的通信和交互。<br>以下是 Intent 类中常用的一些方法：  </p>
+<ol>
+<li><strong>setAction</strong>(String action)：设置意图的操作动作，比如 ACTION_SEND 、 ACTION_VIEW 等。  </li>
+<li><strong>putExtra</strong>(name: String, value: …)：向意图中添加额外的数据，可以传递文本、整数、布尔值、序列化对象等。<br>额外数据键(Extra Key)：</li>
+</ol>
+<ul>
+<li><p><em>Intent.EXTRA_STREAM</em>  用于在 Intent 中传递一个数据流(Stream)或者指向数据流的 URI ,实现数据的共享和传递功能。<br>  通常情况下，Intent.EXTRA_STREAM 被用于在应用程序之间<em>共享或传递文件、图片、视频等二进制数据</em>。  </p>
+</li>
+<li><p>Intent.EXTRA_MIME_TYPES  用于指定要处理的数据的 MIME 类型<br>  (Multipurpose Internet Mail Extensions)多用途互联网邮件扩展<br>  MIME 类型是一种标准的数据格式标识方法，用于<em>指示数据的类型</em>，例如图片、音频、视频等<br>  可以精确地指定要处理的数据类型，确保只有符合指定类型的数据被选择和处理，提高了数据处理的准确性和效率。  </p>
+</li>
+<li><p>Intent.EXTRA_TEXT：用于传递文本数据。</p>
+</li>
+<li><p>Intent.EXTRA_EMAIL：用于传递电子邮件地址。</p>
+</li>
+<li><p>Intent.EXTRA_SUBJECT：用于传递邮件主题。</p>
+</li>
+<li><p>Intent.EXTRA_PHONE_NUMBER：用于传递电话号码。</p>
+</li>
+<li><p>Intent.EXTRA_CC：用于传递电子邮件的抄送地址。</p>
+</li>
+<li><p>Intent.EXTRA_BCC：用于传递电子邮件的密送地址。</p>
+</li>
+<li><p>Intent.EXTRA_TITLE：用于传递标题信息。</p>
+</li>
+<li><p>Intent.EXTRA_HTML_TEXT：用于传递HTML格式的文本数据。</p>
+</li>
+<li><p>Intent.EXTRA_KEY_EVENT：用于传递按键事件。</p>
+</li>
+<li><p>Intent.EXTRA_SHORTCUT_ICON：用于传递快捷方式的图标。</p>
+</li>
+</ul>
+<p>这些额外数据键可以帮助开发者在Intent中传递各种类型的数据，实现不同功能和交互。开发者可以根据需求选择合适的额外数据键，将数据添加到Intent中，以实现数据的传递和处理。</p>
+<ol start="3">
+<li>setType(String type)：设置数据的类型，比如”text&#x2F;plain”、”image&#x2F;jpeg”等。  </li>
+<li>setData(Uri data)：设置意图的数据，通常用于指定要处理的数据的URI。  </li>
+<li><strong>setFlags</strong>(int flags)：设置意图的标志位。<br><strong>addFlags</strong> 添加多个标志位<br>Intent 标志:</li>
+</ol>
+<ul>
+<li>FLAG_ACTIVITY_CLEAR_TASK   </li>
+<li>FLAG_ACTIVITY_NEW_TASK   </li>
+<li>Intent.FLAG_GRANT_READ_URI_PERMISSION   用于指示接收 Intent 的组件应该被授予读取指定 URI 的权限<br>  这个标志通常用于在应用程序之间共享数据时，确保接收方应用程序有权限读取数据</li>
+</ul>
+<ol start="6">
+<li>addCategory(String category)：向意图中添加类别，用于指定要处理的组件的类别。  </li>
+<li><strong>createChooser</strong>(Intent target, CharSequence title)：创建一个选择器对话框，让用户选择要处理意图的应用程序。</li>
+</ol>
+<ul>
+<li>target ：要包装的 Intent 对象，即需要用户选择应用程序来处理的 Intent。   </li>
+<li>title ：选择器对话框的标题，通常是一个 CharSequence 类型的字符串，用于描述选择器的目的或内容。   </li>
+<li>当调用 startActivity() 方法时，传入通过 Intent.createChooser() 创建的 Intent 对象，系统会显示一个选择器对话框，列出可以处理该 Intent 的应用程序列表。用户可以从中选择一个应用程序来处理该 Intent。  </li>
+<li>可以提供更好的用户体验，让用户在处理特定操作时能够选择适合他们的应用程序，而不是直接打开默认应用程序。这样可以增加灵活性和用户友好性。</li>
+</ul>
+<p>title：选择器对话框的标题，通常是一个 CharSequence 类型的字符串，用于描述选择器的目的或内容。<br>8. getIntent()：获取意图的详细信息。<br>9. getAction()：获取意图的操作动作。<br>10. getExtras()：获取意图中的额外数据。<br>11. resolveActivity(PackageManager pm)：判断是否有能够处理该意图的组件。  </p>
+<p>以上是Intent类中常用的一些方法，开发者可以根据实际需求选择合适的方法来创建和处理意图，实现应用程序中的各种功能和交互。</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/01/29/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/Intent%20%E6%84%8F%E5%9B%BE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/29/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Activity/Activity/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Activity
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/29/Java%E5%9F%BA%E7%A1%80/XML/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">XML</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2023-2024
+        <i class="ri-heart-fill heart_icon"></i> Annie
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/annie.png" alt="Annie"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>嘿嘿 请我吃小蛋糕吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

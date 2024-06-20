@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.1k</span>
+            <span class="post-count">1.3k</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">4 min</span>
+            <span class="post-count">5 min</span>
         </span>
     </span>
 </div>
@@ -169,7 +169,7 @@
 <p>Navigation 组件具有一个名为 Safe Args 的 Gradle 插件，该插件可以生成简单的 object 和 builder 类，以便以类型安全的方式浏览和访问任何关联的参数。<br>强烈建议将 <strong>Safe Args 用于导航和传递数据</strong>，因为它可以<strong>确保类型安全</strong>。  </p>
 <ol>
 <li><p>导入插件</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins&#123;</span><br><span class="line">	<span class="comment">//替换classPath</span></span><br><span class="line">	id <span class="string">&#x27;androidx.navigation.safeargs&#x27;</span> version <span class="string">&#x27;2.7.7&#x27;</span> apply <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;androidx.navigation.safeargs&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1</span></span><br><span class="line">plugins&#123;</span><br><span class="line">	<span class="comment">//替换classPath</span></span><br><span class="line">	id <span class="string">&#x27;androidx.navigation.safeargs&#x27;</span> version <span class="string">&#x27;2.7.7&#x27;</span> apply <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;androidx.navigation.safeargs.kotlin&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 </li>
@@ -185,10 +185,14 @@
 <p>接收<br><strong>…FragmentArgs by navArgs()</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取传递过来的参数对象</span></span><br><span class="line"><span class="keyword">private</span> val args: HomeFragmentArgs by <span class="title function_">navArgs</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">binding.textView.text = args.number.toString()</span><br></pre></td></tr></table></figure>
 
+<hr>
+<p>传递一个类(传递特殊类型参数)  </p>
+<p>序列化对象是指将一个对象转换为字节流的过程,以便在网络传输或存储到本地文件中。<br>序列化对象可以方便地在不同组件之间传递数据，提高应用的灵活性和扩展性。  </p>
+<p>常用的序列化方式包括使用 Serializable 接口或 Parcelable 接口来实现对象的序列化。  </p>
+<p>要实现序列化接口 Parcelable<br>需要导入序列化插件:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//2</span><br><span class="line">plugins &#123;</span><br><span class="line">    id &#x27;kotlin-parcelize&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>传递一个类</p>
-<p>要实现序列化接口 Parcelable</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Parcelize</span><br><span class="line">data <span class="keyword">class</span> <span class="title class_">User</span> constructor(val name:String, val age:lnt):Parcelable</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Parcelize</span></span><br><span class="line">data <span class="keyword">class</span> <span class="title class_">User</span> constructor(</span><br><span class="line">	val name:String,</span><br><span class="line">	 val age:lnt):Parcelable</span><br></pre></td></tr></table></figure>
 
  
       <!-- reward -->

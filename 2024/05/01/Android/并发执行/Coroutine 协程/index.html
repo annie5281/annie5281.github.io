@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">4 min</span>
+            <span class="post-count">5 min</span>
         </span>
     </span>
 </div>
@@ -152,8 +152,9 @@
 <li>await() 获取对应的值，必须在一个协程内调用</li>
 </ul>
 <ol start="4">
-<li>使用 <strong>withContext()</strong> 切换线程<br>Dispatchers.IO 子线程<br>Dispatchers.Main Ul主线程<br>在特定的 CoroutineScop e中创建一个新的 CoroutineContext<br>它允许您在特定的作用域内设置 CoroutineContext，以便在该作用域内执行协程时使用该上下文。<br>这可以帮助您在协程中使用不同的上下文，例如切换线程或设置协程的调度器。</li>
+<li>使用 <strong>withContext()</strong> 切换线程<br>Dispatchers.IO 子线程<br>Dispatchers.Main Ul主线程<br>最后一行是返回值</li>
 </ol>
+<p>在特定的 CoroutineScop e中创建一个新的 CoroutineContext<br>它允许您在特定的作用域内设置 CoroutineContext，以便在该作用域内执行协程时使用该上下文。<br>这可以帮助您在协程中使用不同的上下文，例如切换线程或设置协程的调度器。</p>
 <p>通常，withContext函数用于在协程中执行需要特定上下文的操作，例如在 IO线程执行网络请求 或 在主线程更新UI。</p>
 <p>总之，withContext函数可以帮助您在协程中更改上下文，以便更好地控制协程的执行环境和调度方式。</p>
 <ol start="5">
@@ -169,11 +170,11 @@
 <li>协程域<br>Activity &#x2F; Fragment</li>
 </ol>
 <ul>
-<li>lifecycleScope :<br>为我们默认提供了一个CoroutineScope 直接使用就可以了<br>如果是自己创建，自己需要管理这个协程的生命周期(创建-&gt;销毁)</li>
+<li><strong>lifecycleScope</strong> :<br>为我们默认提供了一个CoroutineScope 直接使用就可以了<br>如果是自己创建，自己需要管理这个协程的生命周期(创建-&gt;销毁)</li>
 </ul>
-<p>ViewModel </p>
+<p>ViewModel   </p>
 <ul>
-<li>ViewModelScope</li>
+<li><strong>ViewModelScope</strong></li>
 </ul>
 <p>除此以外就需要自已创建 CoroutineScope</p>
 <hr>
@@ -187,7 +188,7 @@
 <li><p>使用 <strong>launch</strong> 开启一个同步任务 a-&gt; b-&gt; c  任务默认就在 scope 所在的区域执行，会返回 Job   </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">scope.launch&#123; <span class="comment">//默认不指定就在 scope 规定的线程</span></span><br><span class="line">  count()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//↓可以切换线程</span></span><br><span class="line">scope.launch(Dispatchers.lO)&#123; <span class="comment">//另外指定线程</span></span><br><span class="line">  count()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>async 开启一个异步任务</p>
+<li><p><strong>async</strong> 开启一个异步任务</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">sum2</span> <span class="operator">=</span> scope.async&#123;</span><br><span class="line">  <span class="type">var</span> <span class="variable">sum</span> <span class="operator">=</span> sum1.await()</span><br><span class="line">  <span class="keyword">for</span> (i in <span class="number">1</span> &lt; .. &lt; <span class="number">100</span>)&#123;</span><br><span class="line">    sum += i</span><br><span class="line">  &#125;</span><br><span class="line">  sum</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>withContext(Dispatchers.Main) 切换上下文 切换代码执行的scope 切换线程  </p>
@@ -196,7 +197,7 @@
 
 
 
-<h1 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h1><p>在Kotlin中，Flow的emit方法用于发射（emit）一个新的元素到Flow中，而collect方法用于从Flow中收集（collect）元素并进行处理。</p>
+<h1 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h1><p>在Kotlin中，Flow 的 emit 方法用于发射(emit)一个新的元素到 Flow 中，而 collect 方法用于从Flow中收集(collect)元素并进行处理。</p>
 <ol>
 <li>emit方法：emit方法是Flow的一个扩展函数，用于向Flow中发射一个新的元素。当调用emit方法时，会将指定的元素发送到Flow中，并通知Flow的观察者（collect方法）有新的元素可用。emit方法通常用于在Flow中生成新的元素，例如在网络请求或数据库查询返回结果后，将结果发射到Flow中。</li>
 </ol>
@@ -204,13 +205,14 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">generateNumbers</span><span class="params">()</span></span>: Flow&lt;<span class="built_in">Int</span>&gt; = flow &#123;</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.5</span>) &#123;</span><br><span class="line">        emit(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> numbersFlow = generateNumbers()</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>collect方法：collect方法是Flow的一个挂起函数，用于从Flow中收集元素并进行处理。当调用collect方法时，会阻塞当前协程直到Flow中有新的元素可用，然后处理这个元素。collect方法通常用于订阅Flow并处理其中的元素，例如打印元素、更新UI等操作。</li>
+<li>collect 方法：collect 方法是Flow的一个挂起函数，用于从 Flow 中收集元素并进行处理。当调用 collect 方法时，会阻塞当前协程直到 Flow 中有新的元素可用，然后处理这个元素。 collect 方法通常用于订阅 Flow 并处理其中的元素，例如打印元素、更新 UI 等操作。</li>
 </ol>
 <p>示例代码：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numbersFlow = generateNumbers()</span><br><span class="line">viewModelScope.launch &#123;</span><br><span class="line">    numbersFlow.collect &#123; number -&gt;</span><br><span class="line">        Log.d(<span class="string">&quot;FlowExample&quot;</span>, <span class="string">&quot;Received number: <span class="variable">$number</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>通过emit方法向Flow中发射新的元素，然后通过collect方法从Flow中收集并处理这些元素，可以实现在Flow中生成和处理数据的功能。</p>
+<p>通过 emit 方法向 Flow 中发射新的元素，然后通过 collect 方法从 Flow 中收集并处理这些元素，可以实现在 Flow 中生成和处理数据的功能。</p>
 <hr>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>cancel()  取消该任务<br>join() 等待任务做完<br>cancelAneJoin()  将 CoroutineScope 的属性 isActive 转换为 false  </p>
  
       <!-- reward -->
       

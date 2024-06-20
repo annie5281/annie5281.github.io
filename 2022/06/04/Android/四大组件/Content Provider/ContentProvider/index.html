@@ -13,7 +13,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>SharedPreferences |  Annie</title>
+      <title>ContentProvider |  Annie</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/annie.png" />
@@ -58,7 +58,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-Android/SharedPreferences"
+  id="post-Android/四大组件/Content Provider/ContentProvider"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -69,7 +69,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  SharedPreferences
+  ContentProvider
 </h1>
  
 
@@ -77,11 +77,11 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/02/17/Android/SharedPreferences/" class="article-date">
-  <time datetime="2024-02-17T13:05:35.000Z" itemprop="datePublished">2024-02-17</time>
+      <a href="/2022/06/04/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Content%20Provider/ContentProvider/" class="article-date">
+  <time datetime="2022-06-04T01:19:30.000Z" itemprop="datePublished">2022-06-04</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Android/">Android</a>
+    <a class="article-category-link" href="/categories/Android/">Android</a> / <a class="article-category-link" href="/categories/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/">四大组件</a> / <a class="article-category-link" href="/categories/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Content-Provider/">Content Provider</a>
   </div>
   
 <div class="word_count">
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">939</span>
+            <span class="post-count">350</span>
         </span>
     </span>
 
@@ -98,54 +98,33 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">3 min</span>
+            <span class="post-count">1 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
-    <div class="tocbot"></div>
-
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在Android开发中， SharedPreferences 类用于实现<strong>数据的轻量级存储</strong>，通常用于<u>存储应用程序的配置信息、用户偏好设置</u>等简单的键值对数据。<br>SharedPreferences 是Android提供的一种轻量级的数据存储方式，它以XML文件的形式存储数据，数据存储在应用的私有目录中，只有应用本身可以访问。 </p>
-<p>在Kotlin中，可以通过以下步骤来使用 SharedPreferences 类：  </p>
+  <p>ContentProvider的子类主要有以下几种：</p>
 <ol>
-<li>获取 SharedPreferences 对象：可以通过 Context 的 <strong>getSharedPreferences</strong>() 方法来获取 SharedPreferences 对象，需要指定一个名称和访问模式（通常使用MODE_PRIVATE）。&#x2F;&#x2F;requireActivity()</li>
+<li><p>SQLiteContentProvider：用于操作SQLite数据库的ContentProvider子类。SQLiteContentProvider提供了对SQLite数据库的查询、插入、更新、删除等操作，可以用于访问和管理本地数据库中的数据。</p>
+</li>
+<li><p>FileProvider：用于共享文件和私有文件目录的ContentProvider子类。FileProvider提供了安全地共享文件和访问文件的功能，可用于在应用程序之间共享文件并保护文件的隐私和安全。</p>
+</li>
+<li><p>ContactsProvider：用于访问联系人数据的ContentProvider子类。ContactsProvider提供了对设备联系人管理的接口，可以查询、修改、添加和删除设备上的联系人信息。</p>
+</li>
+<li><p>CallLogProvider：用于访问通话记录的ContentProvider子类。CallLogProvider提供了对设备通话记录的访问和管理功能，包括查询通话记录、添加通话记录等操作。</p>
+</li>
+<li><p>MediaStoreProvider：用于访问设备媒体文件的ContentProvider子类。MediaStoreProvider提供了对设备上音频、视频和图片等媒体文件的访问接口，用于管理和展示设备上的媒体文件。</p>
+</li>
 </ol>
-<p>在这里，Context.MODE_PRIVATE 是指定了 SharedPreferences 的访问模式，表示只有当前应用程序可以访问这个 SharedPreferences 文件。除了 Context.MODE_PRIVATE，还有以下几种访问模式：</p>
-<ul>
-<li>Context.MODE_PRIVATE: 只有当前应用程序可以访问这个 SharedPreferences 文件。</li>
-<li>Context.MODE_WORLD_READABLE: 其他应用程序可以读取这个 SharedPreferences 文件中的数据。</li>
-<li>Context.MODE_WORLD_WRITEABLE: 其他应用程序可以写入或修改这个 SharedPreferences 文件中的数据，不推荐使用，因为存在安全风险。</li>
-<li>Context.MODE_MULTI_PROCESS: 多个进程可以同时访问这个 SharedPreferences 文件。</li>
-<li>Context.MODE_APPEND: 当写入数据时，将新数据追加到旧数据的后面。</li>
-</ul>
-<p>在实际开发中，一般使用 Context.MODE_PRIVATE 最为常见，以确保数据的安全性和私密性。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> sharedPreferences = context.getSharedPreferences(<span class="string">&quot;my_preferences&quot;</span>, Context.MODE_PRIVATE)</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>编辑 SharedPreferences 数据：可以通过 SharedPreferences 对象的 <strong>edit</strong>() 方法获取一个 SharedPreferences.Editor 对象，通过该对象可以对 SharedPreferences 中的数据进行读写操作。<br><strong>apply()</strong></li>
-</ol>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> editor = sharedPreferences.edit()</span><br><span class="line">editor.putString(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>)</span><br><span class="line">editor.putInt(<span class="string">&quot;key2&quot;</span>, <span class="number">123</span>)</span><br><span class="line">editor.apply() <span class="comment">// 保存数据</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>读取 SharedPreferences 数据：可以通过 SharedPreferences 对象的相应方法来读取存储在 SharedPreferences 中的数据。</li>
-</ol>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> value = sharedPreferences.getString(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;default_value&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> intValue = sharedPreferences.getInt(<span class="string">&quot;key2&quot;</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>通过使用 SharedPreferences 类，开发者可以方便地<strong>存储和读取简单的键值对数据</strong>，如<u>用户登录状态、应用配置信息</u>等。<br>需要注意的是，SharedPreferences 适用于存储少量简单数据，对于大量或复杂数据建议使用 SQLite数据库 或其他适合的数据存储方式。</p>
-<h1 id="用户是否第一次使用该app"><a href="#用户是否第一次使用该app" class="headerlink" title="用户是否第一次使用该app"></a>用户是否第一次使用该app</h1><p>在Android开发中，可以通过<code>SharedPreferences</code>来确定用户是否是第一次使用该App。可以在App启动时检查一个特定的标记是否存在，如果不存在则说明是第一次使用。</p>
-<p>以下是一个使用Kotlin语言的示例代码，演示了如何通过<code>SharedPreferences</code>来确定用户是否是第一次使用该App：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.content.Context</span><br><span class="line"><span class="keyword">import</span> android.content.SharedPreferences</span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> PREFS_NAME = <span class="string">&quot;MyPrefs&quot;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> FIRST_TIME_KEY = <span class="string">&quot;firstTime&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取SharedPreferences对象</span></span><br><span class="line">        <span class="keyword">val</span> sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查是否是第一次使用</span></span><br><span class="line">        <span class="keyword">val</span> isFirstTime = sharedPreferences.getBoolean(FIRST_TIME_KEY, <span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isFirstTime) &#123;</span><br><span class="line">            <span class="comment">// 第一次使用，执行相应的操作</span></span><br><span class="line">            <span class="comment">// 例如显示欢迎页面、引导页面等</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将标记设为false，表示不是第一次使用</span></span><br><span class="line">            with(sharedPreferences.edit()) &#123;</span><br><span class="line">                putBoolean(FIRST_TIME_KEY, <span class="literal">false</span>)</span><br><span class="line">                apply()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 不是第一次使用，执行其他操作</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的示例中，我们首先定义了一个 SharedPreferences 的名称和用于判断是否是第一次使用的键。然后在<code>onCreate()</code>方法中获取 SharedPreferences 对象，检查是否是第一次使用，如果是则执行相应的操作，并将标记设为 false 。如果不是第一次使用，则可以执行其他操作。</p>
-<p>通过这种方式，我们可以在App启动时判断用户是否是第一次使用该App，并根据需要执行相应的逻辑。</p>
+<p>以上是ContentProvider常见的一些子类，每个子类都针对特定的数据源或数据类型提供了相应的访问和管理功能。开发者可以根据具体的需求选择合适的ContentProvider子类来实现数据共享和访问控制。</p>
  
       <!-- reward -->
       
@@ -216,7 +195,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2024/02/17/Android/SharedPreferences/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://annie5281.github.io/2022/06/04/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/Content%20Provider/ContentProvider/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -227,19 +206,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2024/02/18/Android/%E5%8A%A8%E7%94%BB/Animator%20%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB/" class="article-nav-link">
+      <a href="/2023/05/31/Android/WindowManager%20%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Animator 属性动画
+            WindowsManager 窗口管理器
           
         </div>
       </a>
     
     
-      <a href="/2024/02/17/Android/%E8%87%AA%E5%AE%9A%E4%B9%89/%E8%87%AA%E5%AE%9A%E4%B9%89View%E3%80%81ViewGroup/" class="article-nav-link">
+      <a href="/2022/06/03/Android/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6/BroadCast%20Receiver%20%E5%B9%BF%E6%92%AD/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">自定义 View、ViewGroup</div>
+        <div class="article-nav-title">BroadCast Receiver</div>
       </a>
     
   </nav>

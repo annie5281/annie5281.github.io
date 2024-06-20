@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">423</span>
+            <span class="post-count">614</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">2 min</span>
+            <span class="post-count">3 min</span>
         </span>
     </span>
 </div>
@@ -121,33 +121,42 @@
 <p>&#x2F;&#x2F;viewpager2<br>implementation ‘androidx.viewpager2:viewpager2:1.0.0’  </p>
 <p>&#x2F;&#x2F;recyclerview<br>implementation ‘androidx.recyclerview:recyclerview:1.3.1’  </p>
 <p>&#x2F;&#x2F;<strong>Navigation</strong>导航<br>implementation(“androidx.navigation:navigation-fragment-ktx:2.6.0”)<br>implementation(“androidx.navigation:navigation-ui-ktx:2.6.0”)</p>
-<p>&#x2F;&#x2F;Safe Args</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id(<span class="string">&quot;androidx.navigation.safeargs&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&#x2F;&#x2F;Safe Args<br>在第1个build.gradle<br>id ‘androidx.navigation.safeargs’ version ‘2.6.0’ apply false  </p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1</span></span><br><span class="line">plugins&#123;</span><br><span class="line">  <span class="comment">//替换classPath</span></span><br><span class="line">  id <span class="string">&#x27;androidx.navigation.safeargs&#x27;</span> version <span class="string">&#x27;2.7.7&#x27;</span> apply <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;androidx.navigation.safeargs.kotlin&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <p>&#x2F;&#x2F;协程 Coroutine<br>implementation(“org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9”)<br>&#x2F;&#x2F;Fragment 和 Activity 默认协程域 lifecycleScope<br>implementation(‘androidx.lifecycle:lifecycle-runtime-ktx:2.6.1’)<br>&#x2F;&#x2F;ViewModel 的协程域 viewModelScope<br>implementation(‘androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1’)  </p>
-<p>&#x2F;&#x2F;Room<br>implementation(“androidx.room:room-runtime:2.5.2”)<br>annotationProcessor(“androidx.room:room-compiler:2.5.2”)<br>kapt(“androidx.room:room-compiler:2.5.2”)<br>导入插件：id ‘kotlin-kapt’  </p>
+<p>&#x2F;&#x2F;Room<br>implementation(“androidx.room:room-runtime:2.5.2”)<br>annotationProcessor(“androidx.room:room-compiler:2.5.2”)<br>kapt(“androidx.room:room-compiler:2.5.2”)<br>implementation(“androidx.room:room-ktx:2.5.2)<br>导入插件：id ‘kotlin-kapt’  </p>
+<p>&#x2F;&#x2F;Room<br>    implementation(“androidx.room:room-runtime:2.6.1”)<br>    kapt(“androidx.room:room-compiler:2.6.1”)<br>    implementation(“androidx.room:room-ktx:2.6.1”)</p>
 <p>&#x2F;&#x2F;bing  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//kts文件中</span></span><br><span class="line">android&#123;</span><br><span class="line">  namespace <span class="string">&#x27;com.example.loginproject&#x27;</span></span><br><span class="line">  compileSdk <span class="number">33</span></span><br><span class="line"></span><br><span class="line">  viewBinding &#123;</span><br><span class="line">    enable = <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>parcelize 序列化插件</p>
+<p>parcelize 序列化插件<br>需要在需要序列化的 data class 类上方添加 @Parcelize 序列<br>并实现： Parcelable  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//2</span><br><span class="line">plugins &#123;</span><br><span class="line">    id kotlin-parcelize&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-
-<p>如何知道系统已经导入了哪些依赖？</p>
-<p>Project -&gt; External Libraries<br>可以看源代码</p>
+<p>&#x2F;&#x2F;<strong>eventbus</strong> (在github)<br>implementation(“org.greenrobot:eventbus:3.3.1”)  </p>
+<p>如何知道系统已经导入了哪些依赖？<br>Project -&gt; External Libraries<br>可以看源代码</p>
 <p>即使设计(设计UI)  </p>
 <p>MAC字体天下 </p>
-<p>动画资源：lottiefiles.com<br>lottie动画  </p>
+<p>**动画资源： lottiefiles.com  **<br>lottie 动画  </p>
 <ol>
-<li>导入implementation ‘com.airbnb.android:lottie:6.1.0’资源  </li>
+<li>导入 implementation ‘com.airbnb.android:lottie:6.1.0’资源  </li>
 <li>创建资源文件夹res —-&gt;raw （音频视频 test文件 json文件）—-&gt; file下载导入动画资源  </li>
 <li>在 fragment 中添加代码 <strong>LottieAnimationView</strong> 控件</li>
 </ol>
 <p>app:<strong>lottie_rawRes</strong>&#x3D;”@raw&#x2F;delivery” &#x2F;&#x2F;显示哪个资源<br>app:<strong>lottie_autoPlay</strong>&#x3D;”true” &#x2F;&#x2F;是否自动播放<br>app:<strong>lottie_loop</strong>&#x3D;”true” &#x2F;&#x2F;是否循环播放  </p>
-<p>&#x2F;&#x2F;Lottie File<br>implementation’com.airbnb.android:lottie:6.1.0’</p>
+<hr>
+<p>阿里巴巴矢量图标库：<br><a target="_blank" rel="noopener" href="https://www.iconfont.cn/search">https://www.iconfont.cn/search</a></p>
+<p><strong>富文本：</strong><br>在 build.gradle 中加入：<br><code>implementation(&quot;org.sufficientlysecure:html-textview:4.0&quot;)</code></p>
+<p>在 settings.gradle 中加入 jcenter()  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dependencyResolutionManagement &#123;</span><br><span class="line">    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)</span><br><span class="line">    repositories &#123;</span><br><span class="line">        google()</span><br><span class="line">        mavenCentral()</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>将图片url加载到 ImageView</strong><br>implementation ‘com.github.bumptech.glide:glide:4.15.1’    </p>
+<p>需要有网络，在 Manifest文件中(明文)：<br><uses-permission android:name="android.permission.INTERNET" /><br>android:usesCleartextTraffic&#x3D;”true”  </p>
+<p>使用方式：<br>Glide.with(fragment).load(url).into(binding.imageview)   </p>
  
       <!-- reward -->
       

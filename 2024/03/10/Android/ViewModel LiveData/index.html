@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">896</span>
+            <span class="post-count">1.2k</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">3 min</span>
+            <span class="post-count">4 min</span>
         </span>
     </span>
 </div>
@@ -183,7 +183,13 @@
 </ol>
 <p>MainActivity中<br>观察数据变化</p>
 <p>mViewModel.number. <strong>observe</strong> (owner: LifecycleOwner 谁观察,observer: (Int!)-&gt; Unit有变化要做什么)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//监听 并实现Observe接口的onChange方法</span></span><br><span class="line"><span class="comment">//当数据改变时，最终调用了观察者的onChange方法，并传递数据过去</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//观察数据变化</span></span><br><span class="line">mViewModel.number.observe( <span class="built_in">this</span>,object:Observer&lt;Int&gt;&#123;</span><br><span class="line">    override fun <span class="title function_">onChanged</span><span class="params">(value: Int)</span>&#123;<span class="comment">//it:Int</span></span><br><span class="line">         binding.result. text = <span class="string">&quot;$it&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//↓触发 lambda 表达式</span></span><br><span class="line">mViewModel.number.observe( <span class="built_in">this</span>,object:Observer&lt;Int&gt;&#123;</span><br><span class="line">    binding.result. text = <span class="string">&quot;$&#123;mViewModel.number&#125;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure> 
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//监听 并实现Observe接口的onChange方法</span></span><br><span class="line"><span class="comment">//当数据改变时，最终调用了观察者的onChange方法，并传递数据过去</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//观察数据变化</span></span><br><span class="line">mViewModel.number.observe( <span class="built_in">this</span>,object:Observer&lt;Int&gt;&#123;</span><br><span class="line">    override fun <span class="title function_">onChanged</span><span class="params">(value: Int)</span>&#123;<span class="comment">//it:Int</span></span><br><span class="line">         binding.result. text = <span class="string">&quot;$it&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//↓触发 lambda 表达式</span></span><br><span class="line">mViewModel.number.observe( <span class="built_in">this</span>,object:Observer&lt;Int&gt;&#123;</span><br><span class="line">    binding.result. text = <span class="string">&quot;$&#123;mViewModel.number&#125;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="LiveData-与-MutableLiveData"><a href="#LiveData-与-MutableLiveData" class="headerlink" title="LiveData 与 MutableLiveData"></a>LiveData 与 MutableLiveData</h2><p>LiveData和MutableLiveData都是Android架构组件中的一部分，用于实现数据的观察和更新。它们之间的主要区别在于MutableLiveData是LiveData的子类，因此MutableLiveData具有LiveData的所有功能，并且还可以通过setValue()和postValue()方法来更新LiveData中的数据。</p>
+<p>具体来说，LiveData是一个具有生命周期感知能力的数据持有类，它可以感知Activity、Fragment或Service等组件的生命周期状态，并在数据发生变化时通知这些组件。而MutableLiveData是LiveData的可变版本，它允许数据的更新和修改，而LiveData只能通过setValue()方法来更新数据。</p>
+<p>联系方面，MutableLiveData可以作为LiveData的替代品，用于在ViewModel中保存和更新数据。在ViewModel中使用MutableLiveData可以确保数据的安全性和一致性，并且能够保持数据在配置变化时的状态。LiveData和MutableLiveData都可以通过observe()方法来观察数据的变化，并在数据发生变化时通知观察者。因此，在Android开发中，通常会使用LiveData和MutableLiveData来实现数据的观察和更新，以实现数据驱动的UI更新。</p>
+ 
       <!-- reward -->
       
       <div id="reword-out">
