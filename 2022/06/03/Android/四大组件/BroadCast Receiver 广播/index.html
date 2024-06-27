@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">136</span>
+            <span class="post-count">684</span>
         </span>
     </span>
 
@@ -98,25 +98,42 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">2 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>&#x2F;&#x2F;点击通知栏按钮，实现切换（给通知栏添加点击事件）</p>
+  <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>BroadcastReceiver即广播，是一个全局的监听器，属于Android四大组件之一<br>Android 广播分为两个角色：广播发送者、广播接收者<br>作用是监听 &#x2F; 接收 应用 App 发出的广播消息，并 做出响应<br>一般应用场景如下</p>
+<p>Android不同组件间的通信（含 ：应用内 &#x2F; 不同应用之间）<br>多线程通信<br>与 Android 系统在特定情况下的通信(如电话呼入时、网络可用时)</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>Android中的广播使用了设计模式中的观察者模式：基于消息的发布 &#x2F; 订阅事件模型<br>模型中有3个角色：<br>a. 消息订阅者（广播接收者）<br>b. 消息发布者（广播发布者）<br>c. 消息中心（AMS，即Activity Manager Service）<br>原理概述<br>a. 广播接收者通过Binder机制在AMS注册<br>b. 广播发送者通过Binder机制向AMS发送广播<br>c. AMS根据广播发送者要求，在已注册的列表中寻找合适的广播接收者(寻找依据 IntentFilter&#x2F;Permission)<br>d. AMS将广播发送到合适的广播接收者的消息循环队列中<br>e. 广播接收者通过消息循环拿到此广播，并回调onReceive();<br>特别注意广播发送者和广播接收者的执行是异步的，即广播发送者不关心有无接收者接收，也不确定接收者何时才能接收到</p>
+<h1 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h1><h2 id="第一步：自定义广播接收者-BroadcastReceiver"><a href="#第一步：自定义广播接收者-BroadcastReceiver" class="headerlink" title="第一步：自定义广播接收者 BroadcastReceiver"></a>第一步：自定义广播接收者 BroadcastReceiver</h2><ol>
+<li>继承 BroadcastReceivre 基类</li>
+<li>必须复写抽象方法 onReceive() 方法</li>
+</ol>
+<ul>
+<li>广播接收器接收到相应广播后，会自动回调 onReceive() 方法  </li>
+<li>一般情况下，onReceive方法会涉及与其他组件之间的交互，如发送 Notification 、 启动 Service 等  </li>
+<li>默认情况下，广播接收器运行在 UI 线程，因此，onReceive()方法不能执行耗时操作，否则将导致ANR</li>
+</ul>
+<p>&#x2F;&#x2F;点击通知栏按钮，实现切换（给通知栏添加点击事件）  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyBroadcastReceiver</span> : BroadcastReceiver() &#123;</span><br><span class="line">    override fun <span class="title function_">onReceive</span><span class="params">(context: Context?, intent: Intent?)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (intent?.action == <span class="string">&quot;com.example.MY_ACTION&quot;</span>) &#123;</span><br><span class="line">            <span class="comment">// 在接收到指定Action的广播时执行操作</span></span><br><span class="line">            <span class="type">val</span> <span class="variable">message</span> <span class="operator">=</span> intent.getStringExtra(<span class="string">&quot;message&quot;</span>)</span><br><span class="line">            Toast.makeText(context, <span class="string">&quot;Received broadcast: $message&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<p>需要在 AndroidManifest.xml 文件中注册这个 BroadcastReceiver，并设置接收的 Action 和相关的权限。  </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">&quot;.MyBroadcastReceiver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.example.MY_ACTION&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure> 
+<h1 id="注册广播接收器"><a href="#注册广播接收器" class="headerlink" title="注册广播接收器"></a>注册广播接收器</h1><p>a. 静态注册<br>需要在 AndroidManifest.xml 文件中注册这个 BroadcastReceiver ，并设置接收的 Action 和相关的权限：<br>当此 App首次启动时，系统会自动实例化 MyBroadcastReceiver 类，并注册到系统中    </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">&quot;.MyBroadcastReceiver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.example.MY_ACTION&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>b. 动态注册<br>注册方式：在代码中调用 Context.registerReceiver() 方法<br>注销方式：在代码中调用 Context.unregisterReceiver() 方法  </p>
+ 
       <!-- reward -->
       
       <div id="reword-out">

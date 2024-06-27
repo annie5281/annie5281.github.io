@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">304</span>
+            <span class="post-count">323</span>
         </span>
     </span>
 
@@ -125,6 +125,7 @@
 <li>release()：释放MediaPlayer占用的资源。</li>
 <li>seekTo(int msec)：跳转到指定的播放位置。</li>
 <li>reset()：重置MediaPlayer到初始状态。</li>
+<li>setValue(leftVolue,rightVolume) 设置音量</li>
 </ol>
 <p>属性：</p>
 <ol>
@@ -140,7 +141,7 @@
 <p>调用 start() 方法开始播放。</p>
 <p>使用相关控制方法如 pause(), stop(), seekTo() 等进行播放控制。</p>
 <p>释放 MediaPlayer 资源。</p>
- 
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">StateMediaPlayer().apply &#123;</span><br><span class="line">  setDataSource(music.url)</span><br><span class="line">  prepareAsync()</span><br><span class="line">  setOnPreparedListener &#123;</span><br><span class="line">    start()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
       <!-- reward -->
       
       <div id="reword-out">

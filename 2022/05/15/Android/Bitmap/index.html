@@ -125,8 +125,8 @@
 <li><p><code>createBitmap()</code>：创建一个新的Bitmap对象。</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> bitmap = Bitmap.createBitmap(<span class="number">100</span>, <span class="number">100</span>, Bitmap.Config.ARGB_8888)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><code>decodeResource()</code>：从资源文件中解码一个Bitmap对象。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> bitmap = BitmapFactory.decodeResource(resources, R.drawable.image)</span><br></pre></td></tr></table></figure>
+<li><p><code>decodeResource()</code>：从资源文件中解码一个  Bitmap对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">bitmap</span> <span class="operator">=</span> BitmapFactory.decodeResource(resources, R.drawable.image)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>compress()</code>：压缩Bitmap对象。<br>将数据压缩到该输出流中</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> outputStream = ByteArrayOutputStream()</span><br><span class="line">bitmap.compress(Bitmap.CompressFormat.PNG, <span class="number">100</span>, outputStream)</span><br></pre></td></tr></table></figure>

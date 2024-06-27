@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">464</span>
+            <span class="post-count">994</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">4 min</span>
         </span>
     </span>
 </div>
@@ -117,12 +117,41 @@
 <h2 id="请求权限"><a href="#请求权限" class="headerlink" title="请求权限"></a>请求权限</h2><h2 id="创建通知的通道-NotificationChannel"><a href="#创建通知的通道-NotificationChannel" class="headerlink" title="创建通知的通道 NotificationChannel"></a>创建通知的通道 NotificationChannel</h2><p>使用 NotificationManager 的 createNotificationChannel() 方法创建通知的通道 NotificationChannel  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取系统管理通知的对象 NotificationManager 在程序和系统的通知服务之间建立连接</span></span><br><span class="line"><span class="type">val</span> <span class="variable">notificationManager</span> <span class="operator">=</span> getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建通道</span></span><br><span class="line"><span class="type">val</span> <span class="variable">channel</span> <span class="operator">=</span> NotificationChannel(channel_id, channel_name,NotificationManager.IMPORTANCE_HIGH)</span><br><span class="line">notificationManager.createNotificationChannel(channel)</span><br></pre></td></tr></table></figure>
 
-<h2 id="创建通知-Notification"><a href="#创建通知-Notification" class="headerlink" title="创建通知 Notification"></a>创建通知 Notification</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">mNotification</span> <span class="operator">=</span> NotificationCompat</span><br><span class="line">	.Builder( context: <span class="built_in">this</span>,channel_id)</span><br><span class="line">	.setSmallIcon(R.drawable.logo)</span><br><span class="line">	.setContentTitle(<span class="string">&quot;标题&quot;</span>)</span><br><span class="line">	.setContentText(<span class="string">&quot;这是文本内容&quot;</span>)</span><br><span class="line">	.build()</span><br><span class="line"></span><br><span class="line"><span class="comment">//将通知发出去</span></span><br><span class="line">notificationManager.notify( id: <span class="number">1</span>, mNotification)</span><br></pre></td></tr></table></figure>
+<h2 id="创建通知-Notification"><a href="#创建通知-Notification" class="headerlink" title="创建通知 Notification"></a>创建通知 Notification</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">val</span> <span class="variable">mNotification</span> <span class="operator">=</span> NotificationCompat</span><br><span class="line">	.Builder( context: <span class="built_in">this</span>,channel_id)</span><br><span class="line">	.setSmallIcon(R.drawable.logo) <span class="comment">//小图标</span></span><br><span class="line">	.setContentTitle(<span class="string">&quot;标题&quot;</span>)</span><br><span class="line">	.setContentText(<span class="string">&quot;这是文本内容&quot;</span>)</span><br><span class="line">	.build()</span><br><span class="line"></span><br><span class="line"><span class="comment">//将通知发出去</span></span><br><span class="line">notificationManager.notify( id: <span class="number">1</span>, mNotification)</span><br></pre></td></tr></table></figure>
 
 
-<h1 id="自定义-Notification-布局"><a href="#自定义-Notification-布局" class="headerlink" title="自定义 Notification 布局"></a>自定义 Notification 布局</h1><p>RemoteViews  </p>
-<p>自定义Notification的布局，使用RemoteViews</p>
-<p>绑定通知栏中的事件（点击事件）PendingIntent<br>PendingIntent.getBroadcast()</p>
+<h1 id="自定义-Notification-布局"><a href="#自定义-Notification-布局" class="headerlink" title="自定义 Notification 布局"></a>自定义 Notification 布局</h1><p>自定义 Notification 的布局，使用 RemoteViews<br>需要给Notification设置以下内容：  </p>
+<ul>
+<li><strong>setContent(views : RemoteViews?)</strong>  </li>
+<li><strong>setCustomBigContentView(views : RemoteViews?)</strong></li>
+</ul>
+<p>绑定通知栏中的事件（点击事件）PendingIntent<br>PendingIntent.getBroadcast()  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mNotification = NotificationCompat</span><br><span class="line">    .Builder(AudioHelper.instance.context, CHANNEL_ID)</span><br><span class="line">    .setSmallIcon(R.drawable.small_icon)</span><br><span class="line">    .setContent(mSmallRemoteView)</span><br><span class="line">    .setCustomBigContentView(mBigRemoteView)</span><br><span class="line">    .build()</span><br><span class="line">mNotificationManager.notify(<span class="number">1</span>,mNotification)</span><br></pre></td></tr></table></figure>
+
+<p>配置 RemoteViews  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mSmallRemoteView = RemoteViews(packageName,R.layout.layout_notification_collpase).apply &#123;</span><br><span class="line">    setTextViewText(R.id.titleView,mMusic.title)<span class="comment">//歌名</span></span><br><span class="line">    setTextViewText(R.id.authorView,mMusic.author)<span class="comment">//歌手</span></span><br><span class="line">    setImageViewResource(R.id.previous,R.drawable.notification_previous)</span><br><span class="line">    setImageViewResource(R.id.playorpause,R.drawable.notification_play)</span><br><span class="line">    setImageViewResource(R.id.next,R.drawable.notification_next)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a>PendingIntent</h1><p>endingIntent 对象封装了 Intent 对象的功能，同时以您应用的名义指定其他应用允许哪些操作的执行，来响应用户未来会进行的操作。<br>比如，所封装的 Intent 可能会在闹铃关闭后或者用户点击通知时被触发。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p> PendingIntent 的应用场景关键在于间接的 Intent 跳转需求， 即先通过一级 Intent 跳转到某个组件，在该组件完成任务后再间接地跳转到二级的 Intent。PendingIntent 中的单词 “pending” 指延迟或挂起，就是指它是延迟的或挂起的。例如，你在以下场景中就可以使用 PendingIntent：</p>
+<p>场景 1 - 系统通知消息的点击操作<br>场景 2 - 桌面微件的点击操作<br>场景 3 - 系统闹钟操作<br>场景 4 - 第三方应用回调操作  </p>
+<h2 id="创建-PendingIntent"><a href="#创建-PendingIntent" class="headerlink" title="创建 PendingIntent"></a>创建 PendingIntent</h2><p>PendingIntent 支持在启动 Activity 、 Service 或 BroadcastReceiver<br>不同类型的组件必须使用特定的静态方法：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//启动 Activity</span></span><br><span class="line">PendingIntent.getActivity(Context context, <span class="type">int</span> requestCode, Intent intent, <span class="type">int</span> flags)</span><br><span class="line"><span class="comment">//启动 Service</span></span><br><span class="line">PendingIntent.Service(Context context, <span class="type">int</span> requestCode, Intent intent, <span class="type">int</span> flags)</span><br><span class="line"><span class="comment">//启动 BroadcastReceiver(发送广播)</span></span><br><span class="line">PendingIntent.getBroadcast(Context context, <span class="type">int</span> requestCode, Intent intent, <span class="type">int</span> flags)</span><br></pre></td></tr></table></figure>
+
+<p>创建 PendingIntent 的4个参数：  </p>
+<ol>
+<li>context： 当前应用的上下文，PendingIntent 将从中抽取授权信息；  </li>
+<li>requestCode： PendingIntent 的请求码，与 Intent 的请求码类似；  </li>
+<li>intent： 最终的意图操作；  </li>
+<li>flag： 控制标记位，我们暂且放到一边。</li>
+</ol>
+<ul>
+<li>FLAG_ONE_SHOT：PendingIntent对象仅使用一次；  </li>
+<li>FLAG_NO_CREATE：如果PendingIntent对象不存在则返回null  </li>
+<li>FLAG_CANCEL_CURRENT：如果PendingIntent对象已存在，则取消原有的对象，创建新的PendingIntent对象  </li>
+<li>FLAG_UPDATE_CURRENT：如果PendingIntent对象已存在，则保留原有的对象，修改原有对象的属性数据  </li>
+<li>FLAG_IMMUTABLE：PendingIntent对象是不可变的  </li>
+<li>FLAG_MUTABLE：PendingIntent对象是可变的</li>
+</ul>
 <hr>
 <h1 id="NotificationManager"><a href="#NotificationManager" class="headerlink" title="NotificationManager"></a>NotificationManager</h1><p>常用方法：</p>
 <ol>

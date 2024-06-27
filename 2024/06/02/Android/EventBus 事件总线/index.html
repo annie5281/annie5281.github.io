@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">240</span>
+            <span class="post-count">418</span>
         </span>
     </span>
 
@@ -118,15 +118,21 @@
 <h1 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h1><ol start="0">
 <li><p>导入依赖<br><code>implementation(&quot;org.greenrobot;eventbus:3.3.1&quot;)</code>  </p>
 </li>
-<li><p>定义事件对应的类（只是一个普通类）<br>class ChangeColorEvent(val color:Int) {}  </p>
+<li><p>定义事件对应的类（只是一个普通类）<br>class ChangeColorEvent(val color:Int) {}   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">AudioEvent</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//音频开始加载的事件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AudioLoadEvent</span>(val music:Song):AudioEvent()</span><br><span class="line"></span><br><span class="line"><span class="comment">//开始播放事件</span></span><br><span class="line">object AudioStartEvent:AudioEvent()</span><br><span class="line"></span><br><span class="line"><span class="comment">//暂停事件</span></span><br><span class="line">object AudioPauseEvent:AudioEvent()</span><br><span class="line"></span><br><span class="line"><span class="comment">//进度变化事件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AudioProgressChangeEvent</span>(val progress:Float):AudioEvent()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送事件<br>EventBus.getDefault().post(ChangeColorEvent(Color.MAGENTA))  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">fun <span class="title function_">start</span><span class="params">()</span>&#123;</span><br><span class="line">        player.start() <span class="comment">//播放音乐</span></span><br><span class="line">        initTimer() <span class="comment">//更新进度</span></span><br><span class="line">        <span class="comment">//发送音乐开始播放的事件</span></span><br><span class="line">        EventBus.getDefault().post(AudioStartEvent)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> fun <span class="title function_">initTimer</span><span class="params">()</span>&#123;</span><br><span class="line">    timer = TimerUtils() <span class="comment">//使用定时器 实现每隔0.2秒钟刷新一次进度给外部</span></span><br><span class="line">    timer?.order(TimerUtils.Order.NONE)</span><br><span class="line">    timer?.timeInterval(<span class="number">200</span>)</span><br><span class="line">    timer?.start()</span><br><span class="line">    timer?.setCallback&#123; _,_-&gt;</span><br><span class="line">        <span class="type">val</span> <span class="variable">progress</span> <span class="operator">=</span> currentTime().toFloat() / totalTime()</span><br><span class="line">        <span class="comment">//发送音乐播放进度的事件</span></span><br><span class="line">        EventBus.getDefault().post(AudioProgressChangeEvent(progress))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>注册和取消注册<br>注册： EventBus.getDefault().register(this)<br>取消注册： EventBus.getDefault().unregister(this)  </p>
 </li>
-<li><p>订阅事件（谁接受谁订阅）<br>使用注解： @Subscribe(threadMode &#x3D; ThreadMode .MAIN)  </p>
-</li>
-<li><p>发送事件<br>EventBus.getDefault().post(ChangeColorEvent(Color.MAGENTA))</p>
+<li><p>订阅事件（谁接受谁订阅）</p>
 </li>
 </ol>
+<ul>
+<li>加注解 : @Subscribe(threadMode &#x3D; ThreadMode .MAIN)  </li>
+<li>参数必须是发送时对应的类型  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Subscribe(threadMode = ThreadMode.MAIN)</span></span><br><span class="line">fun <span class="title function_">onLoadEvent</span><span class="params">(event: AudioLoadEvent)</span>&#123;</span><br><span class="line">    initLoadUI(event.music)</span><br><span class="line">    mRotateAnimation.reset()</span><br><span class="line">    mBinding.progressPlayView.showPause()</span><br><span class="line">    mBinding.progressPlayView.changeProgress(<span class="number">0f</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
  
       <!-- reward -->
       
